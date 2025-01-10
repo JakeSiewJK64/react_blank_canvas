@@ -1,7 +1,10 @@
 export const Home = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-2 w-[50%]">
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <a className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="/login">
+        Go to login
+      </a>
       <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
         Button
       </button>
