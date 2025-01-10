@@ -1,15 +1,4 @@
-const testTimemout = () => {
-  for (let i = 0; i < 1e6; i++) {
-    return;
-  }
-};
-
 export const Home = () => {
-  const start = performance.now();
-  testTimemout();
-  const end = performance.now();
-  console.log(`difference: ${(end - start) / 1000}`);
-
   return (
     <div>
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
