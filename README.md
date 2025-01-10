@@ -7,6 +7,7 @@ yarn dev
 ```
 
 *note: please use node version 20.17.0 and above.
+
 *note: please run `yarn install` before running.
 
 ### Running the E2E playwright tests
