@@ -1,3 +1,4 @@
+import { cn } from "../../utils";
 import "../../index.css";
 
 /** Primary UI component for user interaction 3 */
@@ -5,8 +6,10 @@ export const Button = ({
   size = "medium",
   label,
   color = "primary",
+  className,
   onClick = () => {},
 }: {
+  className?: string;
   /** Background color of the button */
   color?: "warn" | "success" | "danger" | "primary";
   /** How large should the button be? */
@@ -30,7 +33,9 @@ export const Button = ({
 
   return (
     <button
-      className={`${buttonColor} active:mt-[2px] ${buttonSizing} rounded`}
+      className={cn(
+        `${buttonColor} active:mt-[2px] ${buttonSizing} rounded ${className}`
+      )}
       onClick={onClick}
     >
       {label}
