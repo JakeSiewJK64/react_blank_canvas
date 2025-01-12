@@ -9,6 +9,7 @@ export const Button = ({
   className,
   onClick = () => {},
 }: {
+  /** style class for button */
   className?: string;
   /** Background color of the button */
   color?: "warn" | "success" | "danger" | "primary";
