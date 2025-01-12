@@ -1,22 +1,23 @@
+import { ReactElement } from "react";
 import { cn } from "../../utils";
 import "../../index.css";
 
 /** Standard button component */
 export const Button = ({
+  children,
   size = "medium",
-  label,
   color = "primary",
   className,
   onClick = () => {},
 }: {
+  /** children to be rendered in button */
+  children: ReactElement | string;
   /** style class for button */
   className?: string;
   /** Background color of the button */
   color?: "warn" | "success" | "danger" | "primary";
   /** How large should the button be? */
   size?: "small" | "medium" | "large";
-  /** Button contents */
-  label?: string;
   /** Optional click handler */
   onClick?: () => void;
 }) => {
@@ -39,7 +40,7 @@ export const Button = ({
       )}
       onClick={onClick}
     >
-      {label}
+      {children}
     </button>
   );
 };
