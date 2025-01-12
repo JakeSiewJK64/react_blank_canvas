@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 import * as Sentry from "@sentry/react";
+import LogRocket from "logrocket";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { PostHogProvider } from "posthog-js/react";
@@ -11,6 +12,8 @@ const REACT_APP_PUBLIC_POSTHOG_KEY = import.meta.env
   .VITE_REACT_APP_PUBLIC_POSTHOG_KEY;
 
 const options = {};
+
+LogRocket.init(import.meta.env.VITE_LOGROCKET_API_KEY);
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DSN,
