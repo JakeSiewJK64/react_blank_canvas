@@ -4,7 +4,7 @@ import "../../index.css";
 
 /** Standard button component */
 export const Button = ({
-  children,
+  children = "Button",
   size = "medium",
   color = "primary",
   className,
