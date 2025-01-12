@@ -1,7 +1,7 @@
 import { cn } from "../../utils";
 import "../../index.css";
 
-/** Primary UI component for user interaction 3 */
+/** Standard button component */
 export const Button = ({
   size = "medium",
   label,
