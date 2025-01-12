@@ -4,6 +4,7 @@ import LogRocket from "logrocket";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { PostHogProvider } from "posthog-js/react";
+import { ToastProvider } from "./components/Toast/index.js";
 import App from "./App.js";
 import "./index.css";
 import "./App.css";
@@ -37,7 +38,9 @@ if (container) {
   root.render(
     <StrictMode>
       <PostHogProvider apiKey={REACT_APP_PUBLIC_POSTHOG_KEY} options={options}>
-        <App />
+        <ToastProvider>
+          <App />
+        </ToastProvider>
       </PostHogProvider>
     </StrictMode>
   );
