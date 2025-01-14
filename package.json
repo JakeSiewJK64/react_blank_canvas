@@ -13,6 +13,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@monicon/react": "^1.2.1",
+    "@monicon/vite": "^1.2.1",
     "@sentry/react": "^8.48.0",
     "@sentry/vite-plugin": "^2.22.7",
     "clsx": "^2.1.1",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
     "@eslint/js": "^9.17.0",
+    "@iconify/json": "^2.2.294",
     "@playwright/test": "^1.49.1",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
