@@ -11,6 +11,7 @@ export const Input = ({
   className,
   checked = false,
   type = "text",
+  onChange = () => {},
 }: {
   /** Error message (if any) */
   errorMessage?: string;
@@ -28,6 +29,8 @@ export const Input = ({
   id?: string;
   /** Input type */
   type?: HTMLInputTypeAttribute;
+  /** onchange callback */
+  onChange?: () => void;
 }) => {
   return (
     <>
@@ -35,6 +38,7 @@ export const Input = ({
         {label}
       </label>
       <input
+        onChange={onChange}
         className={cn(
           `shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
             errorMessage && "border-red-500"
