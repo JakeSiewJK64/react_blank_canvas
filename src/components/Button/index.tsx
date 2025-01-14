@@ -52,13 +52,13 @@ export const Button = ({
     primary: buttonPrimaryColor,
     outline: buttonOutlineColor,
   }[variant];
+  const disableStyling =
+    (disabled || loading) && "opacity-25 cursor-not-allowed";
 
   return (
     <button
       className={cn(
-        `rounded flex flex-row gap-2 ${
-          (disabled || loading) && "opacity-25 cursor-not-allowed"
-        } ${buttonColor} ${buttonSizing} ${className}`
+        `rounded flex flex-row gap-2 ${disableStyling} ${buttonColor} ${buttonSizing} ${className}`
       )}
       disabled={disabled || loading}
       onClick={onClick}
