@@ -1,3 +1,4 @@
+import Monicon from "@monicon/react";
 import { ReactElement } from "react";
 import { cn } from "../../utils";
 import "../../index.css";
@@ -9,6 +10,7 @@ export const Button = ({
   color = "primary",
   className,
   disabled = false,
+  loading = false,
   onClick = () => {},
 }: {
   /** children to be rendered in button */
@@ -23,6 +25,8 @@ export const Button = ({
   disabled?: boolean;
   /** Optional click handler */
   onClick?: () => void;
+  /** loader in button */
+  loading?: boolean;
 }) => {
   const buttonSizing = {
     sm: "h-8 px-4 text-sm",
@@ -39,14 +43,22 @@ export const Button = ({
   return (
     <button
       className={cn(
-        `rounded ${
+        `rounded flex flex-row gap-2 ${
           disabled && "opacity-25 cursor-not-allowed"
         } ${buttonColor} ${buttonSizing} ${className}`
       )}
       disabled={disabled}
       onClick={onClick}
     >
-      {children}
+      {loading && (
+        <div className="animate-spin my-auto">
+          <Monicon
+            name="lucide:loader-circle"
+            size={{ sm: 12, md: 24, lg: 24 }[size]}
+          />
+        </div>
+      )}
+      <div className="my-auto">{children}</div>
     </button>
   );
 };
