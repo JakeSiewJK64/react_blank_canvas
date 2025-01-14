@@ -61,7 +61,7 @@ const ModalStory: Meta<typeof Modal> = {
 export const Standard = {
   args: {},
 };
-export const WithCloseButton = {
+export const WithoutCloseButton = {
   args: {
     withCloseButton: false,
   },
