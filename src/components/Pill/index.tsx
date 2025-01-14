@@ -28,10 +28,10 @@ export const Pill = ({
   onCloseClick?: () => void;
 }) => {
   const sizing = {
-    sm: "py-1 px-2",
-    md: "py-2 px-4",
-    lg: "py-3 px-6",
-    xl: "py-4 px-8",
+    sm: "px-2",
+    md: "px-4",
+    lg: "px-6",
+    xl: "px-8",
   }[size];
   const coloring = {
     none: "",
