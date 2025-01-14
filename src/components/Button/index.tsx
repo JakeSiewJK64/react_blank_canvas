@@ -44,10 +44,10 @@ export const Button = ({
     <button
       className={cn(
         `rounded flex flex-row gap-2 ${
-          disabled && "opacity-25 cursor-not-allowed"
+          (disabled || loading) && "opacity-25 cursor-not-allowed"
         } ${buttonColor} ${buttonSizing} ${className}`
       )}
-      disabled={disabled}
+      disabled={disabled || loading}
       onClick={onClick}
     >
       {loading && (
