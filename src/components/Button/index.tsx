@@ -12,7 +12,10 @@ export const Button = ({
   disabled = false,
   loading = false,
   onClick = () => {},
+  variant = "primary",
 }: {
+  /** button variant */
+  variant?: "outline" | "primary";
   /** children to be rendered in button */
   children: ReactElement | string;
   /** style class for button */
@@ -33,12 +36,22 @@ export const Button = ({
     md: "h-11 px-6",
     lg: "h-12 px-6 text-lg",
   }[size];
-  const buttonColor = {
+  const buttonPrimaryColor = {
     primary: "bg-[#3498db] text-white",
     danger: "bg-red-600 text-white",
     success: "bg-green-600 text-white",
     warn: "bg-amber-400 text-black",
   }[color];
+  const buttonOutlineColor = {
+    primary: "bg-transparent text-[#3498db] border border-[#3498db]",
+    danger: "bg-transparent text-red-600 border border-red-500",
+    success: "bg-transparent text-green-600 border border-green-500",
+    warn: "bg-transparent text-amber-600 border border-amber-500",
+  }[color];
+  const buttonColor = {
+    primary: buttonPrimaryColor,
+    outline: buttonOutlineColor,
+  }[variant];
 
   return (
     <button
