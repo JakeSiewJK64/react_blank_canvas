@@ -8,6 +8,7 @@ export const Button = ({
   size = "md",
   color = "primary",
   className,
+  disabled = false,
   onClick = () => {},
 }: {
   /** children to be rendered in button */
@@ -18,6 +19,8 @@ export const Button = ({
   color?: "warn" | "success" | "danger" | "primary";
   /** How large should the button be? */
   size?: "sm" | "md" | "lg";
+  /** disable button */
+  disabled?: boolean;
   /** Optional click handler */
   onClick?: () => void;
 }) => {
@@ -36,8 +39,11 @@ export const Button = ({
   return (
     <button
       className={cn(
-        `${buttonColor} active:mt-[2px] ${buttonSizing} rounded ${className}`
+        `rounded ${
+          disabled && "opacity-25 cursor-not-allowed"
+        } ${buttonColor} ${buttonSizing} ${className}`
       )}
+      disabled={disabled}
       onClick={onClick}
     >
       {children}
