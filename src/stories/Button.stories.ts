@@ -24,21 +24,21 @@ const ButtonStory: Meta<typeof Button> = {
 export const Large = {
   args: {
     size: "large",
-    label: "Button",
+    children: "Button",
   },
 };
 
 export const Regular = {
   args: {
     color: "primary",
-    label: "Button",
+    children: "Button",
   },
 };
 
 export const Small = {
   args: {
     size: "small",
-    label: "Button",
+    children: "Button",
   },
 };
 
