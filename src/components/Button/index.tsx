@@ -5,7 +5,7 @@ import "../../index.css";
 /** Standard button component */
 export const Button = ({
   children = "Button",
-  size = "medium",
+  size = "md",
   color = "primary",
   className,
   onClick = () => {},
@@ -17,14 +17,14 @@ export const Button = ({
   /** Background color of the button */
   color?: "warn" | "success" | "danger" | "primary";
   /** How large should the button be? */
-  size?: "small" | "medium" | "large";
+  size?: "sm" | "md" | "lg";
   /** Optional click handler */
   onClick?: () => void;
 }) => {
   const buttonSizing = {
-    small: "h-8 px-4 text-sm",
-    medium: "h-11 px-6",
-    large: "h-12 px-6 text-lg",
+    sm: "h-8 px-4 text-sm",
+    md: "h-11 px-6",
+    lg: "h-12 px-6 text-lg",
   }[size];
   const buttonColor = {
     primary: "bg-[#3498db] text-white",
