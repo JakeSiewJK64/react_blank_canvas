@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Meta } from "@storybook/react";
-import { Modal } from "../components/Modal";
+import { Meta, StoryFn } from "@storybook/react";
+import { Modal, ModalProvider, useModal } from "../components/Modal";
 import { Button } from "../components/Button";
 
 const Demo = (props: { withFooter?: boolean; withCloseButton?: boolean }) => {
@@ -42,24 +42,76 @@ const Demo = (props: { withFooter?: boolean; withCloseButton?: boolean }) => {
   );
 };
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
+const DemoModalsEvent = () => {
+  const modal = useModal();
+
+  return (
+    <Button
+      variant="outline"
+      onClick={() => {
+        modal?.openModal({
+          children: (
+            <>
+              <span>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+              </span>
+              <Button
+                size="sm"
+                onClick={() =>
+                  modal.openModal({
+                    title: "Sub Dialog",
+                    children: "this is a sub dialog",
+                    onClose: modal.closeModal,
+                  })
+                }
+              >
+                Open Sub-Dialog
+              </Button>
+            </>
+          ),
+          onCancel: modal.closeModal,
+          onClose: modal.closeModal,
+        });
+      }}
+    >
+      Open Confirm
+    </Button>
+  );
+};
+
 const ModalStory: Meta<typeof Modal> = {
   title: "Example/Modal",
   component: Modal,
   render: (args) => <Demo {...args} />,
   parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
-  // More on argTypes: https://storybook.js.org/docs/api/argtypes
-  argTypes: {},
+  argTypes: {
+    title: { type: "string", description: "title of the modal" },
+    onCancel: { type: "function", description: "on confirm callback" },
+    onConfirm: { type: "function", description: "on confirm callback" },
+    onClose: { type: "function", description: "on close callback" },
+    className: { type: "string", description: "styling class names" },
+    children: {
+      description: "react components to be rendered inside the modal",
+    },
+  },
 };
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Standard = {
-  args: {},
+  args: {
+    title: "Standard Modal",
+  },
 };
 export const WithoutCloseButton = {
   args: {
@@ -71,5 +123,10 @@ export const WithoutFooter = {
     withFooter: false,
   },
 };
+export const UseModalsHook: StoryFn = () => (
+  <ModalProvider>
+    <DemoModalsEvent />
+  </ModalProvider>
+);
 
 export default ModalStory;
