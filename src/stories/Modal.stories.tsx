@@ -89,7 +89,7 @@ const DemoModalsEvent = () => {
 };
 
 const ModalStory: Meta<typeof Modal> = {
-  title: "Example/Modal",
+  title: "Core/Modal",
   component: Modal,
   render: (args) => <Demo {...args} />,
   parameters: {

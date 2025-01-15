@@ -3,7 +3,7 @@ import { Toast } from "../components/Toast";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const ToastStory: Meta<typeof Toast> = {
-  title: "Example/Toast",
+  title: "Core/Toast",
   component: Toast,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout

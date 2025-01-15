@@ -2,7 +2,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { Anchor } from "../components/Anchor";
 
 const AnchorStory: Meta<typeof Anchor> = {
-  title: "Example/Anchor",
+  title: "Core/Anchor",
   component: Anchor,
   parameters: {
     layout: "centered",

@@ -3,7 +3,7 @@ import { Card } from "../components/Card";
 import { Button } from "../components/Button";
 
 const CardStory: Meta<typeof Card> = {
-  title: "Example/Card",
+  title: "Core/Card",
   component: Card,
   parameters: {
     layout: "centered",

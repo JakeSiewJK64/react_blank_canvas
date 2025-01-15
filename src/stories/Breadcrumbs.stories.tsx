@@ -3,7 +3,7 @@ import { Breadcrumbs } from "../components/Breadcrumbs";
 import { Anchor } from "../components/Anchor";
 
 const BreadcrumbsStory: Meta<typeof Breadcrumbs> = {
-  title: "Example/Breadcrumbs",
+  title: "Core/Breadcrumbs",
   component: Breadcrumbs,
   parameters: {
     layout: "centered",
