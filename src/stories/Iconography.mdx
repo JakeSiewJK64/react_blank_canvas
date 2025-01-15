@@ -1,0 +1,29 @@
+import Monicon from "@monicon/react";
+import { Markdown, IconGallery, IconItem, Meta } from "@storybook/blocks";
+import Icons from '../utils/json/icons.json';
+import '../index.css';
+
+<Meta title='Iconography' />
+
+# Iconography
+
+### Example usage:
+
+```tsx
+<Monicon name='lucide:chevrons-up-down' />
+```
+
+#### Click on the icon to copy their code to clipboard.
+
+<IconGallery>
+  {Icons.map((icon) => (
+    <IconItem name={icon}>
+      <button className="hover:bg-slate-600" title={`Copy ${icon} to clipboard`} onClick={() => {
+          navigator.clipboard.writeText(icon);
+        }}
+      >
+        <Monicon name={icon} />
+      </button>
+    </IconItem>
+  ))}
+</IconGallery>

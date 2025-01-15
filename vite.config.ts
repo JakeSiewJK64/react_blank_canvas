@@ -3,6 +3,7 @@ import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react";
 import monicon from "@monicon/vite";
 import tailwindcss from "tailwindcss";
+import Icons from "./src/utils/json/icons.json";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,7 +14,7 @@ export default defineConfig({
       project: "typescript-react",
     }),
     monicon({
-      icons: ["lucide:loader-circle"],
+      icons: Icons,
     }),
   ],
   css: {
