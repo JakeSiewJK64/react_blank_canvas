@@ -19,9 +19,10 @@ const columnHelper = createColumnHelper<{
   description: string;
 }>();
 
-export const Regular: StoryFn<typeof Table> = (_) => (
-  <Table
-    data={[
+export const Regular: StoryFn<typeof Table> = (args) => {
+  const res = {
+    count: 3,
+    results: [
       {
         name: "apple",
         price: "100",
@@ -37,32 +38,43 @@ export const Regular: StoryFn<typeof Table> = (_) => (
         price: "300",
         description: "It has survived not only five centuries.",
       },
-    ]}
-    columns={[
-      columnHelper.accessor("name", {
-        header: "Name",
-        cell: (info) => <span>{info.getValue()}</span>,
-      }),
-      columnHelper.accessor("price", {
-        header: "Price",
-        cell: (info) => <span>{info.getValue()}</span>,
-      }),
-      columnHelper.accessor("description", {
-        header: "Description",
-        cell: (info) => (
-          <span className="overflow-ellipsis">{info.getValue()}</span>
-        ),
-      }),
-      columnHelper.display({
-        header: " ",
-        cell: () => (
-          <Button size="sm" variant="outline">
-            Action
-          </Button>
-        ),
-      }),
-    ]}
-  />
-);
+    ],
+  };
+
+  return (
+    <Table
+      initialPageIndex={0}
+      initialPageSize={5}
+      pagination
+      serverSideDataSource
+      total={res.count}
+      data={res.results}
+      columns={[
+        columnHelper.accessor("name", {
+          header: "Name",
+          cell: (info) => <span>{info.getValue()}</span>,
+        }),
+        columnHelper.accessor("price", {
+          header: "Price",
+          cell: (info) => <span>{info.getValue()}</span>,
+        }),
+        columnHelper.accessor("description", {
+          header: "Description",
+          cell: (info) => (
+            <span className="overflow-ellipsis">{info.getValue()}</span>
+          ),
+        }),
+        columnHelper.display({
+          header: " ",
+          cell: () => (
+            <Button size="sm" variant="outline">
+              Action
+            </Button>
+          ),
+        }),
+      ]}
+    />
+  );
+};
 
 export default TableStory;
