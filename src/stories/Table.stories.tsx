@@ -48,6 +48,7 @@ export const Regular: StoryFn<typeof Table> = (args) => {
       pagination
       serverSideDataSource
       total={res.count}
+      {...args}
       data={res.results}
       columns={[
         columnHelper.accessor("name", {
