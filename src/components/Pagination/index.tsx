@@ -63,7 +63,6 @@ export const Pagination = ({
           <PaginationButton
             title={String(previewIndex)}
             active={value === previewIndex}
-            disabled={value === previewIndex}
             key={`${index}-${Date.now()}`}
             onClick={() => {
               onChange(previewIndex);
