@@ -19,6 +19,12 @@ const columnHelper = createColumnHelper<{
   description: string;
 }>();
 
+/**
+ * **references:**
+ *
+ * [react table sorting](https://stackoverflow.com/a/74977394)
+ *
+ * */
 export const Regular: StoryFn<typeof Table> = (args) => {
   const res = {
     count: 3,
@@ -53,6 +59,7 @@ export const Regular: StoryFn<typeof Table> = (args) => {
       columns={[
         columnHelper.accessor("name", {
           header: "Name",
+          enableSorting: false,
           cell: (info) => <span>{info.getValue()}</span>,
         }),
         columnHelper.accessor("price", {
@@ -60,12 +67,14 @@ export const Regular: StoryFn<typeof Table> = (args) => {
           cell: (info) => <span>{info.getValue()}</span>,
         }),
         columnHelper.accessor("description", {
+          enableSorting: false,
           header: "Description",
           cell: (info) => (
             <span className="overflow-ellipsis">{info.getValue()}</span>
           ),
         }),
         columnHelper.display({
+          enableSorting: false,
           header: " ",
           cell: () => (
             <Button size="sm" variant="outline">

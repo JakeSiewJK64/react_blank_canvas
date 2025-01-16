@@ -1,3 +1,4 @@
+import Monicon from "@monicon/react";
 import {
   useReactTable,
   Table as TSTable,
@@ -5,7 +6,9 @@ import {
   getCoreRowModel,
   flexRender,
   getPaginationRowModel,
+  SortingState,
 } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
 import { Pagination } from "../Pagination";
 import { Select } from "../Select";
 import "../../index.css";
@@ -14,6 +17,12 @@ type PageInfo = {
   totalRows: number;
   pageIndex: number;
   pageSize: number;
+};
+
+type BaseAPIOptions = {
+  pageSize: number;
+  pageIndex: number;
+  sorting?: SortingState;
 };
 
 const getPageRecordInfo = ({ totalRows, pageIndex, pageSize }: PageInfo) => {
@@ -38,7 +47,9 @@ export const Table = ({
   total = 0,
   initialPageSize = 10,
   initialPageIndex = 0,
+  fetchData = () => {},
 }: {
+  fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
   initialPageSize?: number;
   initialPageIndex?: number;
   total?: number;
@@ -47,6 +58,7 @@ export const Table = ({
   columns: ColumnDef<any, any>[];
   serverSideDataSource?: boolean;
 }) => {
+  const [sorting, setSorting] = useState<SortingState>([]);
   const reactTable: TSTable<unknown> = useReactTable({
     data,
     columns,
@@ -58,8 +70,21 @@ export const Table = ({
         pageSize: initialPageSize,
       },
     },
+    manualSorting: serverSideDataSource,
+    onSortingChange: setSorting,
+    state: {
+      sorting,
+    },
   });
   const { pageIndex, pageSize } = reactTable.getState().pagination;
+
+  useEffect(() => {
+    fetchData({
+      pageIndex,
+      pageSize,
+      sorting,
+    });
+  }, [pageSize, pageIndex, fetchData, sorting]);
 
   return (
     <div>
@@ -111,10 +136,21 @@ export const Table = ({
                     key={header.id}
                     className="p-4 border-collapse border border-slate-400"
                   >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                    <div className="flex flex-row gap-2 items-center justify-between">
+                      <span>
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                      </span>
+                      {header.column.getCanSort() && (
+                        <button
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          <Monicon name="lucide:arrow-up-down" size={15} />
+                        </button>
+                      )}
+                    </div>
                   </th>
                 );
               })}
