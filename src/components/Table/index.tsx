@@ -126,7 +126,7 @@ export const Table = ({
           </div>
         </div>
       )}
-      <table className="table-auto p-4 border-collapse border border-slate-400">
+      <table className="p-4 border-collapse border border-slate-400">
         <thead className="bg-slate-200">
           {reactTable.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
