@@ -203,6 +203,11 @@ export const Table = ({
           Loading...
         </div>
       )}
+      {data.length === 0 && (
+        <div className="mt-4 flex flex-col items-center justify-center">
+          No Data
+        </div>
+      )}
     </div>
   );
 };
