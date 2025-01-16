@@ -126,16 +126,13 @@ export const Table = ({
           </div>
         </div>
       )}
-      <table className="p-4 border-collapse border border-slate-400">
+      <table>
         <thead className="bg-slate-200">
           {reactTable.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <th
-                    key={header.id}
-                    className="p-4 border-collapse border border-slate-400"
-                  >
+                  <th key={header.id} className="p-4 border border-slate-400">
                     <div className="flex flex-row gap-2 items-center justify-between">
                       <span>
                         {flexRender(
@@ -167,7 +164,7 @@ export const Table = ({
                 return (
                   <td
                     key={cell.id}
-                    className="p-4 border-collapse border border-slate-400"
+                    className="p-4 border-b-[1px] border-slate-400"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
