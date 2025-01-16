@@ -197,17 +197,15 @@ export const Table = ({
           ))}
         </tbody>
       </table>
-      {loading && (
-        <div className="mt-4 flex flex-col items-center justify-center">
-          <Loader size="sm" />
-          Loading...
-        </div>
-      )}
-      {data.length === 0 && (
-        <div className="mt-4 flex flex-col items-center justify-center">
-          No Data
-        </div>
-      )}
+      <div className="mt-4 flex flex-col items-center justify-center">
+        {loading && (
+          <>
+            <Loader size="sm" />
+            <span>Loading...</span>
+          </>
+        )}
+        {data.length === 0 && !loading && <span>No Data</span>}
+      </div>
     </div>
   );
 };
