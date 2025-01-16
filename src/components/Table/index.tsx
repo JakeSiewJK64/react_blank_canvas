@@ -131,6 +131,9 @@ export const Table = ({
           {reactTable.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
+                const canSort = header.column.getCanSort();
+                const isSorted = header.column.getIsSorted();
+
                 return (
                   <th key={header.id} className="p-4">
                     <div className="flex flex-row gap-2 items-center justify-between">
@@ -140,11 +143,23 @@ export const Table = ({
                           header.getContext()
                         )}
                       </span>
-                      {header.column.getCanSort() && (
+                      {canSort && (
                         <button
                           onClick={header.column.getToggleSortingHandler()}
                         >
-                          <Monicon name="lucide:arrow-up-down" size={15} />
+                          {isSorted ? (
+                            <div
+                              className={`transform transition-transform duration-300 ${
+                                header.column.getIsSorted() === "asc"
+                                  ? "rotate-0"
+                                  : "rotate-180"
+                              }`}
+                            >
+                              <Monicon name="lucide:arrow-up" size={15} />
+                            </div>
+                          ) : (
+                            <Monicon name="lucide:arrow-up-down" size={15} />
+                          )}
                         </button>
                       )}
                     </div>
