@@ -48,7 +48,9 @@ export const Table = ({
   initialPageSize = 10,
   initialPageIndex = 0,
   fetchData = () => {},
+  pageCount = 0,
 }: {
+  pageCount?: number;
   fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
   initialPageSize?: number;
   initialPageIndex?: number;
@@ -70,6 +72,8 @@ export const Table = ({
         pageSize: initialPageSize,
       },
     },
+    pageCount,
+    manualPagination: serverSideDataSource,
     manualSorting: serverSideDataSource,
     onSortingChange: setSorting,
     state: {
