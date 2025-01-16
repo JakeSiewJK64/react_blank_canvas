@@ -43,6 +43,10 @@ export const Pagination = ({
   value: number;
   offset?: number;
 }) => {
+  if (total === 0) {
+    return null;
+  }
+
   const getIntermediaryPages = () => {
     const createButtons = (start: number, count: number) => {
       return Array.from({ length: count }).map((_, index) => {
