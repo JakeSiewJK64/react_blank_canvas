@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { Pagination } from "../Pagination";
+import { Loader } from "../Loader";
 import { Select } from "../Select";
 import "../../index.css";
 
@@ -22,7 +23,7 @@ type PageInfo = {
 type BaseAPIOptions = {
   pageSize: number;
   pageIndex: number;
-  sorting?: SortingState;
+  sorting: SortingState;
 };
 
 const getPageRecordInfo = ({ totalRows, pageIndex, pageSize }: PageInfo) => {
@@ -49,7 +50,10 @@ export const Table = ({
   initialPageIndex = 0,
   fetchData = () => {},
   pageCount = 0,
+  loading = false,
 }: {
+  loading?: boolean;
+  false?: boolean;
   pageCount?: number;
   fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
   initialPageSize?: number;
@@ -101,7 +105,7 @@ export const Table = ({
               onChange={(pageSize) => {
                 reactTable.setPageSize(Number(pageSize));
               }}
-              className="w-[10rem]"
+              className="w-[10rem] my-2"
               options={["1", "5", "10", "15"]}
             />
           </div>
@@ -130,7 +134,7 @@ export const Table = ({
           </div>
         </div>
       )}
-      <table>
+      <table className="w-[100%] min-w-[50rem]">
         <thead className="bg-slate-200 rounded-md">
           {reactTable.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -193,6 +197,12 @@ export const Table = ({
           ))}
         </tbody>
       </table>
+      {loading && (
+        <div className="mt-4 flex flex-col items-center justify-center">
+          <Loader size="sm" />
+          Loading...
+        </div>
+      )}
     </div>
   );
 };
