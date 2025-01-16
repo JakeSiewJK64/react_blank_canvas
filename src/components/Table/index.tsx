@@ -29,7 +29,7 @@ const getPageRecordInfo = ({ totalRows, pageIndex, pageSize }: PageInfo) => {
   const firstRowNum = pageIndex * pageSize + 1;
   const currLastRowNum = (pageIndex + 1) * pageSize;
   const lastRowNum = currLastRowNum < totalRows ? currLastRowNum : totalRows;
-  return `Page ${firstRowNum} - ${lastRowNum} of ${totalRows}`;
+  return `Viewing ${firstRowNum} - ${lastRowNum} of ${totalRows}`;
 };
 
 export const getPageCount = ({
