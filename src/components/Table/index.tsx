@@ -133,18 +133,18 @@ export const Table = ({
               {headerGroup.headers.map((header) => {
                 const canSort = header.column.getCanSort();
                 const isSorted = header.column.getIsSorted();
+                const headerTitle = flexRender(
+                  header.column.columnDef.header,
+                  header.getContext()
+                );
 
                 return (
                   <th key={header.id} className="p-4">
                     <div className="flex flex-row gap-2 items-center justify-between">
-                      <span>
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                      </span>
+                      <span>{headerTitle}</span>
                       {canSort && (
                         <button
+                          title={`Sort by ${headerTitle}`}
                           onClick={header.column.getToggleSortingHandler()}
                         >
                           {isSorted ? (
