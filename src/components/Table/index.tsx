@@ -203,7 +203,8 @@ export const Table = ({
         </tbody>
       </table>
       <span>
-        Total records: <strong>{reactTable.getRowCount()}</strong>
+        Total records:{" "}
+        <strong>{reactTable.getRowModel().rows.length.toLocaleString()}</strong>
       </span>
       <div className="mt-4 flex flex-col items-center justify-center">
         {loading && (
