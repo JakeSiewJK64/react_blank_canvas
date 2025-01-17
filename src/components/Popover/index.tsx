@@ -71,7 +71,7 @@ export const Popover = ({
           } z-10 transition-all`
         )}
       >
-        <div className="rounded bg-white p-3 shadow-[10px_30px_150px_rgba(46,38,92,0.25)]">
+        <div className="rounded bg-white shadow-[10px_30px_150px_rgba(46,38,92,0.25)]">
           {content}
         </div>
       </div>

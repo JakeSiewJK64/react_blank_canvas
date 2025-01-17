@@ -16,6 +16,7 @@ import { Select } from "../Select";
 import { Popover } from "../Popover";
 import { Button } from "../Button";
 import { cn } from "../../utils";
+import { Input } from "../Input";
 import "../../index.css";
 
 export type BaseAPIOptions = {
@@ -26,16 +27,18 @@ export type BaseAPIOptions = {
 };
 
 const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
+  const [viewName, setViewName] = useState("");
+
   return (
-    <>
+    <div className="p-2">
       <div className="flex flex-column justify-between w-[15rem] items-center">
         <span>Show/Hide Column</span>
         <Button
+          variant="ghost"
+          size="sm"
           onClick={() => {
             table.resetColumnVisibility();
           }}
-          size="sm"
-          variant="text"
         >
           Reset
         </Button>
@@ -58,7 +61,105 @@ const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
           </div>
         );
       })}
-    </>
+      <div className="my-4">
+        <Input
+          label="View Name"
+          value={viewName}
+          type="text"
+          onChange={(e) => {
+            setViewName(e.target.value);
+          }}
+        />
+      </div>
+      {viewName && (
+        <Button
+          size="sm"
+          className="w-[100%]"
+          onClick={() => {
+            const visibleColumnArray = table
+              .getVisibleFlatColumns()
+              .map((col) => {
+                const columnName = col.id;
+
+                if (columnName !== " ") {
+                  return columnName;
+                }
+              });
+            const existingViews = JSON.parse(
+              localStorage.getItem("storedTableViews") ?? "[]"
+            );
+
+            localStorage.setItem(
+              "storedTableViews",
+              JSON.stringify([
+                ...existingViews,
+                {
+                  label: viewName,
+                  value: visibleColumnArray,
+                },
+              ])
+            );
+          }}
+        >
+          Save View
+        </Button>
+      )}
+    </div>
+  );
+};
+
+const StoredView = ({ table }: { table: TSTable<unknown> }) => {
+  const localStorageViews = JSON.parse(
+    localStorage.getItem("storedTableViews") ?? "[]"
+  );
+
+  if (!localStorageViews || localStorageViews.length === 0) {
+    return null;
+  }
+
+  const SelectView = () => {
+    return (
+      <div className="flex flex-col">
+        {localStorageViews.map((view: { label: string; value: string[] }) => {
+          return (
+            <Button
+              key={`${view.label}-${view.value}`}
+              className="hover:bg-slate-200 rounded-none"
+              size="sm"
+              variant="outline"
+              id={`${view.label}-${view.value}`}
+              onClick={() => {
+                // hide all columns
+                table.toggleAllColumnsVisible(false);
+
+                // iterate all stored columns to be visible
+                view.value.forEach((column) => {
+                  if (!column) {
+                    return;
+                  }
+
+                  const reactTableColumns = table.getColumn(column);
+
+                  if (reactTableColumns) {
+                    reactTableColumns.toggleVisibility(true);
+                  }
+                });
+              }}
+            >
+              <div className="text-left">{view.label}</div>
+            </Button>
+          );
+        })}
+      </div>
+    );
+  };
+
+  return (
+    <Popover position="bottom" trigger="click" content={<SelectView />}>
+      <Button size="sm" variant="outline">
+        Stored Views
+      </Button>
+    </Popover>
   );
 };
 
@@ -173,7 +274,7 @@ export const Table = ({
             <div
               role="button"
               title="Show/Hide columns"
-              className="rounded border p-1 mb-2 border-slate-300"
+              className="rounded border p-1 border-slate-300"
             >
               <Monicon name="lucide:columns-2" />
             </div>
@@ -183,12 +284,13 @@ export const Table = ({
               <div
                 role="button"
                 title="Show/Hide columns"
-                className="rounded border p-1 mb-2 border-slate-300"
+                className="rounded border p-1 border-slate-300"
               >
                 <Monicon name="lucide:filter" />
               </div>
             </Popover>
           )}
+          <StoredView table={reactTable} />
         </div>
         {pagination && (
           <div className="flex flex-row gap-1 items-center">

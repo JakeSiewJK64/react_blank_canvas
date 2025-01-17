@@ -18,12 +18,12 @@ export const Input = ({
         {label}
       </label>
       <input
+        {...props}
         className={cn(
           `shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
             errorMessage && "border-red-500"
           } ${props.className}`
         )}
-        {...props}
       />
       {errorMessage && (
         <p className="text-red-500 text-xs italic">{errorMessage}</p>

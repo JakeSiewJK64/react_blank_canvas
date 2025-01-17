@@ -95,7 +95,7 @@ export const Filter: StoryFn<typeof Table> = (args) => {
           className="my-2 ms-auto"
           type="submit"
           size="sm"
-          variant="outline"
+          variant="destructive"
         >
           Submit
         </Button>
@@ -125,7 +125,7 @@ export const Filter: StoryFn<typeof Table> = (args) => {
         }),
         columnHelper.display({
           enableSorting: false,
-          header: " ",
+          id: "action",
           cell: () => (
             <Button size="sm" variant="outline">
               Action
