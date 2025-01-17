@@ -64,7 +64,7 @@ export const Table = ({
   pageSizeOptions?: string[];
   /** The data to display in the table. */
   data: unknown[];
-  /** The total number of records available. This is useful for pagination calculations. */
+  /** The total number of records available. Only applicable to server side data source. */
   total?: number;
   /** An array of column definitions to configure table headers and cell rendering. */
   columns: ColumnDef<any, any>[];
