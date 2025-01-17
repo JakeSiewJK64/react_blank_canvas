@@ -15,12 +15,6 @@ import { Loader } from "../Loader";
 import { Select } from "../Select";
 import "../../index.css";
 
-type PageInfo = {
-  totalRows: number;
-  pageIndex: number;
-  pageSize: number;
-};
-
 export type BaseAPIOptions = {
   pageSize: number;
   pageIndex: number;
