@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { BaseAPIOptions, Table } from "../components/Table";
 import { Button } from "../components/Button";
+import { Input } from "../components/Input";
 
 const TableStory: Meta<typeof Table> = {
   title: "Core/Table",
@@ -36,6 +37,76 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
 
   return (
     <Table
+      serverSideDataSource={false}
+      pagination
+      initialPageSize={total}
+      initialPageIndex={0}
+      {...args}
+      data={res.data}
+      columns={[
+        columnHelper.accessor("fact", {
+          header: "Fact",
+          enableSorting: false,
+          cell: (info) => <span>{info.getValue()}</span>,
+        }),
+        columnHelper.accessor("length", {
+          header: "Length",
+          cell: (info) => <span>{info.getValue()}</span>,
+        }),
+        columnHelper.display({
+          enableSorting: false,
+          header: " ",
+          cell: () => (
+            <Button size="sm" variant="outline">
+              Action
+            </Button>
+          ),
+        }),
+      ]}
+    />
+  );
+};
+
+export const Filter: StoryFn<typeof Table> = (args) => {
+  const total = 10;
+  const res = {
+    data: Array.from({ length: total }).map((_, index) => ({
+      fact: `fact ${index}`,
+      length: 10 * index,
+    })),
+  };
+  const FilterComponent = ({
+    onChange = () => {},
+  }: {
+    onChange: (e: unknown) => void;
+  }) => {
+    return (
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onChange(e.target);
+        }}
+      >
+        <div className="flex flex-row gap-2 items-center w-[30rem]">
+          <Input label="First Name" placeholder="First Name" />
+          <Input label="Last Name" placeholder="Last Name" />
+        </div>
+        <Button
+          className="my-2 ms-auto"
+          type="submit"
+          size="sm"
+          variant="outline"
+        >
+          Submit
+        </Button>
+      </form>
+    );
+  };
+
+  return (
+    <Table
+      filterable
+      filter={<FilterComponent onChange={(e) => console.log(e)} />}
       serverSideDataSource={false}
       pagination
       initialPageSize={total}

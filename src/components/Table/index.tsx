@@ -9,7 +9,7 @@ import {
   SortingState,
   getSortedRowModel,
 } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Pagination } from "../Pagination";
 import { Loader } from "../Loader";
 import { Select } from "../Select";
@@ -70,6 +70,8 @@ export const Table = ({
   serverSideDataSource = true,
   loading = false,
   selection = false,
+  filterable = true,
+  filter = null,
   initialPageSize = 10,
   initialPageIndex = 0,
   pageCount = 0,
@@ -108,6 +110,10 @@ export const Table = ({
   serverSideDataSource?: boolean;
   /** is row selection enabled. */
   selection?: boolean;
+  /** show filter component. */
+  filterable?: boolean;
+  /** filter component. */
+  filter?: ReactElement | null;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
@@ -158,19 +164,32 @@ export const Table = ({
   return (
     <div>
       <div className="flex flex-row gap-2 items-center justify-between">
-        <Popover
-          position="right"
-          trigger="click"
-          content={<ColumnFilter table={reactTable} />}
-        >
-          <div
-            role="button"
-            title="Show/Hide columns"
-            className="rounded border p-1 mb-2 border-slate-300"
+        <div className="flex flex-row gap-2 items-center">
+          <Popover
+            position="right"
+            trigger="click"
+            content={<ColumnFilter table={reactTable} />}
           >
-            <Monicon name="lucide:columns-2" />
-          </div>
-        </Popover>
+            <div
+              role="button"
+              title="Show/Hide columns"
+              className="rounded border p-1 mb-2 border-slate-300"
+            >
+              <Monicon name="lucide:columns-2" />
+            </div>
+          </Popover>
+          {filterable && filter && (
+            <Popover position="right" trigger="click" content={<>{filter}</>}>
+              <div
+                role="button"
+                title="Show/Hide columns"
+                className="rounded border p-1 mb-2 border-slate-300"
+              >
+                <Monicon name="lucide:filter" />
+              </div>
+            </Popover>
+          )}
+        </div>
         {pagination && (
           <div className="flex flex-row gap-1 items-center">
             <div className="text-sm min-w-[5rem]">Page Size: </div>
