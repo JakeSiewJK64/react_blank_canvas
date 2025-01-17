@@ -168,7 +168,7 @@ export const Table = ({
     <div>
       <div className="flex flex-row gap-2 items-center justify-between">
         <Popover
-          position="bottom"
+          position="right"
           trigger="click"
           content={<ColumnFilter table={reactTable} />}
         >
