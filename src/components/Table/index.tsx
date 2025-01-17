@@ -7,6 +7,7 @@ import {
   flexRender,
   getPaginationRowModel,
   SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { Pagination } from "../Pagination";
@@ -71,6 +72,7 @@ export const Table = ({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     initialState: {
       pagination: {
         pageIndex: initialPageIndex,
@@ -184,10 +186,7 @@ export const Table = ({
           ))}
         </thead>
         <tbody>
-          {(pagination
-            ? reactTable.getPaginationRowModel()
-            : reactTable.getRowModel()
-          ).rows.map((rowGroup) => (
+          {reactTable.getRowModel().rows.map((rowGroup) => (
             <tr key={rowGroup.id} className="hover:bg-slate-100">
               {rowGroup.getVisibleCells().map((cell) => {
                 return (
