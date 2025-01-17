@@ -182,25 +182,17 @@ export const Table = ({
           </div>
         </Popover>
         {pagination && (
-          <div className="flex flex-row gap-2 items-center">
-            <div className="text-sm">Page Size: </div>
+          <div className="flex flex-row gap-1 items-center">
+            <div className="text-sm min-w-[5rem]">Page Size: </div>
             <Select
               value={String(reactTable.getState().pagination.pageSize)}
-              className="w-[5rem] my-2"
+              className="my-2"
               options={pageSizeOptions}
               onChange={(pageSize) => {
                 reactTable.setPageSize(Number(pageSize));
               }}
             />
             <div className="flex flex-row gap-4 items-center">
-              <span className="text-sm">
-                Showing {reactTable.getRowModel().rows.length.toLocaleString()}
-                {" - "}
-                {serverSideDataSource
-                  ? total
-                  : reactTable.getRowCount().toLocaleString()}{" "}
-                Rows
-              </span>
               <Pagination
                 onFirstPage={() => {
                   reactTable.firstPage();
@@ -295,10 +287,22 @@ export const Table = ({
         )}
         {data.length === 0 && !loading && <span>No Data</span>}
       </div>
-      <span>
-        Total records:{" "}
-        <strong>{reactTable.getRowModel().rows.length.toLocaleString()}</strong>
-      </span>
+      <div className="flex flex-row justify-between">
+        <span>
+          Total records:{" "}
+          <strong>
+            {reactTable.getRowModel().rows.length.toLocaleString()}
+          </strong>
+        </span>
+        <span className="text-sm">
+          Showing {reactTable.getRowModel().rows.length.toLocaleString()}
+          {" - "}
+          {serverSideDataSource
+            ? total
+            : reactTable.getRowCount().toLocaleString()}{" "}
+          Rows
+        </span>
+      </div>
     </div>
   );
 };

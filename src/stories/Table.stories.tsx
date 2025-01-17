@@ -44,6 +44,7 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
       pagination
       initialPageSize={total}
       initialPageIndex={0}
+      {...args}
       data={res.data}
       columns={[
         columnHelper.accessor("fact", {
