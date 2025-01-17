@@ -1,36 +1,25 @@
 import Monicon from "@monicon/react";
-import { ReactElement } from "react";
+import { ButtonHTMLAttributes } from "react";
 import { cn } from "../../utils";
 import "../../index.css";
 
 /** Standard button component */
 export const Button = ({
-  children = "Button",
   size = "md",
   color = "primary",
-  className,
-  disabled = false,
   loading = false,
-  onClick = () => {},
   variant = "primary",
+  ...props
 }: {
   /** button variant */
   variant?: "outline" | "primary";
-  /** children to be rendered in button */
-  children: ReactElement | string;
-  /** style class for button */
-  className?: string;
   /** Background color of the button */
   color?: "warn" | "success" | "danger" | "primary";
   /** How large should the button be? */
   size?: "sm" | "md" | "lg";
-  /** disable button */
-  disabled?: boolean;
-  /** Optional click handler */
-  onClick?: () => void;
   /** loader in button */
   loading?: boolean;
-}) => {
+} & ButtonHTMLAttributes<HTMLButtonElement>) => {
   const buttonSizing = {
     sm: "h-8 px-4 text-sm",
     md: "h-11 px-6",
@@ -53,15 +42,15 @@ export const Button = ({
     outline: buttonOutlineColor,
   }[variant];
   const disableStyling =
-    (disabled || loading) && "opacity-25 cursor-not-allowed";
+    (props.disabled || loading) && "opacity-25 cursor-not-allowed";
 
   return (
     <button
       className={cn(
-        `rounded flex flex-row gap-2 ${disableStyling} ${buttonColor} ${buttonSizing} ${className}`
+        `rounded flex flex-row gap-2 ${disableStyling} ${buttonColor} ${buttonSizing} ${props.className}`
       )}
-      disabled={disabled || loading}
-      onClick={onClick}
+      disabled={props.disabled || loading}
+      onClick={props.onClick}
     >
       {loading && (
         <div className="animate-spin my-auto">
@@ -71,7 +60,7 @@ export const Button = ({
           />
         </div>
       )}
-      <div className="my-auto">{children}</div>
+      <div className="my-auto">{props.children}</div>
     </button>
   );
 };
