@@ -53,7 +53,6 @@ export const Table = ({
   loading = false,
 }: {
   loading?: boolean;
-  false?: boolean;
   pageCount?: number;
   fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
   initialPageSize?: number;
