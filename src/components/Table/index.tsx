@@ -44,10 +44,12 @@ export const Table = ({
   initialPageSize = 10,
   initialPageIndex = 0,
   pageCount = 0,
+  total = 0,
   fetchData = () => {},
 }: {
   pageSizeOptions?: string[];
   data: unknown[];
+  total?: number;
   columns: ColumnDef<any, any>[];
   fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
   pageCount?: number;
@@ -107,7 +109,10 @@ export const Table = ({
             <span className="text-sm">
               Showing {reactTable.getRowModel().rows.length.toLocaleString()}
               {" - "}
-              {reactTable.getRowCount().toLocaleString()} Rows
+              {serverSideDataSource
+                ? total
+                : reactTable.getRowCount().toLocaleString()}{" "}
+              Rows
             </span>
             <Pagination
               onFirstPage={() => {

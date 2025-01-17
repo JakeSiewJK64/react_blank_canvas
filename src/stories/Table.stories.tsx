@@ -169,6 +169,7 @@ export const ServerSideTable: StoryFn<typeof Table> = () => {
 
   return (
     <Table
+      total={res.count}
       fetchData={fetchData}
       pagination
       loading={loading}
