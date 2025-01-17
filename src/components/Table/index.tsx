@@ -9,7 +9,7 @@ import {
   SortingState,
   getSortedRowModel,
 } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { HTMLProps, useEffect, useRef, useState } from "react";
 import { Pagination } from "../Pagination";
 import { Loader } from "../Loader";
 import { Select } from "../Select";
@@ -19,6 +19,30 @@ export type BaseAPIOptions = {
   pageSize: number;
   pageIndex: number;
   sorting: SortingState;
+  rowSelection: object;
+};
+
+export const IndeterminateCheckbox = ({
+  indeterminate,
+  className = "",
+  ...rest
+}: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) => {
+  const ref = useRef<HTMLInputElement>(null!);
+
+  useEffect(() => {
+    if (typeof indeterminate === "boolean") {
+      ref.current.indeterminate = !rest.checked && indeterminate;
+    }
+  }, [ref, indeterminate]);
+
+  return (
+    <input
+      type="checkbox"
+      ref={ref}
+      className={className + " cursor-pointer"}
+      {...rest}
+    />
+  );
 };
 
 export const Table = ({
@@ -28,10 +52,12 @@ export const Table = ({
   pagination = true,
   serverSideDataSource = true,
   loading = false,
+  selection = false,
   initialPageSize = 10,
   initialPageIndex = 0,
   pageCount = 0,
   total = 0,
+  onRowSelect = () => {},
   fetchData = () => {},
 }: {
   /** A list of options for rows per page in the pagination dropdown. */
@@ -43,7 +69,14 @@ export const Table = ({
   /** An array of column definitions to configure table headers and cell rendering. */
   columns: ColumnDef<any, any>[];
   /** A function to fetch data from the server. Called with options including `pageIndex`, `pageSize`, and `sorting`. */
-  fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
+  fetchData?: ({
+    pageIndex,
+    pageSize,
+    sorting,
+    rowSelection,
+  }: BaseAPIOptions) => void;
+  /** Callback for on rows selected */
+  onRowSelect?: (selectedRows: unknown) => void;
   /** The total number of pages available (used for server-side pagination). */
   pageCount?: number;
   /** The initial number of rows displayed per page. */
@@ -56,8 +89,12 @@ export const Table = ({
   pagination?: boolean;
   /** Whether to use server-side data fetching. If `true`, `fetchData` must be provided. */
   serverSideDataSource?: boolean;
+  /** is row selection enabled. */
+  selection?: boolean;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
+
   const reactTable: TSTable<unknown> = useReactTable({
     data,
     columns,
@@ -74,8 +111,11 @@ export const Table = ({
     manualPagination: serverSideDataSource,
     manualSorting: serverSideDataSource,
     onSortingChange: setSorting,
+    enableRowSelection: selection,
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
+      rowSelection,
     },
   });
   const { pageIndex, pageSize } = reactTable.getState().pagination;
@@ -85,8 +125,13 @@ export const Table = ({
       pageIndex,
       pageSize,
       sorting,
+      rowSelection,
     });
   }, [pageSize, pageIndex, fetchData, sorting]);
+
+  useEffect(() => {
+    onRowSelect(reactTable.getSelectedRowModel().flatRows);
+  }, [rowSelection, onRowSelect]);
 
   return (
     <div>

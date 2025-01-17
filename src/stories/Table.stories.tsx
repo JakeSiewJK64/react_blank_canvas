@@ -1,6 +1,10 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { createColumnHelper } from "@tanstack/react-table";
-import { BaseAPIOptions, Table } from "../components/Table";
+import {
+  BaseAPIOptions,
+  IndeterminateCheckbox,
+  Table,
+} from "../components/Table";
 import { Button } from "../components/Button";
 import { useCallback, useEffect, useState } from "react";
 
@@ -42,6 +46,70 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
       initialPageIndex={0}
       data={res.data}
       columns={[
+        columnHelper.accessor("fact", {
+          header: "Fact",
+          enableSorting: false,
+          cell: (info) => <span>{info.getValue()}</span>,
+        }),
+        columnHelper.accessor("length", {
+          header: "Length",
+          cell: (info) => <span>{info.getValue()}</span>,
+        }),
+        columnHelper.display({
+          enableSorting: false,
+          header: " ",
+          cell: () => (
+            <Button size="sm" variant="outline">
+              Action
+            </Button>
+          ),
+        }),
+      ]}
+    />
+  );
+};
+
+export const SelectTable: StoryFn<typeof Table> = (args) => {
+  const total = 10;
+  const res = {
+    data: Array.from({ length: total }).map((_, index) => ({
+      fact: `fact ${index}`,
+      length: 10 * index,
+    })),
+  };
+
+  return (
+    <Table
+      serverSideDataSource={false}
+      pagination
+      initialPageSize={total}
+      initialPageIndex={0}
+      onRowSelect={(e) => console.log(e)}
+      data={res.data}
+      selection
+      columns={[
+        columnHelper.display({
+          id: "select",
+          header: ({ table }) => (
+            <IndeterminateCheckbox
+              {...{
+                checked: table.getIsAllRowsSelected(),
+                indeterminate: table.getIsSomeRowsSelected(),
+                onChange: table.getToggleAllRowsSelectedHandler(),
+              }}
+            />
+          ),
+          cell: ({ row }) => (
+            <IndeterminateCheckbox
+              {...{
+                checked: row.getIsSelected(),
+                disabled: !row.getCanSelect(),
+                indeterminate: row.getIsSomeSelected(),
+                onChange: row.getToggleSelectedHandler(),
+              }}
+            />
+          ),
+        }),
         columnHelper.accessor("fact", {
           header: "Fact",
           enableSorting: false,
