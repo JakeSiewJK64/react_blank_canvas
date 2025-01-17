@@ -133,11 +133,14 @@ export const ServerSideTable: StoryFn<typeof Table> = () => {
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [sort, setSort] = useState("length");
   const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      const obj = new URLSearchParams();
+      obj.append("page", page.toString());
+      obj.append("limit", pageSize.toString());
+
       const response = await fetch(
         `https://catfact.ninja/facts?limit=${pageSize}&page=${page}`
       );
@@ -153,7 +156,7 @@ export const ServerSideTable: StoryFn<typeof Table> = () => {
     };
 
     fetchData();
-  }, [page, pageSize, sort]);
+  }, [page, pageSize]);
 
   const res = {
     count: data?.total ?? 0,
@@ -163,6 +166,8 @@ export const ServerSideTable: StoryFn<typeof Table> = () => {
   const fetchData = useCallback((args: BaseAPIOptions) => {
     setPageSize(args.pageSize);
     setPage(args.pageIndex + 1);
+
+    console.log(args.sorting);
   }, []);
 
   return (
