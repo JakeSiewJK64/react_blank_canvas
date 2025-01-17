@@ -3,6 +3,12 @@ export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      colors: {
+        destructive: "#ff0000",
+        kt: {
+          primary: "#09ABC2",
+        },
+      },
       keyframes: {
         slideIn: {
           "0%": { transform: "translateX(-100%)", opacity: "0" },
