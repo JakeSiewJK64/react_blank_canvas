@@ -6,9 +6,8 @@ import "../../index.css";
 const variants = {
   variant: {
     default:
-      "bg-[#09ABC2] text-white hover:bg-primary/90 focus:ring-[#09ABC2] focus:ring-2 focus:ring-offset-2",
-    destructive:
-      "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+      "bg-kt-primary text-white hover:bg-kt-primary/90 focus:ring-2 focus:ring-kt-primary focus:ring-offset-2",
+    destructive: "bg-destructive text-white hover:bg-destructive/90",
     outline:
       "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
     secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -47,8 +46,9 @@ export const Button = ({
   return (
     <button
       {...props}
+      disabled={loading || props.disabled}
       className={cn(
-        `inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 ${variants.size[size]} ${variants.variant[variant]}`
+        `inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 ${variants.size[size]} ${variants.variant[variant]} ${props.className}`
       )}
     >
       {loading && (

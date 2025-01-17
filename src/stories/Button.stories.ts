@@ -23,8 +23,8 @@ const ButtonStory: Meta<typeof Button> = {
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Large = {
   args: {
-    size: "lg",
     children: "Button",
+    size: "lg",
   },
 };
 
@@ -38,6 +38,14 @@ export const Regular = {
 export const Small = {
   args: {
     size: "sm",
+    children: "Button",
+  },
+};
+
+export const Loading = {
+  args: {
+    size: "sm",
+    loading: true,
     children: "Button",
   },
 };
