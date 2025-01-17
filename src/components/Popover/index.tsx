@@ -6,7 +6,7 @@ import { cn } from "../../utils";
  * reference:
  * @see https://dev.to/said7388/how-to-create-a-popover-using-tailwind-css-13kj
  */
-export const ReactPopover = ({
+export const Popover = ({
   children,
   content,
   trigger = "click",

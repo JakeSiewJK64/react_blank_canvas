@@ -13,7 +13,7 @@ import { HTMLProps, useEffect, useRef, useState } from "react";
 import { Pagination } from "../Pagination";
 import { Loader } from "../Loader";
 import { Select } from "../Select";
-import { ReactPopover } from "../Popover";
+import { Popover } from "../Popover";
 import "../../index.css";
 
 export type BaseAPIOptions = {
@@ -167,7 +167,7 @@ export const Table = ({
   return (
     <div>
       <div className="flex flex-row gap-2 items-center justify-between">
-        <ReactPopover
+        <Popover
           position="bottom"
           trigger="click"
           content={<ColumnFilter table={reactTable} />}
@@ -179,7 +179,7 @@ export const Table = ({
           >
             <Monicon name="lucide:filter" />
           </div>
-        </ReactPopover>
+        </Popover>
         {pagination && (
           <div className="flex flex-row gap-2 items-center">
             <div className="text-sm">Page Size: </div>
