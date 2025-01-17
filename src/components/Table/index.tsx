@@ -27,13 +27,6 @@ export type BaseAPIOptions = {
   sorting: SortingState;
 };
 
-export const getPageCount = ({
-  totalRows,
-  pageSize,
-}: Omit<PageInfo, "pageIndex">) => {
-  return Math.ceil(totalRows / pageSize);
-};
-
 export const Table = ({
   data = [],
   columns = [],
@@ -47,16 +40,27 @@ export const Table = ({
   total = 0,
   fetchData = () => {},
 }: {
+  /** A list of options for rows per page in the pagination dropdown. */
   pageSizeOptions?: string[];
+  /** The data to display in the table. */
   data: unknown[];
+  /** The total number of records available. This is useful for pagination calculations. */
   total?: number;
+  /** An array of column definitions to configure table headers and cell rendering. */
   columns: ColumnDef<any, any>[];
+  /** A function to fetch data from the server. Called with options including `pageIndex`, `pageSize`, and `sorting`. */
   fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
+  /** The total number of pages available (used for server-side pagination). */
   pageCount?: number;
+  /** The initial number of rows displayed per page. */
   initialPageSize?: number;
+  /** The initial page index (0-based) when the table loads. */
   initialPageIndex?: number;
+  /** Whether the table is in a loading state, displaying a loading indicator. */
   loading?: boolean;
+  /** Whether pagination is enabled for the table. */
   pagination?: boolean;
+  /** Whether to use server-side data fetching. If `true`, `fetchData` must be provided. */
   serverSideDataSource?: boolean;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
