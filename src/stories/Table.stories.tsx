@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from "@storybook/react";
+import { useCallback, useEffect, useState } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { BaseAPIOptions, Table } from "../components/Table";
 import { Button } from "../components/Button";
-import { useCallback, useEffect, useState } from "react";
 
 const TableStory: Meta<typeof Table> = {
   title: "Core/Table",
