@@ -26,10 +26,8 @@ const columnHelper = createColumnHelper<{
  *
  * */
 export const ClientSideTable: StoryFn<typeof Table> = (args) => {
-  const pageSize = 10;
-  const total = args.total ?? 0;
+  const total = 10;
   const res = {
-    count: total,
     data: Array.from({ length: total }).map((_, index) => ({
       fact: `fact ${index}`,
       length: 10 * index,
@@ -40,8 +38,7 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
     <Table
       serverSideDataSource={false}
       pagination
-      total={res.count}
-      initialPageSize={pageSize}
+      initialPageSize={total}
       initialPageIndex={0}
       data={res.data}
       columns={[
@@ -175,7 +172,6 @@ export const ServerSideTable: StoryFn<typeof Table> = () => {
       fetchData={fetchData}
       pagination
       loading={loading}
-      total={res.count}
       pageCount={Math.ceil(res.count / pageSize)}
       initialPageSize={pageSize}
       initialPageIndex={page - 1}

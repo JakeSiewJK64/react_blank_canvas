@@ -27,13 +27,6 @@ export type BaseAPIOptions = {
   sorting: SortingState;
 };
 
-const getPageRecordInfo = ({ totalRows, pageIndex, pageSize }: PageInfo) => {
-  const firstRowNum = pageIndex * pageSize + 1;
-  const currLastRowNum = (pageIndex + 1) * pageSize;
-  const lastRowNum = currLastRowNum < totalRows ? currLastRowNum : totalRows;
-  return `Viewing ${firstRowNum} - ${lastRowNum} of ${totalRows}`;
-};
-
 export const getPageCount = ({
   totalRows,
   pageSize,
@@ -48,7 +41,6 @@ export const Table = ({
   pagination = true,
   serverSideDataSource = true,
   loading = false,
-  total = 0,
   initialPageSize = 10,
   initialPageIndex = 0,
   pageCount = 0,
@@ -61,7 +53,6 @@ export const Table = ({
   pageCount?: number;
   initialPageSize?: number;
   initialPageIndex?: number;
-  total?: number;
   loading?: boolean;
   pagination?: boolean;
   serverSideDataSource?: boolean;
@@ -114,13 +105,9 @@ export const Table = ({
           </div>
           <div className="flex flex-row gap-4 items-center">
             <span className="text-sm">
-              {getPageRecordInfo({
-                pageIndex,
-                pageSize,
-                totalRows: serverSideDataSource
-                  ? total
-                  : reactTable.getRowModel().rows.length,
-              })}
+              Showing {reactTable.getRowModel().rows.length.toLocaleString()}
+              {" - "}
+              {reactTable.getRowCount().toLocaleString()} Rows
             </span>
             <Pagination
               onFirstPage={() => {

@@ -30,7 +30,7 @@ export const Input = ({
   /** Input type */
   type?: HTMLInputTypeAttribute;
   /** onchange callback */
-  onChange?: () => void;
+  onChange?: (e: unknown) => void;
 }) => {
   return (
     <>
