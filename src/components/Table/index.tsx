@@ -13,6 +13,7 @@ import { HTMLProps, useEffect, useRef, useState } from "react";
 import { Pagination } from "../Pagination";
 import { Loader } from "../Loader";
 import { Select } from "../Select";
+import { ReactPopover } from "../Popover";
 import "../../index.css";
 
 export type BaseAPIOptions = {
@@ -42,6 +43,31 @@ export const IndeterminateCheckbox = ({
       className={className + " cursor-pointer"}
       {...rest}
     />
+  );
+};
+
+const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
+  return (
+    <>
+      {table.getAllLeafColumns().map((column) => {
+        if (column.id === " ") {
+          return;
+        }
+
+        return (
+          <div key={column.id} className="px-1">
+            <label>
+              <input
+                checked={column.getIsVisible()}
+                onChange={column.getToggleVisibilityHandler()}
+                type="checkbox"
+              />{" "}
+              {column.id}
+            </label>
+          </div>
+        );
+      })}
+    </>
   );
 };
 
@@ -94,6 +120,9 @@ export const Table = ({
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
+  const [columnVisibility, setColumnVisibility] = useState<
+    Record<string, boolean>
+  >({});
 
   const reactTable: TSTable<unknown> = useReactTable({
     data,
@@ -113,9 +142,11 @@ export const Table = ({
     onSortingChange: setSorting,
     enableRowSelection: selection,
     onRowSelectionChange: setRowSelection,
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
       rowSelection,
+      columnVisibility,
     },
   });
   const { pageIndex, pageSize } = reactTable.getState().pagination;
@@ -135,48 +166,61 @@ export const Table = ({
 
   return (
     <div>
-      {pagination && (
-        <div className="flex flex-row gap-2 items-center justify-between">
+      <div className="flex flex-row gap-2 items-center justify-between">
+        <ReactPopover
+          position="bottom"
+          trigger="click"
+          content={<ColumnFilter table={reactTable} />}
+        >
+          <div
+            role="button"
+            title="Show/Hide columns"
+            className="rounded border p-1 mb-2 border-slate-300"
+          >
+            <Monicon name="lucide:filter" />
+          </div>
+        </ReactPopover>
+        {pagination && (
           <div className="flex flex-row gap-2 items-center">
-            <div className="w-[8rem] text-sm">Page Size: </div>
+            <div className="text-sm">Page Size: </div>
             <Select
               value={String(reactTable.getState().pagination.pageSize)}
-              className="w-[10rem] my-2"
+              className="w-[5rem] my-2"
               options={pageSizeOptions}
               onChange={(pageSize) => {
                 reactTable.setPageSize(Number(pageSize));
               }}
             />
+            <div className="flex flex-row gap-4 items-center">
+              <span className="text-sm">
+                Showing {reactTable.getRowModel().rows.length.toLocaleString()}
+                {" - "}
+                {serverSideDataSource
+                  ? total
+                  : reactTable.getRowCount().toLocaleString()}{" "}
+                Rows
+              </span>
+              <Pagination
+                onFirstPage={() => {
+                  reactTable.firstPage();
+                }}
+                onLastPage={() => {
+                  reactTable.lastPage();
+                }}
+                pageCount={reactTable.getPageCount()}
+                onNextPage={() => reactTable.nextPage()}
+                onPreviousPage={() => reactTable.previousPage()}
+                disableNext={!reactTable.getCanNextPage()}
+                disablePrevious={!reactTable.getCanPreviousPage()}
+                value={reactTable.getState().pagination.pageIndex + 1}
+                onChange={(e) => {
+                  reactTable.setPageIndex(Number(e) - 1);
+                }}
+              />
+            </div>
           </div>
-          <div className="flex flex-row gap-4 items-center">
-            <span className="text-sm">
-              Showing {reactTable.getRowModel().rows.length.toLocaleString()}
-              {" - "}
-              {serverSideDataSource
-                ? total
-                : reactTable.getRowCount().toLocaleString()}{" "}
-              Rows
-            </span>
-            <Pagination
-              onFirstPage={() => {
-                reactTable.firstPage();
-              }}
-              onLastPage={() => {
-                reactTable.lastPage();
-              }}
-              pageCount={reactTable.getPageCount()}
-              onNextPage={() => reactTable.nextPage()}
-              onPreviousPage={() => reactTable.previousPage()}
-              disableNext={!reactTable.getCanNextPage()}
-              disablePrevious={!reactTable.getCanPreviousPage()}
-              value={reactTable.getState().pagination.pageIndex + 1}
-              onChange={(e) => {
-                reactTable.setPageIndex(Number(e) - 1);
-              }}
-            />
-          </div>
-        </div>
-      )}
+        )}
+      </div>
       <table className="w-[100%] min-w-[50rem]">
         <thead className="bg-slate-200 rounded-md">
           {reactTable.getHeaderGroups().map((headerGroup) => (
