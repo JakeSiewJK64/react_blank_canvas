@@ -178,7 +178,7 @@ export const Table = ({
             title="Show/Hide columns"
             className="rounded border p-1 mb-2 border-slate-300"
           >
-            <Monicon name="lucide:filter" />
+            <Monicon name="lucide:columns-2" />
           </div>
         </Popover>
         {pagination && (
