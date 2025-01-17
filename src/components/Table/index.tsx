@@ -9,7 +9,7 @@ import {
   SortingState,
   getSortedRowModel,
 } from "@tanstack/react-table";
-import { HTMLProps, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Pagination } from "../Pagination";
 import { Loader } from "../Loader";
 import { Select } from "../Select";
