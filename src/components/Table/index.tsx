@@ -43,26 +43,26 @@ export const getPageCount = ({
 export const Table = ({
   data = [],
   columns = [],
+  pageSizeOptions = ["5", "10", "20", "50", "100"],
   pagination = true,
   serverSideDataSource = true,
+  loading = false,
   total = 0,
   initialPageSize = 10,
   initialPageIndex = 0,
-  fetchData = () => {},
   pageCount = 0,
-  loading = false,
-  pageSizeOptions = ["5", "10", "20", "50", "100"],
+  fetchData = () => {},
 }: {
   pageSizeOptions?: string[];
-  loading?: boolean;
-  pageCount?: number;
+  data: unknown[];
+  columns: ColumnDef<any, any>[];
   fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
+  pageCount?: number;
   initialPageSize?: number;
   initialPageIndex?: number;
   total?: number;
+  loading?: boolean;
   pagination?: boolean;
-  data: unknown[];
-  columns: ColumnDef<any, any>[];
   serverSideDataSource?: boolean;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
