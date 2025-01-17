@@ -14,6 +14,7 @@ import { Pagination } from "../Pagination";
 import { Loader } from "../Loader";
 import { Select } from "../Select";
 import { Popover } from "../Popover";
+import { Button } from "../Button";
 import { cn } from "../../utils";
 import "../../index.css";
 
@@ -50,6 +51,18 @@ export const IndeterminateCheckbox = ({
 const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
   return (
     <>
+      <div className="flex flex-column justify-between w-[15rem] items-center">
+        <span>Show/Hide Column</span>
+        <Button
+          onClick={() => {
+            table.resetColumnVisibility();
+          }}
+          size="sm"
+          variant="outline"
+        >
+          Reset
+        </Button>
+      </div>
       {table.getAllLeafColumns().map((column) => {
         if (column.id === " ") {
           return;
