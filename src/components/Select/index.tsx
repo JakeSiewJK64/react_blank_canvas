@@ -1,32 +1,16 @@
+import { SelectHTMLAttributes } from "react";
 import "../../index.css";
 
 export const Select = ({
   options,
-  className,
-  defaultValue,
-  onChange,
-  value,
+  ...props
 }: {
-  value: string;
   options: { value: string; label: string }[] | string[];
-  className?: string;
-  defaultValue?: string;
-  onChange?: (e: number | string) => void;
-}) => {
+} & SelectHTMLAttributes<HTMLSelectElement>) => {
   return (
     <select
-      value={value}
-      defaultValue={defaultValue}
-      onChange={(e) => {
-        const value = e.target.value;
-
-        if (!onChange || !value) {
-          return;
-        }
-
-        onChange(value);
-      }}
-      className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${className}`}
+      {...props}
+      className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none block w-full px-2 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 ${props.className}`}
     >
       {options.map((option) => {
         if (typeof option === "string") {

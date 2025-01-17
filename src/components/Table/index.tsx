@@ -35,7 +35,7 @@ const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
             table.resetColumnVisibility();
           }}
           size="sm"
-          variant="outline"
+          variant="text"
         >
           Reset
         </Button>
