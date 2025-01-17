@@ -10,6 +10,7 @@ export const Input = ({
   errorMessage,
   className,
   checked = false,
+  disabled = false,
   type = "text",
   onChange = () => {},
 }: {
@@ -17,6 +18,8 @@ export const Input = ({
   errorMessage?: string;
   /** Checked or not (applicable for checkbox input type) */
   checked?: boolean;
+  /** disabled or not */
+  disabled?: boolean;
   /** Value of input */
   value?: string | number;
   /** Input label */
@@ -38,6 +41,7 @@ export const Input = ({
         {label}
       </label>
       <input
+        disabled={disabled}
         onChange={onChange}
         className={cn(
           `shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
