@@ -14,6 +14,7 @@ import { Pagination } from "../Pagination";
 import { Loader } from "../Loader";
 import { Select } from "../Select";
 import { Popover } from "../Popover";
+import { cn } from "../../utils";
 import "../../index.css";
 
 export type BaseAPIOptions = {
@@ -271,7 +272,11 @@ export const Table = ({
                 return (
                   <td
                     key={cell.id}
-                    className="p-4 border-b-[1px] border-slate-400"
+                    className={cn(
+                      `p-4 border-b-[1px] border-slate-400 ${
+                        cell.row.getIsSelected() && "bg-slate-100"
+                      }`
+                    )}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
