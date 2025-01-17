@@ -70,7 +70,7 @@ export const Table = ({
         pageSize: initialPageSize,
       },
     },
-    ...(serverSideDataSource && { pageCount, autoResetPageIndex: true }),
+    ...(serverSideDataSource && { pageCount }),
     manualPagination: serverSideDataSource,
     manualSorting: serverSideDataSource,
     onSortingChange: setSorting,
