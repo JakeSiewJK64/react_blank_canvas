@@ -1,10 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { createColumnHelper } from "@tanstack/react-table";
-import {
-  BaseAPIOptions,
-  IndeterminateCheckbox,
-  Table,
-} from "../components/Table";
+import { BaseAPIOptions, Table } from "../components/Table";
 import { Button } from "../components/Button";
 import { useCallback, useEffect, useState } from "react";
 
@@ -92,22 +88,18 @@ export const SelectTable: StoryFn<typeof Table> = (args) => {
         columnHelper.display({
           id: "select",
           header: ({ table }) => (
-            <IndeterminateCheckbox
-              {...{
-                checked: table.getIsAllRowsSelected(),
-                indeterminate: table.getIsSomeRowsSelected(),
-                onChange: table.getToggleAllRowsSelectedHandler(),
-              }}
+            <input
+              type="checkbox"
+              checked={table.getIsAllRowsSelected()}
+              onChange={table.getToggleAllRowsSelectedHandler()}
             />
           ),
           cell: ({ row }) => (
-            <IndeterminateCheckbox
-              {...{
-                checked: row.getIsSelected(),
-                disabled: !row.getCanSelect(),
-                indeterminate: row.getIsSomeSelected(),
-                onChange: row.getToggleSelectedHandler(),
-              }}
+            <input
+              type="checkbox"
+              checked={row.getIsSelected()}
+              disabled={!row.getCanSelect()}
+              onChange={row.getToggleSelectedHandler()}
             />
           ),
         }),
