@@ -33,17 +33,29 @@ const PaginationButton = ({
 };
 
 export const Pagination = ({
-  total,
   value,
   onChange,
+  pageCount,
   offset = 7,
+  disableNext = false,
+  disablePrevious = false,
+  onFirstPage = () => {},
+  onLastPage = () => {},
+  onNextPage = () => {},
+  onPreviousPage = () => {},
 }: {
   onChange: (e: number) => void;
-  total: number;
+  onNextPage?: () => void;
+  onPreviousPage?: () => void;
+  onFirstPage?: () => void;
+  onLastPage?: () => void;
   value: number;
+  pageCount: number;
   offset?: number;
+  disableNext?: boolean;
+  disablePrevious?: boolean;
 }) => {
-  if (total === 0) {
+  if (pageCount === 0) {
     return null;
   }
 
@@ -67,13 +79,14 @@ export const Pagination = ({
     };
 
     // case 1: Total pages are less than the offset
-    if (total < offset) {
-      return createButtons(1, total - 1);
+    if (pageCount < offset) {
+      return createButtons(1, pageCount);
     }
 
     // case 2: Current page is near the end
-    if (value + offset > total) {
-      const start = total - offset;
+    if (value + offset > pageCount) {
+      const start = pageCount - offset + 1;
+
       return (
         <>
           <div className="pt-1">
@@ -88,7 +101,7 @@ export const Pagination = ({
     if (value - offset < 1) {
       return (
         <>
-          {createButtons(2, offset - 1)}
+          {createButtons(1, offset)}
           <div className="pt-1">
             <Monicon name="lucide:ellipsis" />
           </div>
@@ -97,7 +110,7 @@ export const Pagination = ({
     }
 
     // case 4: Current page is somewhere in the middle
-    if (value > offset && value <= total - offset) {
+    if (value > offset && value <= pageCount - offset) {
       const start = value - Math.floor(offset / 2);
       return (
         <>
@@ -118,46 +131,44 @@ export const Pagination = ({
   return (
     <div className="flex flex-row my-2 gap-1">
       <PaginationButton
+        title="First Page"
+        disabled={disablePrevious}
+        onClick={() => onFirstPage()}
+      >
+        <div className="ps-[3px]">
+          <Monicon name="lucide:chevrons-left" size={15} />
+        </div>
+      </PaginationButton>
+      <PaginationButton
         title="Previous Page"
-        disabled={value === 1}
+        disabled={disablePrevious}
         onClick={() => {
-          onChange(value - 1);
+          onPreviousPage();
         }}
       >
         <div className="ps-[3px]">
           <Monicon name="lucide:arrow-left" size={15} />
         </div>
       </PaginationButton>
-      <PaginationButton
-        title="1"
-        active={value === 1}
-        disabled={value === 1}
-        onClick={() => {
-          onChange(1);
-        }}
-      >
-        <div className="text-sm pb-2">1</div>
-      </PaginationButton>
       {getIntermediaryPages()}
       <PaginationButton
-        disabled={value === total}
-        title={String(total)}
-        active={value === total}
-        onClick={() => {
-          onChange(total);
-        }}
-      >
-        <div className="text-sm pb-2">{total}</div>
-      </PaginationButton>
-      <PaginationButton
         title="Next Page"
-        disabled={value === total}
+        disabled={disableNext}
         onClick={() => {
-          onChange(value + 1);
+          onNextPage();
         }}
       >
         <div className="ps-[3px]">
           <Monicon name="lucide:arrow-right" size={15} />
+        </div>
+      </PaginationButton>
+      <PaginationButton
+        title="Last Page"
+        disabled={disableNext}
+        onClick={() => onLastPage()}
+      >
+        <div className="ps-[3px]">
+          <Monicon name="lucide:chevrons-right" size={15} />
         </div>
       </PaginationButton>
     </div>

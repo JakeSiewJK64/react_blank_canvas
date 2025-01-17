@@ -20,7 +20,7 @@ type PageInfo = {
   pageSize: number;
 };
 
-type BaseAPIOptions = {
+export type BaseAPIOptions = {
   pageSize: number;
   pageIndex: number;
   sorting: SortingState;
@@ -51,7 +51,9 @@ export const Table = ({
   fetchData = () => {},
   pageCount = 0,
   loading = false,
+  pageSizeOptions = ["5", "10", "20", "50", "100"],
 }: {
+  pageSizeOptions?: string[];
   loading?: boolean;
   pageCount?: number;
   fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
@@ -75,7 +77,7 @@ export const Table = ({
         pageSize: initialPageSize,
       },
     },
-    pageCount,
+    ...(serverSideDataSource && { pageCount }),
     manualPagination: serverSideDataSource,
     manualSorting: serverSideDataSource,
     onSortingChange: setSorting,
@@ -101,11 +103,11 @@ export const Table = ({
             <div className="w-[8rem] text-sm">Page Size: </div>
             <Select
               value={String(reactTable.getState().pagination.pageSize)}
+              className="w-[10rem] my-2"
+              options={pageSizeOptions}
               onChange={(pageSize) => {
                 reactTable.setPageSize(Number(pageSize));
               }}
-              className="w-[10rem] my-2"
-              options={["1", "5", "10", "15"]}
             />
           </div>
           <div className="flex flex-row gap-4 items-center">
@@ -119,16 +121,21 @@ export const Table = ({
               })}
             </span>
             <Pagination
+              onFirstPage={() => {
+                reactTable.firstPage();
+              }}
+              onLastPage={() => {
+                reactTable.lastPage();
+              }}
+              pageCount={reactTable.getPageCount()}
+              onNextPage={() => reactTable.nextPage()}
+              onPreviousPage={() => reactTable.previousPage()}
+              disableNext={!reactTable.getCanNextPage()}
+              disablePrevious={!reactTable.getCanPreviousPage()}
               value={reactTable.getState().pagination.pageIndex + 1}
               onChange={(e) => {
                 reactTable.setPageIndex(Number(e) - 1);
               }}
-              total={getPageCount({
-                pageSize,
-                totalRows: serverSideDataSource
-                  ? total
-                  : reactTable.getRowModel().rows.length,
-              })}
             />
           </div>
         </div>
@@ -196,6 +203,9 @@ export const Table = ({
           ))}
         </tbody>
       </table>
+      <span>
+        Total records: <strong>{reactTable.getRowCount()}</strong>
+      </span>
       <div className="mt-4 flex flex-col items-center justify-center">
         {loading && (
           <>
