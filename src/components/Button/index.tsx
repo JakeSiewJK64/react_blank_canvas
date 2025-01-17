@@ -3,69 +3,57 @@ import { ButtonHTMLAttributes } from "react";
 import { cn } from "../../utils";
 import "../../index.css";
 
+const variants = {
+  variant: {
+    default:
+      "bg-[#09ABC2] text-white hover:bg-primary/90 focus:ring-[#09ABC2] focus:ring-2 focus:ring-offset-2",
+    destructive:
+      "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+    outline:
+      "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+    ghost:
+      "hover:bg-accent hover:text-accent-foreground active:ring focus:ring",
+    link: "text-primary underline-offset-4 hover:underline",
+  },
+  size: {
+    default: "h-10 px-4 py-2",
+    sm: "h-9 rounded-md px-3",
+    lg: "h-11 rounded-md px-8",
+    icon: "h-10 w-10",
+  },
+};
+
 /** Standard button component */
 export const Button = ({
-  size = "md",
-  color = "primary",
+  size = "default",
+  variant = "default",
   loading = false,
-  variant = "primary",
   ...props
 }: {
   /** button variant */
-  variant?: "outline" | "primary" | "text";
-  /** Background color of the button */
-  color?: "warn" | "success" | "danger" | "primary";
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
   /** How large should the button be? */
-  size?: "sm" | "md" | "lg";
+  size?: "default" | "sm" | "lg" | "icon";
   /** loader in button */
   loading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const buttonSizing = {
-    xs: "h-4 px-4 text-sm",
-    sm: "h-8 px-4 text-sm",
-    md: "h-11 px-6",
-    lg: "h-12 px-6 text-lg",
-  }[size];
-  const buttonPrimaryColor = {
-    primary: "bg-[#3498db] text-white",
-    danger: "bg-red-600 text-white",
-    success: "bg-green-600 text-white",
-    warn: "bg-amber-400 text-black",
-  }[color];
-  const buttonOutlineColor = {
-    primary: "bg-transparent text-[#3498db] border border-[#3498db]",
-    danger: "bg-transparent text-red-600 border border-red-500",
-    success: "bg-transparent text-green-600 border border-green-500",
-    warn: "bg-transparent text-amber-600 border border-amber-500",
-  }[color];
-  const buttonTextColor = {
-    primary: "bg-transparent text-[#3498db] focus:ring-2 focus:ring-blue-500",
-    danger: "bg-transparent text-red-600 focus:ring-2 focus:ring-blue-500",
-    success: "bg-transparent text-green-600 focus:ring-2 focus:ring-blue-500",
-    warn: "bg-transparent text-amber-600 focus:ring-2 focus:ring-blue-500",
-  }[color];
-  const buttonColor = {
-    primary: buttonPrimaryColor,
-    outline: buttonOutlineColor,
-    text: buttonTextColor,
-  }[variant];
-  const disableStyling =
-    (props.disabled || loading) && "opacity-25 cursor-not-allowed";
-
   return (
     <button
       {...props}
-      disabled={props.disabled || loading}
       className={cn(
-        `rounded flex flex-row gap-2 ${disableStyling} ${buttonColor} ${buttonSizing} ${props.className}`
+        `inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 ${variants.size[size]} ${variants.variant[variant]}`
       )}
     >
       {loading && (
         <div className="animate-spin my-auto">
-          <Monicon
-            name="lucide:loader-circle"
-            size={{ xs: 6, sm: 12, md: 24, lg: 24 }[size]}
-          />
+          <Monicon name="lucide:loader-circle" />
         </div>
       )}
       <div className="my-auto">{props.children}</div>
