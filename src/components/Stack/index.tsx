@@ -17,7 +17,7 @@ export const Stack = ({
   return (
     <div
       className={cn(
-        `flex flex-col gap-${gap} justify-${justify} align-${align} ${className}`
+        `flex flex-col gap-${gap} justify-${justify} items-${align} ${className}`
       )}
     >
       {children}

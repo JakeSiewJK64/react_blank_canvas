@@ -17,7 +17,7 @@ export const Group = ({
   return (
     <div
       className={cn(
-        `flex flex-row gap-${gap} justify-${justify} align-${align} ${className}`
+        `flex flex-row gap-${gap} justify-${justify} items-${align} ${className}`
       )}
     >
       {children}
