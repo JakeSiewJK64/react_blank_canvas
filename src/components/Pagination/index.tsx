@@ -1,6 +1,7 @@
 import Monicon from "@monicon/react";
 import { ReactElement } from "react";
 import { cn } from "../../utils";
+import { Group } from "../Group";
 
 const PaginationButton = ({
   children,
@@ -129,7 +130,7 @@ export const Pagination = ({
   };
 
   return (
-    <div className="flex flex-row my-2 gap-1">
+    <Group gap={1} className="my-2">
       <PaginationButton
         title="First Page"
         disabled={disablePrevious}
@@ -171,6 +172,6 @@ export const Pagination = ({
           <Monicon name="lucide:chevrons-right" size={15} />
         </div>
       </PaginationButton>
-    </div>
+    </Group>
   );
 };
