@@ -299,8 +299,8 @@ export const Table = ({
               value={String(reactTable.getState().pagination.pageSize)}
               className="my-2"
               options={pageSizeOptions}
-              onChange={(pageSize) => {
-                reactTable.setPageSize(Number(pageSize));
+              onChange={(e) => {
+                reactTable.setPageSize(Number(e.target.value));
               }}
             />
             <div className="flex flex-row gap-4 items-center">
