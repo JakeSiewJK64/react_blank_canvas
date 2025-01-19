@@ -11,7 +11,7 @@ export const Stack = ({
   gap?: number;
   children: ReactNode | ReactNode[];
   align?: CSSProperties["alignItems"];
-  justify?: CSSProperties["justifyItems"];
+  justify?: CSSProperties["justifyContent"];
   className?: string;
 }) => {
   return (
