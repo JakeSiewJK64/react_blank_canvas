@@ -1,4 +1,5 @@
 import { Children, ReactElement } from "react";
+import { Group } from "../Group";
 import "../../index.css";
 
 export const Breadcrumbs = ({
@@ -10,15 +11,15 @@ export const Breadcrumbs = ({
 }) => {
   const items = Children.toArray(children);
   return (
-    <div className="flex flex-row">
+    <Group>
       {items.map((item, index) => (
-        <>
+        <div key={children.length - index}>
           {item}
           <span className="mx-1">
             {index !== items.length - 1 ? separator : ""}
           </span>
-        </>
+        </div>
       ))}
-    </div>
+    </Group>
   );
 };
