@@ -14,10 +14,12 @@ export const Group = ({
   justify?: CSSProperties["justifyContent"];
   className?: string;
 }) => {
+  const justifyContent = `justify-${justify?.replaceAll("space-", "")}`;
+
   return (
     <div
       className={cn(
-        `flex flex-row gap-${gap} justify-${justify} items-${align} ${className}`
+        `flex flex-row gap-${gap} ${justifyContent} items-${align} ${className}`
       )}
     >
       {children}
