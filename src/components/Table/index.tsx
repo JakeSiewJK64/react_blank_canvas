@@ -17,6 +17,8 @@ import { Popover } from "../Popover";
 import { Button } from "../Button";
 import { cn } from "../../utils";
 import { Input } from "../Input";
+import { Group } from "../Group";
+import { Stack } from "../Stack";
 import "../../index.css";
 
 export type BaseAPIOptions = {
@@ -156,7 +158,11 @@ const StoredView = ({ table }: { table: TSTable<unknown> }) => {
 
   return (
     <Popover position="bottom" trigger="click" content={<SelectView />}>
-      <Button size="sm" variant="outline">
+      <Button
+        size="sm"
+        variant="outline"
+        className="h-7 focus:ring ring-kt-primary"
+      >
         Stored Views
       </Button>
     </Popover>
@@ -264,8 +270,8 @@ export const Table = ({
 
   return (
     <div>
-      <div className="flex flex-row gap-2 items-center justify-between">
-        <div className="flex flex-row gap-2 items-center">
+      <Group gap={2} align="center" justify="space-between">
+        <Group gap={2} align="center">
           <Popover
             position="right"
             trigger="click"
@@ -291,9 +297,9 @@ export const Table = ({
             </Popover>
           )}
           <StoredView table={reactTable} />
-        </div>
+        </Group>
         {pagination && (
-          <div className="flex flex-row gap-1 items-center">
+          <Group gap={2} align="center">
             <div className="text-sm min-w-[5rem]">Page Size: </div>
             <Select
               value={String(reactTable.getState().pagination.pageSize)}
@@ -303,7 +309,7 @@ export const Table = ({
                 reactTable.setPageSize(Number(e.target.value));
               }}
             />
-            <div className="flex flex-row gap-4 items-center">
+            <Group gap={4} align="center">
               <Pagination
                 onFirstPage={() => {
                   reactTable.firstPage();
@@ -321,10 +327,10 @@ export const Table = ({
                   reactTable.setPageIndex(Number(e) - 1);
                 }}
               />
-            </div>
-          </div>
+            </Group>
+          </Group>
         )}
-      </div>
+      </Group>
       <table className="w-[100%] min-w-[50rem]">
         <thead className="bg-slate-200 rounded-md">
           {reactTable.getHeaderGroups().map((headerGroup) => (
@@ -339,7 +345,7 @@ export const Table = ({
 
                 return (
                   <th key={header.id} className="p-4">
-                    <div className="flex flex-row gap-2 items-center justify-between">
+                    <Group gap={2} align="center" justify="space-between">
                       <span>{headerTitle}</span>
                       {canSort && (
                         <button
@@ -361,7 +367,7 @@ export const Table = ({
                           )}
                         </button>
                       )}
-                    </div>
+                    </Group>
                   </th>
                 );
               })}
@@ -389,7 +395,7 @@ export const Table = ({
           ))}
         </tbody>
       </table>
-      <div className="mt-4 flex flex-col items-center justify-center">
+      <Stack align="center" justify="center" className="mt-4">
         {loading && (
           <>
             <Loader size="sm" />
@@ -397,8 +403,8 @@ export const Table = ({
           </>
         )}
         {data.length === 0 && !loading && <span>No Data</span>}
-      </div>
-      <div className="flex flex-row justify-between">
+      </Stack>
+      <Group justify="space-between">
         <span>
           Total records:{" "}
           <strong>
@@ -413,7 +419,7 @@ export const Table = ({
             : reactTable.getRowCount().toLocaleString()}{" "}
           Rows
         </span>
-      </div>
+      </Group>
     </div>
   );
 };
