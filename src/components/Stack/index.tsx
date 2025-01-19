@@ -19,7 +19,7 @@ export const Stack = ({
       className={cn(`flex flex-col ${className}`)}
       style={{
         gap,
-        alignContent: align,
+        alignItems: align,
         justifyContent: justify,
       }}
     >

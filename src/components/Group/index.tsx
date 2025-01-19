@@ -19,7 +19,7 @@ export const Group = ({
       className={cn(`flex flex-row ${className}`)}
       style={{
         gap,
-        alignContent: align,
+        alignItems: align,
         justifyContent: justify,
       }}
     >
