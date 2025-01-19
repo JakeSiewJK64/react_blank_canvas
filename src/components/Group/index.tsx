@@ -8,19 +8,20 @@ export const Group = ({
   align,
   justify,
 }: {
-  gap?: number;
+  gap?: string | number;
   children: ReactNode | ReactNode[];
   align?: CSSProperties["alignItems"];
   justify?: CSSProperties["justifyContent"];
   className?: string;
 }) => {
-  const justifyContent = `justify-${justify?.replaceAll("space-", "")}`;
-
   return (
     <div
-      className={cn(
-        `flex flex-row gap-${gap} ${justifyContent} items-${align} ${className}`
-      )}
+      className={cn(`flex flex-row ${className}`)}
+      style={{
+        gap,
+        alignContent: align,
+        justifyContent: justify,
+      }}
     >
       {children}
     </div>

@@ -8,7 +8,7 @@ export const Stack = ({
   align,
   justify,
 }: {
-  gap?: number;
+  gap?: string | number;
   children: ReactNode | ReactNode[];
   align?: CSSProperties["alignItems"];
   justify?: CSSProperties["justifyContent"];
@@ -16,9 +16,12 @@ export const Stack = ({
 }) => {
   return (
     <div
-      className={cn(
-        `flex flex-col gap-${gap} justify-${justify} items-${align} ${className}`
-      )}
+      className={cn(`flex flex-col ${className}`)}
+      style={{
+        gap,
+        alignContent: align,
+        justifyContent: justify,
+      }}
     >
       {children}
     </div>
