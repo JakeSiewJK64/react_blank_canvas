@@ -401,6 +401,7 @@ export const Table = ({
     enableRowSelection: selection,
     onRowSelectionChange: setRowSelection,
     onColumnVisibilityChange: setColumnVisibility,
+    columnResizeMode: "onChange",
     state: {
       sorting,
       rowSelection,
@@ -580,6 +581,14 @@ export const Table = ({
                           )}
                         </Group>
                       </Group>
+                      <div
+                        className="bg-black opacity-[0.25] w-[3px] cursor-ew-resize h-[100%] absolute right-0 top-0 touch-none select-none"
+                        onMouseDown={header.getResizeHandler()}
+                        onTouchStart={header.getResizeHandler()}
+                        onDoubleClick={() => {
+                          header.column.resetSize();
+                        }}
+                      />
                     </th>
                   );
                 })}
