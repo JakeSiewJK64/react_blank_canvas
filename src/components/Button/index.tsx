@@ -7,7 +7,7 @@ import "../../index.css";
 const variants = {
   variant: {
     default:
-      "bg-kt-primary text-white hover:bg-kt-primary/90 focus:ring-2 focus:ring-kt-primary focus:ring-offset-2",
+      "bg-kt-6 text-white hover:bg-kt-6/90 focus:ring-2 focus:ring-kt-6 focus:ring-offset-2",
     destructive: "bg-destructive text-white hover:bg-destructive/90",
     outline:
       "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
