@@ -562,6 +562,11 @@ export const Table = ({
                               } ${headerTitle} column`}
                               className="cursor-pointer rounded-full p-1"
                               onClick={() => {
+                                if (isPinned) {
+                                  header.column.pin(false);
+                                  return;
+                                }
+
                                 header.column.pin("left");
                               }}
                             >
