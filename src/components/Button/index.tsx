@@ -10,7 +10,8 @@ const variants = {
       "bg-kt-6 text-white hover:bg-kt-6/90 focus:ring-2 ring-kt-6 ring-offset-2",
     elevated:
       "active:border-b-2 border-b-4 border-b-kt-7 bg-kt-6 text-white hover:bg-kt-6/90",
-    destructive: "bg-destructive text-white hover:bg-destructive/90",
+    destructive:
+      "focus:ring-1 ring-danger border border-danger text-danger ring-offset-1",
     outline:
       "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
     secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -20,6 +21,7 @@ const variants = {
   },
   size: {
     default: "h-10 px-4 py-2",
+    xs: "h-7 rounded-md px-3",
     sm: "h-9 rounded-md px-3",
     lg: "h-11 rounded-md px-8",
     icon: "h-10 w-10",
@@ -45,7 +47,7 @@ export const Button = ({
     | "elevated"
     | "link";
   /** How large should the button be? */
-  size?: "default" | "sm" | "lg" | "icon";
+  size?: "default" | "sm" | "lg" | "icon" | "xs";
   /** loader in button */
   loading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>) => {

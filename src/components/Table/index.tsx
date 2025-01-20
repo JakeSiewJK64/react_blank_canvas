@@ -304,9 +304,8 @@ export const Table = ({
             <Button
               title="Clear current selection"
               icon={<Monicon size={15} name="lucide:x" />}
-              size="sm"
-              variant="outline"
-              className="h-7 focus:ring-1 ring-red-600 border border-red-600 text-red-600 ring-offset-1"
+              size="xs"
+              variant="destructive"
               onClick={() => {
                 reactTable.resetRowSelection();
               }}
