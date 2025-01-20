@@ -8,6 +8,8 @@ const variants = {
   variant: {
     default:
       "bg-kt-6 text-white hover:bg-kt-6/90 focus:ring-2 focus:ring-kt-6 focus:ring-offset-2",
+    elevated:
+      "active:border-b-2 border-b-4 border-b-kt-7 bg-kt-6 text-white hover:bg-kt-6/90",
     destructive: "bg-destructive text-white hover:bg-destructive/90",
     outline:
       "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
@@ -40,6 +42,7 @@ export const Button = ({
     | "outline"
     | "secondary"
     | "ghost"
+    | "elevated"
     | "link";
   /** How large should the button be? */
   size?: "default" | "sm" | "lg" | "icon";

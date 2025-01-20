@@ -49,5 +49,11 @@ export const Loading = {
     children: "Button",
   },
 };
+export const Elevated = {
+  args: {
+    variant: "elevated",
+    children: "Button",
+  },
+};
 
 export default ButtonStory;
