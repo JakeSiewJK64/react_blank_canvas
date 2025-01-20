@@ -20,6 +20,7 @@ import { Input } from "../Input";
 import { Group } from "../Group";
 import { Stack } from "../Stack";
 import { Checkbox } from "../Checkbox";
+import { Tabs } from "../Tabs";
 import "../../index.css";
 
 export type BaseAPIOptions = {
@@ -29,143 +30,293 @@ export type BaseAPIOptions = {
   rowSelection: object;
 };
 
-const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
-  const [viewName, setViewName] = useState("");
+type TableView = { label: string; value: string[] };
+
+const EditViewPopover = ({
+  tableView,
+  onUpdate = () => {},
+  allViews,
+}: {
+  allViews: string[];
+  tableView: TableView;
+  onUpdate: (viewName: TableView) => void;
+}) => {
+  const [newTableViewName, setNewTableViewName] = useState(tableView.label);
 
   return (
-    <div className="p-2">
-      <div className="flex flex-column justify-between w-[15rem] items-center">
-        <span>Show/Hide Column</span>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => {
-            table.resetColumnVisibility();
-          }}
-        >
-          Reset
-        </Button>
-      </div>
-      <Stack gap={4}>
-        {table.getAllLeafColumns().map((column) => {
-          if (column.id === " ") {
-            return;
-          }
-
-          return (
-            <div key={column.id}>
+    <Popover
+      position="right"
+      trigger="click"
+      content={
+        <Stack gap={4} className="p-2">
+          <div>
+            Edit <strong>{tableView.label}</strong> view
+          </div>
+          <Input
+            value={newTableViewName}
+            onChange={(e) => setNewTableViewName(e.target.value)}
+            placeholder="Enter new view name"
+            className="my-2"
+          />
+          {allViews.map((column) => (
+            <Group gap={4} key={column}>
               <Checkbox
-                checked={column.getIsVisible()}
-                onChange={column.getToggleVisibilityHandler()}
-                label={column.id}
+                defaultChecked={tableView.value.includes(column)}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    tableView.value.push(column);
+                  }
+                }}
               />
-            </div>
-          );
-        })}
-      </Stack>
-      <div className="my-4">
-        <Input
-          label="View Name"
-          value={viewName}
-          type="text"
-          onChange={(e) => {
-            setViewName(e.target.value);
-          }}
-        />
-      </div>
-      {viewName && (
-        <Button
-          size="sm"
-          className="w-[100%]"
-          onClick={() => {
-            const visibleColumnArray = table
-              .getVisibleFlatColumns()
-              .map((col) => {
-                const columnName = col.id;
-
-                if (columnName !== " ") {
-                  return columnName;
-                }
-              });
-            const existingViews = JSON.parse(
-              localStorage.getItem("storedTableViews") ?? "[]"
-            );
-
-            localStorage.setItem(
-              "storedTableViews",
-              JSON.stringify([
-                ...existingViews,
-                {
-                  label: viewName,
-                  value: visibleColumnArray,
-                },
-              ])
-            );
-          }}
-        >
-          Save View
-        </Button>
-      )}
-    </div>
-  );
-};
-
-const StoredView = ({ table }: { table: TSTable<unknown> }) => {
-  const localStorageViews = JSON.parse(
-    localStorage.getItem("storedTableViews") ?? "[]"
-  );
-
-  if (!localStorageViews || localStorageViews.length === 0) {
-    return null;
-  }
-
-  const SelectView = () => {
-    return (
-      <div className="flex flex-col">
-        {localStorageViews.map((view: { label: string; value: string[] }) => {
-          return (
+              <div>{column}</div>
+            </Group>
+          ))}
+          <Group justify="end">
             <Button
-              key={`${view.label}-${view.value}`}
-              className="hover:bg-slate-200 rounded-none"
-              size="sm"
               variant="outline"
-              id={`${view.label}-${view.value}`}
+              size="xs"
+              title={`Save ${tableView.label} view`}
               onClick={() => {
-                // hide all columns
-                table.toggleAllColumnsVisible(false);
-
-                // iterate all stored columns to be visible
-                view.value.forEach((column) => {
-                  if (!column) {
-                    return;
-                  }
-
-                  const reactTableColumns = table.getColumn(column);
-
-                  if (reactTableColumns) {
-                    reactTableColumns.toggleVisibility(true);
-                  }
+                onUpdate({
+                  label: newTableViewName,
+                  value: tableView.value,
                 });
               }}
             >
-              <div className="text-left">{view.label}</div>
+              Save
             </Button>
-          );
-        })}
-      </div>
-    );
-  };
+          </Group>
+        </Stack>
+      }
+    >
+      <Button
+        title={`Edit ${tableView.label} view`}
+        size="xs"
+        variant="outline"
+        icon={<Monicon name="lucide:pencil" size={15} />}
+      />
+    </Popover>
+  );
+};
+
+const DeleteViewPopover = ({
+  tableView,
+  onDelete = () => {},
+}: {
+  tableView: TableView;
+  onDelete: (viewName: string) => void;
+}) => {
+  return (
+    <Popover
+      position="right"
+      trigger="click"
+      content={
+        <div className="p-2">
+          Are you sure you want to delete view{" "}
+          <strong>{tableView.label}?</strong>
+          <Group justify="end">
+            <Button
+              variant="destructive"
+              size="xs"
+              title={`Delete ${tableView.label} view`}
+              onClick={() => {
+                onDelete(tableView.label);
+              }}
+            >
+              Delete View
+            </Button>
+          </Group>
+        </div>
+      }
+    >
+      <Button
+        title={`Delete ${tableView.label} view`}
+        size="xs"
+        variant="destructive"
+        icon={<Monicon name="lucide:trash-2" size={15} />}
+      />
+    </Popover>
+  );
+};
+
+const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
+  const [viewName, setViewName] = useState("");
+  const localStorageViews: TableView[] = JSON.parse(
+    localStorage.getItem("columnViews") ?? "[]"
+  );
+  const viewExists = localStorageViews.some((col) => col.label === viewName);
 
   return (
-    <Popover position="bottom" trigger="click" content={<SelectView />}>
-      <Button
-        size="sm"
-        variant="outline"
-        className="h-7 focus:ring ring-kt-primary"
+    <div className="p-2">
+      <Tabs
+        border={false}
+        tabList={[
+          { id: "column_toggle", label: "Show/Hide Column" },
+          { id: "saved_views", label: "Saved Views" },
+        ]}
       >
-        Stored Views
-      </Button>
-    </Popover>
+        <div key="column_toggle" className="pt-2">
+          <Input
+            errorMessage={viewExists ? `"${viewName}" already exist.` : ""}
+            value={viewName}
+            placeholder="Enter view name"
+            type="text"
+            onChange={(e) => {
+              setViewName(e.target.value);
+            }}
+          />
+          <Stack className="my-2" gap={4}>
+            {table.getAllLeafColumns().map((column) => {
+              if (column.id === " ") {
+                return;
+              }
+
+              return (
+                <div key={column.id}>
+                  <Checkbox
+                    checked={column.getIsVisible()}
+                    onChange={column.getToggleVisibilityHandler()}
+                    label={column.id}
+                  />
+                </div>
+              );
+            })}
+          </Stack>
+          <Group gap={2} justify="end">
+            <Button
+              variant="destructive"
+              title="Reset selected view"
+              size="xs"
+              onClick={() => {
+                table.resetColumnVisibility();
+              }}
+            >
+              Reset View
+            </Button>
+            {viewName && (
+              <Button
+                title="Save current view"
+                size="xs"
+                disabled={viewExists}
+                onClick={() => {
+                  const visibleColumnArray = table
+                    .getVisibleFlatColumns()
+                    .map((col) => {
+                      const columnName = col.id;
+
+                      if (columnName !== " ") {
+                        return columnName;
+                      }
+                    });
+                  const existingViews = JSON.parse(
+                    localStorage.getItem("columnViews") ?? "[]"
+                  );
+
+                  localStorage.setItem(
+                    "columnViews",
+                    JSON.stringify([
+                      ...existingViews,
+                      {
+                        label: viewName,
+                        value: visibleColumnArray,
+                      },
+                    ])
+                  );
+                }}
+              >
+                Save View
+              </Button>
+            )}
+          </Group>
+        </div>
+        <div key="saved_views">
+          <Stack className="mt-2" gap={4}>
+            {localStorageViews.length === 0 && (
+              <Stack align="center">
+                <Monicon size={25} name="lucide:package-open" />
+                <div className="text-sm text-center">
+                  You currently have no saved views.
+                </div>
+              </Stack>
+            )}
+            {localStorageViews.map((view: TableView) => {
+              return (
+                <div
+                  key={`${view.label}-${view.value}`}
+                  className="text-sm p-1 border-b-2 border-slate-300"
+                  id={`${view.label}-${view.value}`}
+                >
+                  <Group justify="space-between">
+                    <div className="text-left">{view.label}</div>
+                    <Group gap={2}>
+                      <EditViewPopover
+                        allViews={table
+                          .getAllLeafColumns()
+                          .map((col) => col.id)}
+                        onUpdate={(newView) => {
+                          const newViewCache = localStorageViews.filter(
+                            (column) => column.label !== view.label
+                          );
+
+                          localStorage.setItem(
+                            "columnViews",
+                            JSON.stringify([...newViewCache, newView])
+                          );
+                        }}
+                        tableView={view}
+                      />
+                      <Button
+                        title={`Apply ${view.label} view`}
+                        className="bg-green-600"
+                        size="xs"
+                        variant="outline"
+                        onClick={() => {
+                          // hide all columns
+                          table.toggleAllColumnsVisible(false);
+
+                          // iterate all stored columns to be visible
+                          view.value.forEach((column) => {
+                            if (!column) {
+                              return;
+                            }
+
+                            const reactTableColumns = table.getColumn(column);
+
+                            if (reactTableColumns) {
+                              reactTableColumns.toggleVisibility(true);
+                            }
+                          });
+                        }}
+                        icon={
+                          <Monicon
+                            color="white"
+                            name="lucide:check"
+                            size={15}
+                          />
+                        }
+                      />
+                      <DeleteViewPopover
+                        tableView={view}
+                        onDelete={(viewName) => {
+                          const filteredTableViews = localStorageViews.filter(
+                            (view) => view.label !== viewName
+                          );
+
+                          localStorage.setItem(
+                            "columnViews",
+                            JSON.stringify(filteredTableViews)
+                          );
+                        }}
+                      />
+                    </Group>
+                  </Group>
+                </div>
+              );
+            })}
+          </Stack>
+        </div>
+      </Tabs>
+    </div>
   );
 };
 
@@ -299,7 +450,6 @@ export const Table = ({
               />
             </Popover>
           )}
-          <StoredView table={reactTable} />
           {reactTable.getIsSomeRowsSelected() && (
             <Button
               title="Clear current selection"

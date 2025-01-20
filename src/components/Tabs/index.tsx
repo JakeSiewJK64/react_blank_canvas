@@ -2,6 +2,7 @@ import { ReactElement, useState } from "react";
 import { Button } from "../Button";
 import { Group } from "../Group";
 import { Stack } from "../Stack";
+import { cn } from "../../utils";
 import "../../index.css";
 
 export const Tabs = ({
@@ -24,7 +25,11 @@ export const Tabs = ({
         {tabList.map((tab) => (
           <Button
             key={`${tab.id}-${tab.label}`}
-            className="hover:bg-slate-100 bg-transparent text-black cursor-pointer rounded-none border-b-2 border-kt-6"
+            className={cn(
+              `hover:bg-slate-100 bg-transparent text-black cursor-pointer rounded-none border-kt-6 ${
+                active === tab.id && "border-b-2"
+              }`
+            )}
             onClick={() => {
               setActive(tab.id);
             }}
