@@ -280,23 +280,23 @@ export const Table = ({
             trigger="click"
             content={<ColumnFilter table={reactTable} />}
           >
-            <div
-              role="button"
+            <Button
               title="Show/Hide columns"
-              className="rounded border p-1 border-slate-300"
-            >
-              <Monicon name="lucide:columns-2" />
-            </div>
+              size="xs"
+              variant="outline"
+              className="border border-slate-300 px-2"
+              icon={<Monicon name="lucide:columns-2" />}
+            />
           </Popover>
           {filterable && filter && (
             <Popover position="right" trigger="click" content={<>{filter}</>}>
-              <div
-                role="button"
-                title="Show/Hide columns"
-                className="rounded border p-1 border-slate-300"
-              >
-                <Monicon name="lucide:filter" />
-              </div>
+              <Button
+                title="Filter"
+                size="xs"
+                variant="outline"
+                className="border border-slate-300 px-2"
+                icon={<Monicon name="lucide:filter" />}
+              />
             </Popover>
           )}
           <StoredView table={reactTable} />
