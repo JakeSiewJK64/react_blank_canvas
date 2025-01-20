@@ -204,16 +204,18 @@ const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
             })}
           </Stack>
           <Group gap={2} justify="end">
-            <Button
-              variant="destructive"
-              title="Reset selected view"
-              size="xs"
-              onClick={() => {
-                table.resetColumnVisibility();
-              }}
-            >
-              Reset View
-            </Button>
+            {!table.getIsAllColumnsVisible() && (
+              <Button
+                variant="destructive"
+                title="Reset selected view"
+                size="xs"
+                onClick={() => {
+                  table.resetColumnVisibility();
+                }}
+              >
+                Reset View
+              </Button>
+            )}
             {viewName && (
               <Button
                 title="Save current view"
