@@ -516,6 +516,9 @@ export const Table = ({
                   return (
                     <th
                       style={{
+                        ...(isPinned && {
+                          boxShadow: "-4px 0 4px -4px gray inset",
+                        }),
                         position: isPinned ? "sticky" : "relative",
                         width: header.column.getSize(),
                         zIndex: isPinned ? 1 : 0,
@@ -587,6 +590,9 @@ export const Table = ({
                   return (
                     <td
                       style={{
+                        ...(isPinned && {
+                          boxShadow: "-4px 0 4px -4px gray inset",
+                        }),
                         position: isPinned ? "sticky" : "relative",
                         width: cell.column.getSize(),
                         zIndex: isPinned ? 1 : 0,
