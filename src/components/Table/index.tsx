@@ -32,6 +32,21 @@ export type BaseAPIOptions = {
 
 type TableView = { label: string; value: string[] };
 
+const getPageRecordInfo = ({
+  totalRows,
+  pageIndex,
+  pageSize,
+}: {
+  totalRows: number;
+  pageIndex: number;
+  pageSize: number;
+}) => {
+  const firstRowNum = pageIndex * pageSize + 1;
+  const currLastRowNum = (pageIndex + 1) * pageSize;
+  const lastRowNum = currLastRowNum < totalRows ? currLastRowNum : totalRows;
+  return `${firstRowNum} - ${lastRowNum} of ${totalRows}`;
+};
+
 const EditViewPopover = ({
   tableView,
   onUpdate = () => {},
@@ -645,17 +660,16 @@ export const Table = ({
       <Group justify="space-between">
         <span>
           Total records:{" "}
-          <strong>
-            {reactTable.getRowModel().rows.length.toLocaleString()}
-          </strong>
+          <strong>{reactTable.getRowModel().rows.length.toString()}</strong>
         </span>
         <span className="text-sm">
-          Showing {reactTable.getRowModel().rows.length.toLocaleString()}
-          {" - "}
-          {serverSideDataSource
-            ? total
-            : reactTable.getRowCount().toLocaleString()}{" "}
-          Rows
+          Showing{" "}
+          {getPageRecordInfo({
+            pageIndex,
+            pageSize,
+            totalRows: serverSideDataSource ? total : reactTable.getRowCount(),
+          })}{" "}
+          rows
         </span>
       </Group>
     </div>
