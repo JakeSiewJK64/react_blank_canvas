@@ -19,6 +19,7 @@ const TableStory: Meta<typeof Table> = {
 const columnHelper = createColumnHelper<{
   fact: string;
   length: number;
+  description: string;
 }>();
 
 /**
@@ -33,6 +34,8 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
     data: Array.from({ length: total }).map((_, index) => ({
       fact: `fact ${index}`,
       length: 10 * index,
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     })),
   };
 
@@ -54,6 +57,10 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
           header: "Length",
           cell: (info) => <span>{info.getValue()}</span>,
         }),
+        columnHelper.accessor("description", {
+          header: "Length",
+          cell: (info) => <span>{info.getValue()}</span>,
+        }),
         columnHelper.display({
           enableSorting: false,
           header: " ",
@@ -65,6 +72,58 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
         }),
       ]}
     />
+  );
+};
+
+export const PinColumnTable: StoryFn<typeof Table> = (args) => {
+  const total = 10;
+  const res = {
+    data: Array.from({ length: total }).map((_, index) => ({
+      fact: `fact ${index}`,
+      length: 10 * index,
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    })),
+  };
+
+  return (
+    <div className="flex justify-center">
+      <div className="w-[75%]">
+        <Table
+          serverSideDataSource={false}
+          pagination
+          initialPageSize={total}
+          initialPageIndex={0}
+          {...args}
+          data={res.data}
+          columns={[
+            columnHelper.accessor("fact", {
+              header: "Fact",
+              enableSorting: false,
+              cell: (info) => <span>{info.getValue()}</span>,
+            }),
+            columnHelper.accessor("length", {
+              header: "Length",
+              cell: (info) => <span>{info.getValue()}</span>,
+            }),
+            columnHelper.accessor("description", {
+              header: "Length",
+              cell: (info) => <span>{info.getValue()}</span>,
+            }),
+            columnHelper.display({
+              enableSorting: false,
+              enablePinning: false,
+              header: " ",
+              cell: () => (
+                <Button size="sm" variant="outline">
+                  Action
+                </Button>
+              ),
+            }),
+          ]}
+        />
+      </div>
+    </div>
   );
 };
 

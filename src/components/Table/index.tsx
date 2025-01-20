@@ -500,41 +500,77 @@ export const Table = ({
       </Group>
       <div className="overflow-auto">
         <table className={cn(`w-[100%] min-w-[50rem] ${className}`)}>
-          <thead className="bg-slate-200 rounded-md">
+          <thead className="rounded-md">
             {reactTable.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   const canSort = header.column.getCanSort();
                   const isSorted = header.column.getIsSorted();
+                  const isPinned = header.column.getIsPinned();
+                  const canPinned = header.column.getCanPin();
                   const headerTitle = flexRender(
                     header.column.columnDef.header,
                     header.getContext()
                   );
 
                   return (
-                    <th key={header.id} className="p-4">
+                    <th
+                      style={{
+                        position: isPinned ? "sticky" : "relative",
+                        width: header.column.getSize(),
+                        zIndex: isPinned ? 1 : 0,
+                        ...(isPinned === "left" && {
+                          left: `${header.column.getStart("left")}px`,
+                        }),
+                      }}
+                      key={header.id}
+                      className="p-4 bg-slate-200"
+                    >
                       <Group gap={2} align="center" justify="space-between">
                         <span>{headerTitle}</span>
-                        {canSort && (
-                          <button
-                            title={`Sort by ${headerTitle}`}
-                            onClick={header.column.getToggleSortingHandler()}
-                          >
-                            {isSorted ? (
-                              <div
-                                className={`transform transition-transform duration-300 ${
-                                  header.column.getIsSorted() === "asc"
-                                    ? "rotate-0"
-                                    : "rotate-180"
-                                }`}
-                              >
-                                <Monicon name="lucide:arrow-up" size={15} />
-                              </div>
-                            ) : (
-                              <Monicon name="lucide:arrow-up-down" size={15} />
-                            )}
-                          </button>
-                        )}
+                        <Group gap={2}>
+                          {canSort && (
+                            <button
+                              title={`Sort by ${headerTitle}`}
+                              onClick={header.column.getToggleSortingHandler()}
+                            >
+                              {isSorted ? (
+                                <div
+                                  className={`transform transition-transform duration-300 ${
+                                    header.column.getIsSorted() === "asc"
+                                      ? "rotate-0"
+                                      : "rotate-180"
+                                  }`}
+                                >
+                                  <Monicon name="lucide:arrow-up" size={15} />
+                                </div>
+                              ) : (
+                                <Monicon
+                                  name="lucide:arrow-up-down"
+                                  size={15}
+                                />
+                              )}
+                            </button>
+                          )}
+                          {canPinned && (
+                            <div
+                              title={`${
+                                !isPinned ? "Pin" : "Unpin"
+                              } ${headerTitle} column`}
+                              className="cursor-pointer rounded-full p-1"
+                              onClick={() => {
+                                header.column.pin("left");
+                              }}
+                            >
+                              <Monicon
+                                size={15}
+                                name={
+                                  !isPinned ? "lucide:pin" : "lucide:pin-off"
+                                }
+                              />
+                            </div>
+                          )}
+                        </Group>
                       </Group>
                     </th>
                   );
@@ -546,11 +582,21 @@ export const Table = ({
             {reactTable.getRowModel().rows.map((rowGroup) => (
               <tr key={rowGroup.id} className="hover:bg-slate-100">
                 {rowGroup.getVisibleCells().map((cell) => {
+                  const isPinned = cell.column.getIsPinned();
+
                   return (
                     <td
+                      style={{
+                        position: isPinned ? "sticky" : "relative",
+                        width: cell.column.getSize(),
+                        zIndex: isPinned ? 1 : 0,
+                        ...(isPinned === "left" && {
+                          left: `${cell.column.getStart("left")}px`,
+                        }),
+                      }}
                       key={cell.id}
                       className={cn(
-                        `p-4 border-b-[1px] border-slate-400 ${
+                        `p-4 border-b-[1px] border-slate-400 bg-white ${
                           cell.row.getIsSelected() && "bg-slate-100"
                         }`
                       )}
