@@ -185,6 +185,7 @@ export const Table = ({
   total = 0,
   onRowSelect = () => {},
   fetchData = () => {},
+  className,
 }: {
   /** A list of options for rows per page in the pagination dropdown. */
   pageSizeOptions?: string[];
@@ -221,6 +222,8 @@ export const Table = ({
   filterable?: boolean;
   /** filter component. */
   filter?: ReactElement | null;
+  /** class styling for table. */
+  className?: string;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
@@ -297,6 +300,20 @@ export const Table = ({
             </Popover>
           )}
           <StoredView table={reactTable} />
+          {reactTable.getIsSomeRowsSelected() && (
+            <Button
+              title="Clear current selection"
+              icon={<Monicon size={15} name="lucide:x" />}
+              size="sm"
+              variant="outline"
+              className="h-7 focus:ring-1 ring-red-600 border border-red-600 text-red-600 ring-offset-1"
+              onClick={() => {
+                reactTable.resetRowSelection();
+              }}
+            >
+              Clear Selection
+            </Button>
+          )}
         </Group>
         {pagination && (
           <Group gap={2} align="center">
@@ -331,7 +348,7 @@ export const Table = ({
           </Group>
         )}
       </Group>
-      <table className="w-[100%] min-w-[50rem]">
+      <table className={cn(`w-[100%] min-w-[50rem] ${className}`)}>
         <thead className="bg-slate-200 rounded-md">
           {reactTable.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
