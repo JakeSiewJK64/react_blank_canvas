@@ -19,6 +19,7 @@ import { cn } from "../../utils";
 import { Input } from "../Input";
 import { Group } from "../Group";
 import { Stack } from "../Stack";
+import { Checkbox } from "../Checkbox";
 import "../../index.css";
 
 export type BaseAPIOptions = {
@@ -45,24 +46,23 @@ const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
           Reset
         </Button>
       </div>
-      {table.getAllLeafColumns().map((column) => {
-        if (column.id === " ") {
-          return;
-        }
+      <Stack gap={4}>
+        {table.getAllLeafColumns().map((column) => {
+          if (column.id === " ") {
+            return;
+          }
 
-        return (
-          <div key={column.id} className="px-1">
-            <label>
-              <input
+          return (
+            <div key={column.id}>
+              <Checkbox
                 checked={column.getIsVisible()}
                 onChange={column.getToggleVisibilityHandler()}
-                type="checkbox"
-              />{" "}
-              {column.id}
-            </label>
-          </div>
-        );
-      })}
+                label={column.id}
+              />
+            </div>
+          );
+        })}
+      </Stack>
       <div className="my-4">
         <Input
           label="View Name"
