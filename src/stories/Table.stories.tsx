@@ -4,6 +4,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { BaseAPIOptions, Table } from "../components/Table";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import { Checkbox } from "../components/Checkbox";
 
 const TableStory: Meta<typeof Table> = {
   title: "Core/Table",
@@ -159,15 +160,13 @@ export const SelectTable: StoryFn<typeof Table> = (args) => {
         columnHelper.display({
           id: "select",
           header: ({ table }) => (
-            <input
-              type="checkbox"
+            <Checkbox
               checked={table.getIsAllRowsSelected()}
               onChange={table.getToggleAllRowsSelectedHandler()}
             />
           ),
           cell: ({ row }) => (
-            <input
-              type="checkbox"
+            <Checkbox
               checked={row.getIsSelected()}
               disabled={!row.getCanSelect()}
               onChange={row.getToggleSelectedHandler()}
