@@ -1,6 +1,7 @@
 import Monicon from "@monicon/react";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "../../utils";
+import { Group } from "../Group";
 import "../../index.css";
 
 const variants = {
@@ -28,8 +29,10 @@ export const Button = ({
   size = "default",
   variant = "default",
   loading = false,
+  icon,
   ...props
 }: {
+  icon?: ReactNode;
   /** button variant */
   variant?:
     | "default"
@@ -56,7 +59,10 @@ export const Button = ({
           <Monicon name="lucide:loader-circle" />
         </div>
       )}
-      <div className="my-auto">{props.children}</div>
+      <Group align="center" gap={5} className="my-auto">
+        {icon && icon}
+        {props.children}
+      </Group>
     </button>
   );
 };
