@@ -498,70 +498,75 @@ export const Table = ({
           </Group>
         )}
       </Group>
-      <table className={cn(`w-[100%] min-w-[50rem] ${className}`)}>
-        <thead className="bg-slate-200 rounded-md">
-          {reactTable.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                const canSort = header.column.getCanSort();
-                const isSorted = header.column.getIsSorted();
-                const headerTitle = flexRender(
-                  header.column.columnDef.header,
-                  header.getContext()
-                );
+      <div className="overflow-auto">
+        <table className={cn(`w-[100%] min-w-[50rem] ${className}`)}>
+          <thead className="bg-slate-200 rounded-md">
+            {reactTable.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  const canSort = header.column.getCanSort();
+                  const isSorted = header.column.getIsSorted();
+                  const headerTitle = flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  );
 
-                return (
-                  <th key={header.id} className="p-4">
-                    <Group gap={2} align="center" justify="space-between">
-                      <span>{headerTitle}</span>
-                      {canSort && (
-                        <button
-                          title={`Sort by ${headerTitle}`}
-                          onClick={header.column.getToggleSortingHandler()}
-                        >
-                          {isSorted ? (
-                            <div
-                              className={`transform transition-transform duration-300 ${
-                                header.column.getIsSorted() === "asc"
-                                  ? "rotate-0"
-                                  : "rotate-180"
-                              }`}
-                            >
-                              <Monicon name="lucide:arrow-up" size={15} />
-                            </div>
-                          ) : (
-                            <Monicon name="lucide:arrow-up-down" size={15} />
-                          )}
-                        </button>
+                  return (
+                    <th key={header.id} className="p-4">
+                      <Group gap={2} align="center" justify="space-between">
+                        <span>{headerTitle}</span>
+                        {canSort && (
+                          <button
+                            title={`Sort by ${headerTitle}`}
+                            onClick={header.column.getToggleSortingHandler()}
+                          >
+                            {isSorted ? (
+                              <div
+                                className={`transform transition-transform duration-300 ${
+                                  header.column.getIsSorted() === "asc"
+                                    ? "rotate-0"
+                                    : "rotate-180"
+                                }`}
+                              >
+                                <Monicon name="lucide:arrow-up" size={15} />
+                              </div>
+                            ) : (
+                              <Monicon name="lucide:arrow-up-down" size={15} />
+                            )}
+                          </button>
+                        )}
+                      </Group>
+                    </th>
+                  );
+                })}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {reactTable.getRowModel().rows.map((rowGroup) => (
+              <tr key={rowGroup.id} className="hover:bg-slate-100">
+                {rowGroup.getVisibleCells().map((cell) => {
+                  return (
+                    <td
+                      key={cell.id}
+                      className={cn(
+                        `p-4 border-b-[1px] border-slate-400 ${
+                          cell.row.getIsSelected() && "bg-slate-100"
+                        }`
                       )}
-                    </Group>
-                  </th>
-                );
-              })}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {reactTable.getRowModel().rows.map((rowGroup) => (
-            <tr key={rowGroup.id} className="hover:bg-slate-100">
-              {rowGroup.getVisibleCells().map((cell) => {
-                return (
-                  <td
-                    key={cell.id}
-                    className={cn(
-                      `p-4 border-b-[1px] border-slate-400 ${
-                        cell.row.getIsSelected() && "bg-slate-100"
-                      }`
-                    )}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <Stack align="center" justify="center" className="mt-4">
         {loading && (
           <>
