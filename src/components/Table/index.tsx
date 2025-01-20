@@ -311,7 +311,8 @@ export const Table = ({
                 reactTable.resetRowSelection();
               }}
             >
-              Clear Selection
+              Clear Selection ({reactTable.getSelectedRowModel().rows.length}{" "}
+              selected rows)
             </Button>
           )}
         </Group>
