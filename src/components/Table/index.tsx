@@ -73,19 +73,25 @@ const EditViewPopover = ({
             placeholder="Enter new view name"
             className="my-2"
           />
-          {allViews.map((column) => (
-            <Group gap={4} key={column}>
-              <Checkbox
-                defaultChecked={tableView.value.includes(column)}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    tableView.value.push(column);
-                  }
-                }}
-              />
-              <div>{column}</div>
-            </Group>
-          ))}
+          {allViews.map((column) => {
+            if (column === " ") {
+              return;
+            }
+
+            return (
+              <Group gap={4} key={column}>
+                <Checkbox
+                  defaultChecked={tableView.value.includes(column)}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      tableView.value.push(column);
+                    }
+                  }}
+                />
+                <div>{column}</div>
+              </Group>
+            );
+          })}
           <Group justify="end">
             <Button
               variant="outline"
