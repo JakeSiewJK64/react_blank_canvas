@@ -6,7 +6,15 @@ export default {
       colors: {
         destructive: "#ff0000",
         kt: {
-          primary: "#09ABC2",
+          0: "#B0F2FB",
+          1: "#9DEFFA",
+          2: "#76E8F9",
+          3: "#4FE2F7",
+          4: "#28DBF5",
+          5: "#0BCDE9",
+          6: "#09ABC2",
+          7: "#077C8C",
+          8: "#044C57",
         },
       },
       keyframes: {
