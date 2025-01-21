@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import "../../index.css";
 
 /** Standard anchor tag with tailwind styling */
@@ -8,7 +8,7 @@ export const Anchor = ({
   className,
 }: {
   href: string;
-  children: ReactElement | string;
+  children: ReactNode | ReactElement | string;
   className?: string;
 }) => {
   return (

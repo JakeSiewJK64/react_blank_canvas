@@ -1,6 +1,8 @@
 import { ReactElement, useEffect, useRef, useState } from "react";
 import { cn } from "../../utils";
 
+export type PopoverPosition = "bottom" | "top" | "left" | "right";
+
 /**
  *
  * reference:
@@ -12,7 +14,7 @@ export const Popover = ({
   trigger = "click",
   position = "bottom",
 }: {
-  position: "bottom" | "top" | "left" | "right";
+  position: PopoverPosition;
   trigger: "click" | "hover";
   content: ReactElement | ReactElement[] | string;
   children: ReactElement | ReactElement[] | string;

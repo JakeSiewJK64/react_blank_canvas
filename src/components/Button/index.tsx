@@ -4,6 +4,18 @@ import { Group } from "../Group";
 import { Loader } from "../Loader";
 import "../../index.css";
 
+export type ButtonProps = {
+  icon?: ReactNode;
+  /** color of the button */
+  color?: "primary" | "danger" | "success" | "secondary";
+  /** button variant */
+  variant?: "primary" | "outline";
+  /** How large should the button be? */
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  /** loader in button */
+  loading?: boolean;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
 const variants = {
   variant: {
     elevated: {
@@ -47,17 +59,7 @@ export const Button = ({
   loading = false,
   icon,
   ...props
-}: {
-  icon?: ReactNode;
-  /** color of the button */
-  color?: "primary" | "danger" | "success" | "secondary";
-  /** button variant */
-  variant?: "primary" | "outline";
-  /** How large should the button be? */
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  /** loader in button */
-  loading?: boolean;
-} & ButtonHTMLAttributes<HTMLButtonElement>) => {
+}: ButtonProps) => {
   return (
     <button
       {...props}
