@@ -9,14 +9,14 @@ const variants = {
       danger: "bg-danger text-white",
       success: "bg-success text-white",
       warn: "bg-amber-600 text-white",
-      outline: "text-slate-600 bg-transparent",
+      secondary: "text-white bg-slate-600",
     },
     outline: {
-      primary: "border border-kt-6 text-white",
-      danger: "border border-danger text-white",
-      success: "border bg-success text-white",
-      warn: "border border-amber-600 text-white",
-      outline: "border border-slate-600 text-slate-600",
+      primary: "border border-kt-6 text-kt-6",
+      danger: "border border-danger text-danger",
+      success: "border border-success text-success",
+      warn: "border border-amber-600 text-amber-600",
+      secondary: "border border-slate-600 text-slate-600",
     },
   },
   size: {
@@ -46,7 +46,7 @@ export const Badge = ({
   /** size of Badge */
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   /** color of Badge */
-  color?: "danger" | "warn" | "success" | "primary";
+  color?: "danger" | "warn" | "success" | "primary" | "secondary";
   /** badge variant */
   variant?: "primary" | "outline";
   /** onClick callback */
@@ -60,7 +60,9 @@ export const Badge = ({
     <div
       onClick={onClick}
       className={cn(
-        `w-fit text-center font-bold rounded-full ${variants.variant[variant][color]} ${variants.size[size]} ${className}`
+        `w-fit text-center font-bold rounded-full ${
+          variants.variant[variant][color] ?? variants.variant.primary.primary
+        } ${variants.size[size]} ${className}`
       )}
     >
       {children}

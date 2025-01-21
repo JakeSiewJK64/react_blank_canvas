@@ -12,15 +12,7 @@ const BadgeStory: Meta<typeof Badge> = {
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
-  argTypes: {
-    children: {
-      control: "text",
-    },
-    size: {
-      control: "select",
-      options: ["sm", "md", "lg", "xl"],
-    },
-  },
+  argTypes: {},
 };
 
 export const Regular = {
