@@ -1,10 +1,10 @@
 import { Meta } from "@storybook/react";
-import { Pill } from "../components/Pill";
+import { Badge } from "../components/Badge";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
-const PillStory: Meta<typeof Pill> = {
-  title: "Core/Pill",
-  component: Pill,
+const BadgeStory: Meta<typeof Badge> = {
+  title: "Core/Badge",
+  component: Badge,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
@@ -25,7 +25,7 @@ const PillStory: Meta<typeof Pill> = {
 
 export const Regular = {
   args: {
-    children: "Pill",
+    children: "Badge",
   },
 };
 
@@ -35,21 +35,21 @@ export const RegularDanger = {
   },
 };
 
-/** Small Pill */
+/** Small Badge */
 export const Small = {
   args: { size: "sm" },
 };
-/** Small Pill */
+/** Small Badge */
 export const WithCloseButton = {
   args: { withClose: true },
 };
-/** Large Pill */
+/** Large Badge */
 export const Large = {
   args: { size: "lg" },
 };
-/** Extra large pill */
+/** Extra large Badge */
 export const ExtraLarge = {
   args: { size: "xl" },
 };
 
-export default PillStory;
+export default BadgeStory;

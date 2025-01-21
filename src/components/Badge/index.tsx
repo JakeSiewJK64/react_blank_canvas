@@ -2,9 +2,9 @@ import { ReactElement } from "react";
 import { cn } from "../../utils";
 import "../../index.css";
 
-/** Standard pill component. */
-export const Pill = ({
-  children = "Pill",
+/** Standard badge component. */
+export const Badge = ({
+  children = "Badge",
   className,
   size = "md",
   color = "none",
@@ -16,9 +16,9 @@ export const Pill = ({
   className?: string;
   /** children */
   children?: ReactElement | string;
-  /** size of pill */
+  /** size of Badge */
   size?: "sm" | "md" | "lg" | "xl";
-  /** color of pill */
+  /** color of Badge */
   color?: "danger" | "warn" | "success" | "primary" | "none";
   /** onClick callback */
   onClick?: () => void;

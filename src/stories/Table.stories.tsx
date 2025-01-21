@@ -6,7 +6,7 @@ import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Checkbox } from "../components/Checkbox";
 import { Stack } from "../components/Stack";
-import { Pill } from "../components/Pill";
+import { Badge } from "../components/Badge";
 
 const TableStory: Meta<typeof Table> = {
   title: "Core/Table",
@@ -105,12 +105,12 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
               ],
             },
             cell: (info) => (
-              <Pill
+              <Badge
                 className="text-center w-[5rem]"
                 color={info.getValue() === "inactive" ? "danger" : "success"}
               >
                 {info.getValue()}
-              </Pill>
+              </Badge>
             ),
           }),
           columnHelper.display({
