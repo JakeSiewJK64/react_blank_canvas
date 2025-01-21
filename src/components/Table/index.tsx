@@ -44,7 +44,6 @@ export type BaseAPIOptions = {
   pageSize: number;
   pageIndex: number;
   sorting: SortingState;
-  rowSelection: object;
   columnFilters: ColumnFiltersState;
 };
 
@@ -448,12 +447,7 @@ export const Table = ({
   /** An array of column definitions to configure table headers and cell rendering. */
   columns: ColumnDef<any, any>[];
   /** A function to fetch data from the server. Called with options including `pageIndex`, `pageSize`, and `sorting`. */
-  fetchData?: ({
-    pageIndex,
-    pageSize,
-    sorting,
-    rowSelection,
-  }: BaseAPIOptions) => void;
+  fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
   /** Callback for on rows selected */
   onRowSelect?: (selectedRows: unknown) => void;
   /** The total number of pages available (used for server-side pagination). */
@@ -523,7 +517,6 @@ export const Table = ({
       pageIndex,
       pageSize,
       sorting,
-      rowSelection,
       columnFilters,
     });
   }, [pageSize, pageIndex, columnFilters, fetchData, sorting]);
@@ -559,6 +552,19 @@ export const Table = ({
                 icon={<Monicon name="lucide:filter" />}
               />
             </Popover>
+          )}
+          {columnFilters.length !== 0 && (
+            <Button
+              title="Clear current selection"
+              icon={<Monicon size={15} name="lucide:x" />}
+              size="xs"
+              variant="destructive"
+              onClick={() => {
+                reactTable.resetColumnFilters();
+              }}
+            >
+              Clear Filter ({columnFilters.length} active filters)
+            </Button>
           )}
           {reactTable.getIsSomeRowsSelected() && (
             <Button

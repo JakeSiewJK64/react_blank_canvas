@@ -53,7 +53,25 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
         {...args}
         data={res.data}
         fetchData={(e) => console.log(e)}
+        selection
+        onRowSelect={(e) => console.log(e)}
         columns={[
+          columnHelper.display({
+            id: "select",
+            header: ({ table }) => (
+              <Checkbox
+                checked={table.getIsAllRowsSelected()}
+                onChange={table.getToggleAllRowsSelectedHandler()}
+              />
+            ),
+            cell: ({ row }) => (
+              <Checkbox
+                checked={row.getIsSelected()}
+                disabled={!row.getCanSelect()}
+                onChange={row.getToggleSelectedHandler()}
+              />
+            ),
+          }),
           columnHelper.accessor("fact", {
             header: "Fact",
             enableSorting: false,
