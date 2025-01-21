@@ -3,6 +3,10 @@ export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      zIndex: {
+        1: 1,
+        2: 2,
+      },
       colors: {
         destructive: "#ff0000",
         danger: "#ff0000",

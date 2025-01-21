@@ -6,6 +6,7 @@ import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Checkbox } from "../components/Checkbox";
 import { Stack } from "../components/Stack";
+import { Pill } from "../components/Pill";
 
 const TableStory: Meta<typeof Table> = {
   title: "Core/Table",
@@ -21,6 +22,7 @@ const columnHelper = createColumnHelper<{
   fact: string;
   length: number;
   description: string;
+  status: "active" | "inactive";
 }>();
 
 /**
@@ -30,25 +32,19 @@ const columnHelper = createColumnHelper<{
  *
  * */
 export const ClientSideTable: StoryFn<typeof Table> = (args) => {
-  const [tableValuePreview, setTableValuePreview] = useState({});
   const total = 20;
   const res = {
     data: Array.from({ length: total }).map((_, index) => ({
       fact: `fact ${index}`,
       length: 10 * index,
+      status: index % 2 ? "active" : "inactive",
       description:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     })),
   };
-  const fetchData = useCallback((e: object) => {
-    setTableValuePreview(e);
-  }, []);
 
   return (
     <Stack>
-      <pre className="bg-slate-200 rounded p-2">
-        {JSON.stringify(tableValuePreview, null, 2)}
-      </pre>
       <Table
         serverSideDataSource={false}
         pagination
@@ -56,7 +52,7 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
         initialPageIndex={0}
         {...args}
         data={res.data}
-        fetchData={fetchData}
+        fetchData={(e) => console.log(e)}
         columns={[
           columnHelper.accessor("fact", {
             header: "Fact",
@@ -73,6 +69,31 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
           columnHelper.accessor("description", {
             header: "Description",
             cell: (info) => <span>{info.getValue()}</span>,
+          }),
+          columnHelper.accessor("status", {
+            header: "Status",
+            filterFn: "equals",
+            meta: {
+              filterType: "select",
+              options: [
+                {
+                  label: "Active",
+                  value: "active",
+                },
+                {
+                  label: "Inactive",
+                  value: "inactive",
+                },
+              ],
+            },
+            cell: (info) => (
+              <Pill
+                className="text-center w-[5rem]"
+                color={info.getValue() === "inactive" ? "danger" : "success"}
+              >
+                {info.getValue()}
+              </Pill>
+            ),
           }),
           columnHelper.display({
             enableSorting: false,

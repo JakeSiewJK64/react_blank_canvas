@@ -29,7 +29,14 @@ import "../../index.css";
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
-    filterType: "range" | "string" | "number" | "boolean" | undefined;
+    filterType:
+      | "range"
+      | "string"
+      | "number"
+      | "select"
+      | "boolean"
+      | undefined;
+    options?: { label: string; value: string }[];
   }
 }
 
@@ -84,6 +91,25 @@ const ColumnFilterInput = ({ column }: { column: Column<any, unknown> }) => {
           placeholder="Max"
         />
       </Group>
+    );
+  }
+
+  if (filterType === "select") {
+    const options = column.columnDef.meta?.options;
+
+    if (!options) {
+      return null;
+    }
+
+    return (
+      <Select
+        value={String(columnFilterValue ?? "")}
+        className="h-[2.5rem] mt-2"
+        options={options}
+        onChange={(e) => {
+          column.setFilterValue(e.target.value);
+        }}
+      />
     );
   }
 
@@ -403,6 +429,7 @@ export const Table = ({
   loading = false,
   selection = false,
   headerFilter = true,
+  stickyHeader = true,
   filter = null,
   initialPageSize = 10,
   initialPageIndex = 0,
@@ -441,6 +468,8 @@ export const Table = ({
   pagination?: boolean;
   /** Whether to use server-side data fetching. If `true`, `fetchData` must be provided. */
   serverSideDataSource?: boolean;
+  /** Enable sticky header */
+  stickyHeader?: boolean;
   /** is row selection enabled. */
   selection?: boolean;
   /** manual filtering enabled (providing your own filter form). */
@@ -579,9 +608,9 @@ export const Table = ({
           </Group>
         )}
       </Group>
-      <div className="overflow-auto">
+      <div className="overflow-auto h-[60rem]">
         <table className={cn(`w-[100%] min-w-[50rem] ${className}`)}>
-          <thead className="rounded-md">
+          <thead className={cn(`${stickyHeader && "sticky z-[2] top-0"}`)}>
             {reactTable.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
