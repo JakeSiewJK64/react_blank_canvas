@@ -1,7 +1,7 @@
-import Monicon from "@monicon/react";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "../../utils";
 import { Group } from "../Group";
+import { Loader } from "../Loader";
 import "../../index.css";
 
 const variants = {
@@ -59,11 +59,7 @@ export const Button = ({
         `inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 ${variants.size[size]} ${variants.variant[variant]} ${props.className}`
       )}
     >
-      {loading && (
-        <div className="animate-spin my-auto">
-          <Monicon name="lucide:loader-circle" />
-        </div>
-      )}
+      {loading && <Loader size="md" color="white" />}
       <Group align="center" gap={5} className="my-auto">
         {icon && icon}
         {props.children}
