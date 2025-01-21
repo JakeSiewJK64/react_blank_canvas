@@ -4,15 +4,20 @@ import "../../index.css";
 
 const variants = {
   variant: {
-    primary: "",
-    outline: "border border-slate-600",
-  },
-  color: {
-    primary: "bg-kt-6 text-white",
-    danger: "bg-danger text-white",
-    success: "bg-success text-white",
-    warn: "bg-amber-600 text-white",
-    outline: "text-slate-600 bg-transparent",
+    primary: {
+      primary: "bg-kt-6 text-white",
+      danger: "bg-danger text-white",
+      success: "bg-success text-white",
+      warn: "bg-amber-600 text-white",
+      outline: "text-slate-600 bg-transparent",
+    },
+    outline: {
+      primary: "border border-kt-6 text-white",
+      danger: "border border-danger text-white",
+      success: "border bg-success text-white",
+      warn: "border border-amber-600 text-white",
+      outline: "border border-slate-600 text-slate-600",
+    },
   },
   size: {
     xs: "px-2 text-xs",
@@ -55,7 +60,7 @@ export const Badge = ({
     <div
       onClick={onClick}
       className={cn(
-        `w-fit text-center font-bold rounded-full ${variants.variant[variant]} ${variants.size[size]} ${variants.color[color]} ${className}`
+        `w-fit text-center font-bold rounded-full ${variants.variant[variant][color]} ${variants.size[size]} ${className}`
       )}
     >
       {children}
