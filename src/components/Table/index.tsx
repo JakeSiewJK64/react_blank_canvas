@@ -8,6 +8,10 @@ import {
   getPaginationRowModel,
   SortingState,
   getSortedRowModel,
+  getFilteredRowModel,
+  ColumnFiltersState,
+  Column,
+  RowData,
 } from "@tanstack/react-table";
 import { ReactElement, useEffect, useState } from "react";
 import { Pagination } from "../Pagination";
@@ -16,18 +20,25 @@ import { Select } from "../Select";
 import { Popover } from "../Popover";
 import { Button } from "../Button";
 import { cn } from "../../utils";
-import { Input } from "../Input";
+import { DebouncedInput, Input } from "../Input";
 import { Group } from "../Group";
 import { Stack } from "../Stack";
 import { Checkbox } from "../Checkbox";
 import { Tabs } from "../Tabs";
 import "../../index.css";
 
+declare module "@tanstack/react-table" {
+  interface ColumnMeta<TData extends RowData, TValue> {
+    filterType: "range" | "string" | "number" | "boolean" | undefined;
+  }
+}
+
 export type BaseAPIOptions = {
   pageSize: number;
   pageIndex: number;
   sorting: SortingState;
   rowSelection: object;
+  columnFilters: ColumnFiltersState;
 };
 
 type TableView = { label: string; value: string[] };
@@ -45,6 +56,46 @@ const getPageRecordInfo = ({
   const currLastRowNum = (pageIndex + 1) * pageSize;
   const lastRowNum = currLastRowNum < totalRows ? currLastRowNum : totalRows;
   return `${firstRowNum} - ${lastRowNum} of ${totalRows}`;
+};
+
+const ColumnFilterInput = ({ column }: { column: Column<any, unknown> }) => {
+  const columnFilterValue = column.getFilterValue();
+  const filterType = column.columnDef.meta?.filterType;
+
+  if (filterType === "range") {
+    return (
+      <Group justify="space-between" gap={4}>
+        <DebouncedInput
+          className="font-normal"
+          type="number"
+          value={(columnFilterValue as [number, number])?.[0] ?? ""}
+          onChange={(value) =>
+            column.setFilterValue((old: [number, number]) => [value, old?.[1]])
+          }
+          placeholder="Min"
+        />
+        <DebouncedInput
+          className="font-normal"
+          type="number"
+          value={(columnFilterValue as [number, number])?.[1] ?? ""}
+          onChange={(value) =>
+            column.setFilterValue((old: [number, number]) => [old?.[0], value])
+          }
+          placeholder="Max"
+        />
+      </Group>
+    );
+  }
+
+  return (
+    <DebouncedInput
+      className="font-normal"
+      type="text"
+      placeholder={`Search by ${column.id}`}
+      value={(columnFilterValue ?? "") as string}
+      onChange={(e) => column.setFilterValue(e)}
+    />
+  );
 };
 
 const EditViewPopover = ({
@@ -351,6 +402,7 @@ export const Table = ({
   serverSideDataSource = true,
   loading = false,
   selection = false,
+  headerFilter = true,
   filterable = true,
   filter = null,
   initialPageSize = 10,
@@ -392,6 +444,8 @@ export const Table = ({
   serverSideDataSource?: boolean;
   /** is row selection enabled. */
   selection?: boolean;
+  /** manual filtering enabled (providing your own filter form). */
+  headerFilter?: boolean;
   /** show filter component. */
   filterable?: boolean;
   /** filter component. */
@@ -401,6 +455,7 @@ export const Table = ({
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<
     Record<string, boolean>
   >({});
@@ -411,6 +466,7 @@ export const Table = ({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(), // for client side filtering
     initialState: {
       pagination: {
         pageIndex: initialPageIndex,
@@ -420,12 +476,15 @@ export const Table = ({
     ...(serverSideDataSource && { pageCount }),
     manualPagination: serverSideDataSource,
     manualSorting: serverSideDataSource,
-    onSortingChange: setSorting,
+    manualFiltering: serverSideDataSource,
     enableRowSelection: selection,
     onRowSelectionChange: setRowSelection,
+    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
     columnResizeMode: "onChange",
     state: {
+      columnFilters,
       sorting,
       rowSelection,
       columnVisibility,
@@ -439,8 +498,9 @@ export const Table = ({
       pageSize,
       sorting,
       rowSelection,
+      columnFilters,
     });
-  }, [pageSize, pageIndex, fetchData, sorting]);
+  }, [pageSize, pageIndex, columnFilters, fetchData, sorting]);
 
   useEffect(() => {
     onRowSelect(reactTable.getSelectedRowModel().flatRows);
@@ -464,7 +524,7 @@ export const Table = ({
             />
           </Popover>
           {filterable && filter && (
-            <Popover position="right" trigger="click" content={<>{filter}</>}>
+            <Popover position="right" trigger="click" content={filter}>
               <Button
                 title="Filter"
                 size="xs"
@@ -612,6 +672,9 @@ export const Table = ({
                           header.column.resetSize();
                         }}
                       />
+                      {header.column.getCanFilter() && headerFilter && (
+                        <ColumnFilterInput column={header.column} />
+                      )}
                     </th>
                   );
                 })}
