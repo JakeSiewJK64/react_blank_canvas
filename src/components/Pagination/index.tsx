@@ -23,7 +23,7 @@ const PaginationButton = ({
       className={cn(
         `${active && "bg-[#09ABC2] text-white"} ${
           disabled && "opacity-[50%] cursor-not-allowed"
-        } w-6 h-6 border border-slate-300 text-center rounded`
+        } w-fit min-w-6 h-6 border border-slate-300 text-center rounded`
       )}
       role="button"
       title={title ?? children.toString()}
@@ -80,13 +80,29 @@ export const Pagination = ({
     };
 
     // case 1: Total pages are less than the offset
-    if (pageCount < offset) {
+    if (pageCount <= offset) {
       return createButtons(1, pageCount);
+    }
+
+    // case 4: Current page is somewhere in the middle
+    if (value >= offset && value <= pageCount - offset) {
+      const start = value - Math.floor(offset / 2);
+      return (
+        <>
+          <div className="pt-1">
+            <Monicon name="lucide:ellipsis" />
+          </div>
+          {createButtons(start, offset)}
+          <div className="pt-1">
+            <Monicon name="lucide:ellipsis" />
+          </div>
+        </>
+      );
     }
 
     // case 2: Current page is near the end
     if (value + offset > pageCount) {
-      const start = pageCount - offset + 1;
+      const start = pageCount - offset;
 
       return (
         <>
@@ -103,22 +119,6 @@ export const Pagination = ({
       return (
         <>
           {createButtons(1, offset)}
-          <div className="pt-1">
-            <Monicon name="lucide:ellipsis" />
-          </div>
-        </>
-      );
-    }
-
-    // case 4: Current page is somewhere in the middle
-    if (value > offset && value <= pageCount - offset) {
-      const start = value - Math.floor(offset / 2);
-      return (
-        <>
-          <div className="pt-1">
-            <Monicon name="lucide:ellipsis" />
-          </div>
-          {createButtons(start, offset)}
           <div className="pt-1">
             <Monicon name="lucide:ellipsis" />
           </div>
