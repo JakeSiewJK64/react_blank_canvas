@@ -403,7 +403,6 @@ export const Table = ({
   loading = false,
   selection = false,
   headerFilter = true,
-  filterable = true,
   filter = null,
   initialPageSize = 10,
   initialPageIndex = 0,
@@ -446,8 +445,6 @@ export const Table = ({
   selection?: boolean;
   /** manual filtering enabled (providing your own filter form). */
   headerFilter?: boolean;
-  /** show filter component. */
-  filterable?: boolean;
   /** filter component. */
   filter?: ReactElement | null;
   /** class styling for table. */
@@ -523,7 +520,7 @@ export const Table = ({
               icon={<Monicon name="lucide:columns-2" />}
             />
           </Popover>
-          {filterable && filter && (
+          {filter && (
             <Popover position="right" trigger="click" content={filter}>
               <Button
                 title="Filter"

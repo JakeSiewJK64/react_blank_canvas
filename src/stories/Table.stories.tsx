@@ -180,7 +180,6 @@ export const Filter: StoryFn<typeof Table> = (args) => {
 
   return (
     <Table
-      filterable
       filter={<FilterComponent onChange={(e) => console.log(e)} />}
       serverSideDataSource={false}
       pagination
