@@ -211,7 +211,8 @@ export const Filter: StoryFn<typeof Table> = (args) => {
           className="my-2 ms-auto"
           type="submit"
           size="sm"
-          variant="destructive"
+          variant="outline"
+          color="danger"
         >
           Submit
         </Button>

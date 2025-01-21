@@ -565,6 +565,7 @@ export const Table = ({
             <Popover position="right" trigger="click" content={filter}>
               <Button
                 title="Filter"
+                color="secondary"
                 size="xs"
                 variant="outline"
                 className="border border-slate-300 px-2"
