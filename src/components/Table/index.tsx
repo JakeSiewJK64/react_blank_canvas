@@ -189,6 +189,7 @@ const EditViewPopover = ({
       <Button
         title={`Edit ${tableView.label} view`}
         size="xs"
+        color="secondary"
         variant="outline"
         icon={<Monicon name="lucide:pencil" size={15} />}
       />
@@ -213,7 +214,8 @@ const DeleteViewPopover = ({
           <strong>{tableView.label}?</strong>
           <Group justify="end">
             <Button
-              variant="destructive"
+              variant="outline"
+              color="danger"
               size="xs"
               title={`Delete ${tableView.label} view`}
               onClick={() => {
@@ -229,7 +231,8 @@ const DeleteViewPopover = ({
       <Button
         title={`Delete ${tableView.label} view`}
         size="xs"
-        variant="destructive"
+        variant="outline"
+        color="danger"
         icon={<Monicon name="lucide:trash-2" size={15} />}
       />
     </Popover>
@@ -282,7 +285,8 @@ const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
           <Group gap={2} justify="end">
             {!table.getIsAllColumnsVisible() && (
               <Button
-                variant="destructive"
+                variant="outline"
+                color="danger"
                 title="Reset selected view"
                 size="xs"
                 onClick={() => {
@@ -551,6 +555,7 @@ export const Table = ({
             <Button
               title="Show/Hide columns"
               size="xs"
+              color="secondary"
               variant="outline"
               className="border border-slate-300 px-2"
               icon={<Monicon name="lucide:columns-2" />}
@@ -572,7 +577,8 @@ export const Table = ({
               title="Clear current selection"
               icon={<Monicon size={15} name="lucide:x" />}
               size="xs"
-              variant="destructive"
+              variant="outline"
+              color="danger"
               onClick={() => {
                 reactTable.resetColumnFilters();
               }}
@@ -585,7 +591,8 @@ export const Table = ({
               title="Clear current selection"
               icon={<Monicon size={15} name="lucide:x" />}
               size="xs"
-              variant="destructive"
+              variant="outline"
+              color="danger"
               onClick={() => {
                 reactTable.resetRowSelection();
               }}
