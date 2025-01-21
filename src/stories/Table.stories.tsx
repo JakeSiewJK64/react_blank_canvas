@@ -105,12 +105,14 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
               ],
             },
             cell: (info) => (
-              <Badge
-                className="text-center w-[5rem]"
-                color={info.getValue() === "inactive" ? "danger" : "success"}
-              >
-                {info.getValue()}
-              </Badge>
+              <div>
+                <Badge
+                  size="xs"
+                  color={info.getValue() === "inactive" ? "danger" : "success"}
+                >
+                  {info.getValue()}
+                </Badge>
+              </div>
             ),
           }),
           columnHelper.display({

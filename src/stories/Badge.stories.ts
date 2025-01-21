@@ -51,5 +51,8 @@ export const Large = {
 export const ExtraLarge = {
   args: { size: "xl" },
 };
+export const Outline = {
+  args: { size: "xs", color: "outline", variant: "outline" },
+};
 
 export default BadgeStory;

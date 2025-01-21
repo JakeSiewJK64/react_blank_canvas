@@ -2,12 +2,34 @@ import { ReactElement } from "react";
 import { cn } from "../../utils";
 import "../../index.css";
 
+const variants = {
+  variant: {
+    primary: "",
+    outline: "border border-slate-600",
+  },
+  color: {
+    primary: "bg-kt-6 text-white",
+    danger: "bg-danger text-white",
+    success: "bg-green-600 text-white",
+    warn: "bg-amber-600 text-white",
+    outline: "text-slate-600 bg-transparent",
+  },
+  size: {
+    xs: "px-2 text-xs",
+    sm: "px-2 text-sm",
+    md: "px-4 py-1 text-md",
+    lg: "px-6 py-2 text-lg",
+    xl: "px-8 py-4 text-xl",
+  },
+};
+
 /** Standard badge component. */
 export const Badge = ({
   children = "Badge",
   className,
   size = "md",
-  color = "none",
+  color = "primary",
+  variant = "primary",
   withClose = false,
   onClick = () => {},
   onCloseClick = () => {},
@@ -17,9 +39,11 @@ export const Badge = ({
   /** children */
   children?: ReactElement | string;
   /** size of Badge */
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   /** color of Badge */
-  color?: "danger" | "warn" | "success" | "primary" | "none";
+  color?: "danger" | "warn" | "success" | "primary";
+  /** badge variant */
+  variant?: "primary" | "outline";
   /** onClick callback */
   onClick?: () => void;
   /** include close button */
@@ -27,25 +51,11 @@ export const Badge = ({
   /** on close button click */
   onCloseClick?: () => void;
 }) => {
-  const sizing = {
-    sm: "px-2",
-    md: "px-4",
-    lg: "px-6",
-    xl: "px-8",
-  }[size];
-  const coloring = {
-    none: "",
-    danger: "bg-red-600 text-white",
-    warn: "bg-amber-600 text-white",
-    success: "bg-green-600 text-white",
-    primary: "bg-[#09ABC2] text-white",
-  }[color];
-
   return (
     <div
       onClick={onClick}
       className={cn(
-        `bg-slate-200 border-slate-400 border-[1px] font-sans font-semibold text-sm rounded-full ${sizing} ${coloring} ${className}`
+        `w-fit text-center font-bold rounded-full ${variants.variant[variant]} ${variants.size[size]} ${variants.color[color]} ${className}`
       )}
     >
       {children}
