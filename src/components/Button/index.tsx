@@ -12,11 +12,9 @@ const variants = {
       "active:border-b-2 border-b-4 border-b-kt-7 bg-kt-6 text-white hover:bg-kt-6/90",
     destructive:
       "focus:ring-1 ring-danger border border-danger text-danger ring-offset-1",
-    outline:
-      "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+    outline: "border hover:bg-slate-100",
     secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    ghost:
-      "hover:bg-accent hover:text-accent-foreground active:ring focus:ring",
+    ghost: "hover:bg-slate-100",
     link: "text-primary underline-offset-4 hover:underline",
   },
   size: {
