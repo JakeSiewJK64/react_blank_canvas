@@ -68,7 +68,7 @@ export const ChildrenWithIcon = {
 
 export const DangerButton = {
   args: {
-    color: "success",
+    color: "danger",
     variant: "elevated",
     children: "Delete Account",
   },
