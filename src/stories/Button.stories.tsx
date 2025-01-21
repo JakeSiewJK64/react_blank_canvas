@@ -1,3 +1,4 @@
+import Monicon from "@monicon/react";
 import { Meta } from "@storybook/react";
 import { Button } from "../components/Button";
 
@@ -53,6 +54,28 @@ export const Elevated = {
   args: {
     variant: "elevated",
     children: "Button",
+  },
+};
+export const Icon = {
+  args: {
+    size: "icon",
+    variant: "outline",
+    icon: <Monicon name="lucide:x" size={15} />,
+  },
+};
+
+export const ChildrenWithIcon = {
+  args: {
+    variant: "outline",
+    icon: <Monicon name="lucide:check" size={15} />,
+    children: "Button",
+  },
+};
+
+export const DangerButton = {
+  args: {
+    variant: "destructive",
+    children: "Delete Account",
   },
 };
 
