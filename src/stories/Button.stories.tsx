@@ -2,26 +2,16 @@ import Monicon from "@monicon/react";
 import { Meta } from "@storybook/react";
 import { Button } from "../components/Button";
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const ButtonStory: Meta<typeof Button> = {
   title: "Core/Button",
   component: Button,
   parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
-  // More on argTypes: https://storybook.js.org/docs/api/argtypes
-  argTypes: {
-    color: {
-      control: "select",
-      options: ["primary", "warn", "danger", "success"],
-    },
-  },
+  argTypes: {},
 };
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Large = {
   args: {
     children: "Button",
@@ -50,31 +40,36 @@ export const Loading = {
     children: "Button",
   },
 };
+
 export const Elevated = {
   args: {
     variant: "elevated",
     children: "Button",
   },
 };
+
 export const Icon = {
   args: {
-    size: "icon",
     variant: "outline",
-    icon: <Monicon name="lucide:x" size={15} />,
+    color: "outline",
+    size: "md",
+    icon: <Monicon color="white" name="lucide:x" size={15} />,
   },
 };
 
 export const ChildrenWithIcon = {
   args: {
     variant: "outline",
-    icon: <Monicon name="lucide:check" size={15} />,
+    color: "success",
+    icon: <Monicon color="#40c057" name="lucide:check" size={15} />,
     children: "Button",
   },
 };
 
 export const DangerButton = {
   args: {
-    variant: "destructive",
+    color: "success",
+    variant: "elevated",
     children: "Delete Account",
   },
 };
