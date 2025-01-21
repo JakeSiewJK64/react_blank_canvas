@@ -46,6 +46,7 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
   return (
     <Stack>
       <Table
+        resetSelectionOnFilterChange
         serverSideDataSource={false}
         pagination
         initialPageSize={total}

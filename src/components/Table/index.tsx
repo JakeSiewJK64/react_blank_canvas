@@ -425,10 +425,11 @@ export const Table = ({
   pageSizeOptions = ["5", "10", "20", "50", "100"],
   pagination = true,
   serverSideDataSource = true,
-  loading = false,
-  selection = false,
   headerFilter = true,
   stickyHeader = true,
+  loading = false,
+  selection = false,
+  resetSelectionOnFilterChange = false,
   filter = null,
   initialPageSize = 10,
   initialPageIndex = 0,
@@ -460,6 +461,8 @@ export const Table = ({
   loading?: boolean;
   /** Whether pagination is enabled for the table. */
   pagination?: boolean;
+  /** reset selection on filter change. */
+  resetSelectionOnFilterChange?: boolean;
   /** Whether to use server-side data fetching. If `true`, `fetchData` must be provided. */
   serverSideDataSource?: boolean;
   /** Enable sticky header */
@@ -513,13 +516,24 @@ export const Table = ({
   const { pageIndex, pageSize } = reactTable.getState().pagination;
 
   useEffect(() => {
+    if (resetSelectionOnFilterChange) {
+      reactTable.resetRowSelection();
+    }
+
     fetchData({
       pageIndex,
       pageSize,
       sorting,
       columnFilters,
     });
-  }, [pageSize, pageIndex, columnFilters, fetchData, sorting]);
+  }, [
+    pageSize,
+    pageIndex,
+    columnFilters,
+    fetchData,
+    sorting,
+    resetSelectionOnFilterChange,
+  ]);
 
   useEffect(() => {
     onRowSelect(reactTable.getSelectedRowModel().flatRows);
