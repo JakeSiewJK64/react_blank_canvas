@@ -2,6 +2,7 @@ import Monicon from "@monicon/react";
 import { ReactElement } from "react";
 import { cn } from "../../utils";
 import { Group } from "../Group";
+import { Button } from "../Button";
 
 const PaginationButton = ({
   children,
@@ -17,19 +18,21 @@ const PaginationButton = ({
   onClick?: () => void;
 }) => {
   return (
-    <button
+    <Button
       disabled={disabled}
       onClick={onClick}
       className={cn(
-        `${active && "bg-[#09ABC2] text-white"} ${
+        `${
           disabled && "opacity-[50%] cursor-not-allowed"
-        } w-fit min-w-6 h-6 border border-slate-300 text-center rounded`
+        } w-fit max-w-6 h-6 border border-slate-300 text-center rounded`
       )}
-      role="button"
+      variant={active ? "primary" : "outline"}
+      color={active ? "primary" : "secondary"}
+      size="xs"
       title={title ?? children.toString()}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 
@@ -130,7 +133,7 @@ export const Pagination = ({
   };
 
   return (
-    <Group gap={1} className="my-2">
+    <Group gap={4} className="my-2">
       <PaginationButton
         title="First Page"
         disabled={disablePrevious}
