@@ -21,9 +21,9 @@ export const Regular = () => (
     }
     trigger="click"
   >
-    <MenuButton>Item A</MenuButton>
-    <MenuButton>Item B</MenuButton>
-    <MenuButton>Item C</MenuButton>
+    <MenuButton title="Item A">Item A</MenuButton>
+    <MenuButton title="Item B">Item B</MenuButton>
+    <MenuButton title="Item C">Item C</MenuButton>
   </Menu>
 );
 
