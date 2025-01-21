@@ -10,6 +10,7 @@ export default {
       colors: {
         destructive: "#ff0000",
         danger: "#ff0000",
+        success: "#40c057",
         kt: {
           0: "#B0F2FB",
           1: "#9DEFFA",

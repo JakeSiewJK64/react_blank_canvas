@@ -10,7 +10,7 @@ const variants = {
   color: {
     primary: "bg-kt-6 text-white",
     danger: "bg-danger text-white",
-    success: "bg-green-600 text-white",
+    success: "bg-success text-white",
     warn: "bg-amber-600 text-white",
     outline: "text-slate-600 bg-transparent",
   },

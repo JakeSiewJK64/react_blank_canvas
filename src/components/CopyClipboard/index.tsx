@@ -24,7 +24,7 @@ export const CopyClipboard = ({
     <Button
       size="icon"
       variant="outline"
-      className={cn(`${clicked ? "bg-green-600" : ""} ${className}`)}
+      className={cn(`${clicked ? "bg-success" : ""} ${className}`)}
       onClick={() => {
         navigator.clipboard.writeText(text);
         setClicked(true);

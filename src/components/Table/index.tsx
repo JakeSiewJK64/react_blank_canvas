@@ -366,7 +366,7 @@ const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
                       />
                       <Button
                         title={`Apply ${view.label} view`}
-                        className="bg-green-600"
+                        className="bg-success"
                         size="xs"
                         variant="outline"
                         onClick={() => {
