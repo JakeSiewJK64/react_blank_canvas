@@ -22,9 +22,13 @@ export const CopyClipboard = ({
 
   return (
     <Button
-      size="icon"
+      color="secondary"
       variant="outline"
-      className={cn(`${clicked ? "bg-success" : ""} ${className}`)}
+      className={cn(
+        `${
+          clicked ? "bg-success hover:bg-success hover:opacity-60" : ""
+        } ${className}`
+      )}
       onClick={() => {
         navigator.clipboard.writeText(text);
         setClicked(true);
