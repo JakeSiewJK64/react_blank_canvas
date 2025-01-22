@@ -1,8 +1,8 @@
 import { Meta } from "@storybook/react/*";
 import { Popover, PopoverPosition } from "../components/Popover";
-import "../index.css";
 import { Card } from "../components/Card";
 import { Button } from "../components/Button";
+import "../index.css";
 
 const PopoverStory: Meta<typeof Popover> = {
   title: "Core/Popover",
