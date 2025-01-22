@@ -28,11 +28,7 @@ export const Popover = ({
     }
   };
 
-  const handleMouseLeft = () => {
-    if (trigger === "hover") {
-      setShow(false);
-    }
-  };
+  const handleMouseLeft = () => {};
 
   useEffect(() => {
     const handleClickOutside = (event: Event) => {
@@ -65,10 +61,10 @@ export const Popover = ({
         className={cn(
           `min-w-fit w-[200px] h-fit absolute ${
             {
-              top: "bottom-[2rem]",
-              bottom: "top-[2rem]",
-              left: "right-[2rem]",
-              right: "left-[2rem]",
+              top: "bottom-full mb-2", // Popover above the button
+              bottom: "top-full mt-2", // Popover below the button
+              left: "right-full mr-2", // Popover to the left of the button
+              right: "left-full ml-2", // Popover to the right of the button
             }[position]
           } z-10 transition-all`
         )}
