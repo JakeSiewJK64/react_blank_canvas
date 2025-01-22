@@ -43,7 +43,7 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
   };
 
   return (
-    <Stack>
+    <Stack className="max-w-[600px]">
       <Table
         serverSideDataSource={false}
         pagination
@@ -147,7 +147,7 @@ export const ServerSideTable: StoryFn<typeof Table> = () => {
       obj.append("limit", pageSize.toString());
 
       const response = await fetch(
-        `https://ccatfact.ninja/facts?limit=${pageSize}&page=${page}`
+        `https://catfact.ninja/facts?limit=${pageSize}&page=${page}`
       );
 
       if (!response.ok) {

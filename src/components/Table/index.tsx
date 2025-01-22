@@ -738,7 +738,10 @@ export const Table = ({
           </thead>
           <tbody>
             {reactTable.getRowModel().rows.map((rowGroup) => (
-              <tr key={rowGroup.id} className="hover:bg-slate-100">
+              <tr
+                key={rowGroup.id}
+                className="hover:bg-slate-100 border-b-[1px] p-4"
+              >
                 {rowGroup.getVisibleCells().map((cell) => {
                   const isPinned = cell.column.getIsPinned();
 
@@ -747,6 +750,7 @@ export const Table = ({
                       style={{
                         ...(isPinned && {
                           boxShadow: "-4px 0 4px -4px gray inset",
+                          backgroundColor: "white",
                         }),
                         position: isPinned ? "sticky" : "relative",
                         width: cell.column.getSize(),
@@ -757,9 +761,7 @@ export const Table = ({
                       }}
                       key={cell.id}
                       className={cn(
-                        `p-4 border-b-[1px] border-slate-400 bg-white ${
-                          cell.row.getIsSelected() && "bg-slate-100"
-                        }`
+                        `${cell.row.getIsSelected() && "bg-slate-100"}`
                       )}
                     >
                       {flexRender(
