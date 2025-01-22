@@ -43,7 +43,7 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
   };
 
   return (
-    <Stack className="max-w-[600px]">
+    <Stack className="resize overflow-auto w-[60vw] h-[50rem]">
       <Table
         serverSideDataSource={false}
         pagination

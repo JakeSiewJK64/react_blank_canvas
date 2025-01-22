@@ -545,261 +545,269 @@ export const Table = ({
   }, [rowSelection, onRowSelect]);
 
   return (
-    <div>
-      <Group gap={2} align="center" justify="space-between">
-        <Group gap={2} align="center">
-          <Popover
-            position="right"
-            trigger="click"
-            content={<ColumnFilter table={reactTable} />}
-          >
-            <Button
-              title="Show/Hide columns"
-              size="xs"
-              color="secondary"
-              variant="outline"
-              className="border border-slate-300 px-2"
-              icon={<Monicon name="lucide:columns-2" />}
-            />
-          </Popover>
-          {filter && (
-            <Popover position="right" trigger="click" content={filter}>
-              <Button
-                title="Filter"
-                color="secondary"
-                size="xs"
-                variant="outline"
-                className="border border-slate-300 px-2"
-                icon={<Monicon name="lucide:filter" />}
-              />
-            </Popover>
-          )}
-          {columnFilters.length !== 0 && (
-            <Button
-              title="Clear current selection"
-              icon={<Monicon size={15} name="lucide:x" />}
-              size="xs"
-              variant="outline"
-              color="danger"
-              onClick={() => {
-                reactTable.resetColumnFilters();
-              }}
+    <table className={cn(`w-[100%] min-w-[50rem] ${className}`)}>
+      <thead className={cn(`${stickyHeader && "sticky z-[2] top-0"}`)}>
+        <tr>
+          <th colSpan={columns.length} className="font-normal">
+            <Group
+              gap={2}
+              align="center"
+              justify="space-between"
+              className="bg-white"
             >
-              Clear Filter ({columnFilters.length} active filters)
-            </Button>
-          )}
-          {reactTable.getIsSomeRowsSelected() && (
-            <Button
-              title="Clear current selection"
-              icon={<Monicon size={15} name="lucide:x" />}
-              size="xs"
-              variant="outline"
-              color="danger"
-              onClick={() => {
-                reactTable.resetRowSelection();
-              }}
-            >
-              Clear Selection ({reactTable.getSelectedRowModel().rows.length}{" "}
-              selected rows)
-            </Button>
-          )}
-        </Group>
-        {pagination && (
-          <Group gap={2} align="center">
-            <div className="text-sm min-w-[5rem]">Page Size: </div>
-            <Select
-              value={String(reactTable.getState().pagination.pageSize)}
-              className="my-2"
-              options={pageSizeOptions}
-              onChange={(e) => {
-                reactTable.setPageSize(Number(e.target.value));
-              }}
-            />
-            <Group gap={4} align="center">
-              <Pagination
-                onFirstPage={() => {
-                  reactTable.firstPage();
-                }}
-                onLastPage={() => {
-                  reactTable.lastPage();
-                }}
-                pageCount={reactTable.getPageCount()}
-                onNextPage={() => reactTable.nextPage()}
-                onPreviousPage={() => reactTable.previousPage()}
-                disableNext={!reactTable.getCanNextPage()}
-                disablePrevious={!reactTable.getCanPreviousPage()}
-                value={reactTable.getState().pagination.pageIndex + 1}
-                onChange={(e) => {
-                  reactTable.setPageIndex(Number(e) - 1);
-                }}
-              />
+              <Group gap={2} align="center">
+                <Popover
+                  position="right"
+                  trigger="click"
+                  content={<ColumnFilter table={reactTable} />}
+                >
+                  <Button
+                    title="Show/Hide columns"
+                    size="xs"
+                    color="secondary"
+                    variant="outline"
+                    className="border border-slate-300 px-2"
+                    icon={<Monicon name="lucide:columns-2" />}
+                  />
+                </Popover>
+                {filter && (
+                  <Popover position="right" trigger="click" content={filter}>
+                    <Button
+                      title="Filter"
+                      color="secondary"
+                      size="xs"
+                      variant="outline"
+                      className="border border-slate-300 px-2"
+                      icon={<Monicon name="lucide:filter" />}
+                    />
+                  </Popover>
+                )}
+                {columnFilters.length !== 0 && (
+                  <Button
+                    title="Clear current selection"
+                    icon={<Monicon size={15} name="lucide:x" />}
+                    size="xs"
+                    variant="outline"
+                    color="danger"
+                    onClick={() => {
+                      reactTable.resetColumnFilters();
+                    }}
+                  >
+                    Clear Filter ({columnFilters.length} active filters)
+                  </Button>
+                )}
+                {reactTable.getIsSomeRowsSelected() && (
+                  <Button
+                    title="Clear current selection"
+                    icon={<Monicon size={15} name="lucide:x" />}
+                    size="xs"
+                    variant="outline"
+                    color="danger"
+                    onClick={() => {
+                      reactTable.resetRowSelection();
+                    }}
+                  >
+                    Clear Selection (
+                    {reactTable.getSelectedRowModel().rows.length} selected
+                    rows)
+                  </Button>
+                )}
+              </Group>
+              {pagination && (
+                <Group gap={2} align="center">
+                  <div className="text-sm min-w-[5rem]">Page Size: </div>
+                  <Select
+                    value={String(reactTable.getState().pagination.pageSize)}
+                    className="my-2"
+                    options={pageSizeOptions}
+                    onChange={(e) => {
+                      reactTable.setPageSize(Number(e.target.value));
+                    }}
+                  />
+                  <Group gap={4} align="center">
+                    <Pagination
+                      onFirstPage={() => {
+                        reactTable.firstPage();
+                      }}
+                      onLastPage={() => {
+                        reactTable.lastPage();
+                      }}
+                      pageCount={reactTable.getPageCount()}
+                      onNextPage={() => reactTable.nextPage()}
+                      onPreviousPage={() => reactTable.previousPage()}
+                      disableNext={!reactTable.getCanNextPage()}
+                      disablePrevious={!reactTable.getCanPreviousPage()}
+                      value={reactTable.getState().pagination.pageIndex + 1}
+                      onChange={(e) => {
+                        reactTable.setPageIndex(Number(e) - 1);
+                      }}
+                    />
+                  </Group>
+                </Group>
+              )}
             </Group>
-          </Group>
-        )}
-      </Group>
-      <div className="overflow-auto">
-        <table className={cn(`w-[100%] min-w-[50rem] ${className}`)}>
-          <thead className={cn(`${stickyHeader && "sticky z-[2] top-0"}`)}>
-            {reactTable.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  const canSort = header.column.getCanSort();
-                  const isSorted = header.column.getIsSorted();
-                  const isPinned = header.column.getIsPinned();
-                  const canPinned = header.column.getCanPin();
-                  const headerTitle = flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  );
+          </th>
+        </tr>
+        {reactTable.getHeaderGroups().map((headerGroup) => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map((header) => {
+              const canSort = header.column.getCanSort();
+              const isSorted = header.column.getIsSorted();
+              const isPinned = header.column.getIsPinned();
+              const canPinned = header.column.getCanPin();
+              const headerTitle = flexRender(
+                header.column.columnDef.header,
+                header.getContext()
+              );
 
-                  return (
-                    <th
-                      style={{
-                        ...(isPinned && {
-                          boxShadow: "-4px 0 4px -4px gray inset",
-                        }),
-                        position: isPinned ? "sticky" : "relative",
-                        width: header.column.getSize(),
-                        zIndex: isPinned ? 1 : 0,
-                        ...(isPinned === "left" && {
-                          left: `${header.column.getStart("left")}px`,
-                        }),
-                      }}
-                      key={header.id}
-                      className="p-4 bg-slate-200"
-                    >
-                      <Group gap={2} align="center" justify="space-between">
-                        <span>{headerTitle}</span>
-                        <Group gap={2}>
-                          {canSort && (
-                            <button
-                              title={`Sort by ${headerTitle}`}
-                              onClick={header.column.getToggleSortingHandler()}
-                            >
-                              {isSorted ? (
-                                <div
-                                  className={`transform transition-transform duration-300 ${
-                                    header.column.getIsSorted() === "asc"
-                                      ? "rotate-0"
-                                      : "rotate-180"
-                                  }`}
-                                >
-                                  <Monicon name="lucide:arrow-up" size={15} />
-                                </div>
-                              ) : (
-                                <Monicon
-                                  name="lucide:arrow-up-down"
-                                  size={15}
-                                />
-                              )}
-                            </button>
-                          )}
-                          {canPinned && (
+              return (
+                <th
+                  style={{
+                    ...(isPinned && {
+                      boxShadow: "-4px 0 4px -4px gray inset",
+                    }),
+                    position: isPinned ? "sticky" : "relative",
+                    width: header.column.getSize(),
+                    zIndex: isPinned ? 1 : 0,
+                    ...(isPinned === "left" && {
+                      left: `${header.column.getStart("left")}px`,
+                    }),
+                  }}
+                  key={header.id}
+                  className="p-4 bg-slate-200"
+                >
+                  <Group gap={2} align="center" justify="space-between">
+                    <span>{headerTitle}</span>
+                    <Group gap={2}>
+                      {canSort && (
+                        <button
+                          title={`Sort by ${headerTitle}`}
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          {isSorted ? (
                             <div
-                              title={`${
-                                !isPinned ? "Pin" : "Unpin"
-                              } ${headerTitle} column`}
-                              className="cursor-pointer rounded-full p-1"
-                              onClick={() => {
-                                if (isPinned) {
-                                  header.column.pin(false);
-                                  return;
-                                }
-
-                                header.column.pin("left");
-                              }}
+                              className={`transform transition-transform duration-300 ${
+                                header.column.getIsSorted() === "asc"
+                                  ? "rotate-0"
+                                  : "rotate-180"
+                              }`}
                             >
-                              <Monicon
-                                size={15}
-                                name={
-                                  !isPinned ? "lucide:pin" : "lucide:pin-off"
-                                }
-                              />
+                              <Monicon name="lucide:arrow-up" size={15} />
                             </div>
+                          ) : (
+                            <Monicon name="lucide:arrow-up-down" size={15} />
                           )}
-                        </Group>
-                      </Group>
-                      <div
-                        className="bg-black opacity-[0.25] w-[3px] cursor-ew-resize h-[100%] absolute right-0 top-0 touch-none select-none"
-                        onMouseDown={header.getResizeHandler()}
-                        onTouchStart={header.getResizeHandler()}
-                        onDoubleClick={() => {
-                          header.column.resetSize();
-                        }}
-                      />
-                      {header.column.getCanFilter() && headerFilter && (
-                        <ColumnFilterInput column={header.column} />
+                        </button>
                       )}
-                    </th>
-                  );
-                })}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {reactTable.getRowModel().rows.map((rowGroup) => (
-              <tr
-                key={rowGroup.id}
-                className="hover:bg-slate-100 border-b-[1px] p-4"
-              >
-                {rowGroup.getVisibleCells().map((cell) => {
-                  const isPinned = cell.column.getIsPinned();
+                      {canPinned && (
+                        <div
+                          title={`${
+                            !isPinned ? "Pin" : "Unpin"
+                          } ${headerTitle} column`}
+                          className="cursor-pointer rounded-full p-1"
+                          onClick={() => {
+                            if (isPinned) {
+                              header.column.pin(false);
+                              return;
+                            }
 
-                  return (
-                    <td
-                      style={{
-                        ...(isPinned && {
-                          boxShadow: "-4px 0 4px -4px gray inset",
-                          backgroundColor: "white",
-                        }),
-                        position: isPinned ? "sticky" : "relative",
-                        width: cell.column.getSize(),
-                        zIndex: isPinned ? 1 : 0,
-                        ...(isPinned === "left" && {
-                          left: `${cell.column.getStart("left")}px`,
-                        }),
-                      }}
-                      key={cell.id}
-                      className={cn(
-                        `${cell.row.getIsSelected() && "bg-slate-100"}`
+                            header.column.pin("left");
+                          }}
+                        >
+                          <Monicon
+                            size={15}
+                            name={!isPinned ? "lucide:pin" : "lucide:pin-off"}
+                          />
+                        </div>
                       )}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <Stack align="center" justify="center" className="mt-4">
-        {loading && (
-          <>
-            <Loader size="sm" />
-            <span>Loading...</span>
-          </>
-        )}
-        {data.length === 0 && !loading && <span>No Data</span>}
-      </Stack>
-      <Group justify="space-between">
-        <span>
-          Total records:{" "}
-          <strong>{reactTable.getRowModel().rows.length.toString()}</strong>
-        </span>
-        <span className="text-sm">
-          Showing{" "}
-          {getPageRecordInfo({
-            pageIndex,
-            pageSize,
-            totalRows: serverSideDataSource ? total : reactTable.getRowCount(),
-          })}{" "}
-          rows
-        </span>
-      </Group>
-    </div>
+                    </Group>
+                  </Group>
+                  <div
+                    className="bg-black opacity-[0.25] w-[3px] cursor-ew-resize h-[100%] absolute right-0 top-0 touch-none select-none"
+                    onMouseDown={header.getResizeHandler()}
+                    onTouchStart={header.getResizeHandler()}
+                    onDoubleClick={() => {
+                      header.column.resetSize();
+                    }}
+                  />
+                  {header.column.getCanFilter() && headerFilter && (
+                    <ColumnFilterInput column={header.column} />
+                  )}
+                </th>
+              );
+            })}
+          </tr>
+        ))}
+      </thead>
+      <tbody>
+        {reactTable.getRowModel().rows.map((rowGroup) => (
+          <tr
+            key={rowGroup.id}
+            className="hover:bg-slate-100 border-b-[1px] p-4"
+          >
+            {rowGroup.getVisibleCells().map((cell) => {
+              const isPinned = cell.column.getIsPinned();
+
+              return (
+                <td
+                  style={{
+                    ...(isPinned && {
+                      boxShadow: "-4px 0 4px -4px gray inset",
+                      backgroundColor: "white",
+                    }),
+                    position: isPinned ? "sticky" : "relative",
+                    width: cell.column.getSize(),
+                    zIndex: isPinned ? 1 : 0,
+                    ...(isPinned === "left" && {
+                      left: `${cell.column.getStart("left")}px`,
+                    }),
+                  }}
+                  key={cell.id}
+                  className={cn(
+                    `${cell.row.getIsSelected() && "bg-slate-100"}`
+                  )}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+      <tfoot>
+        <tr className="sticky z-[2] bottom-0 bg-white">
+          <th colSpan={columns.length} className="font-normal">
+            <Stack align="center" justify="center" className="mt-4">
+              {loading && (
+                <>
+                  <Loader size="sm" />
+                  <span>Loading...</span>
+                </>
+              )}
+              {data.length === 0 && !loading && <span>No Data</span>}
+            </Stack>
+            <Group justify="space-between">
+              <span>
+                Total records:{" "}
+                <strong>
+                  {reactTable.getRowModel().rows.length.toString()}
+                </strong>
+              </span>
+              <span className="text-sm">
+                Showing{" "}
+                {getPageRecordInfo({
+                  pageIndex,
+                  pageSize,
+                  totalRows: serverSideDataSource
+                    ? total
+                    : reactTable.getRowCount(),
+                })}{" "}
+                rows
+              </span>
+            </Group>
+          </th>
+        </tr>
+      </tfoot>
+    </table>
   );
 };
