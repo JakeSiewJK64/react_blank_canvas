@@ -190,7 +190,7 @@ const EditViewPopover = ({
         title={`Edit ${tableView.label} view`}
         size="xs"
         color="secondary"
-        variant="outline"
+        variant="subtle"
         icon={<Monicon name="lucide:pencil" size={15} />}
       />
     </Popover>
@@ -370,9 +370,8 @@ const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
                       />
                       <Button
                         title={`Apply ${view.label} view`}
-                        className="bg-success"
                         size="xs"
-                        variant="outline"
+                        color="success"
                         onClick={() => {
                           // hide all columns
                           table.toggleAllColumnsVisible(false);

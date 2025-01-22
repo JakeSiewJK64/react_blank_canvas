@@ -9,7 +9,7 @@ export type ButtonProps = {
   /** color of the button */
   color?: "primary" | "danger" | "success" | "secondary";
   /** button variant */
-  variant?: "primary" | "outline";
+  variant?: "primary" | "outline" | "subtle";
   /** How large should the button be? */
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   /** loader in button */
@@ -40,6 +40,12 @@ const variants = {
       danger: "border border-danger text-danger hover:border border-danger/90",
       success:
         "border border-success text-success hover:border border-success/90",
+    },
+    subtle: {
+      primary: "border-none text-kt-6 hover:bg-kt-1 hover:text-white",
+      success: "border-none text-success hover:bg-green-100",
+      danger: "border-none text-danger hover:bg-red-100",
+      secondary: "border-none text-slate-600 hover:bg-slate-100",
     },
   },
   size: {
