@@ -251,8 +251,8 @@ const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
       <Tabs
         border={false}
         tabList={[
-          { id: "column_toggle", label: "Show/Hide Column" },
-          { id: "saved_views", label: "Saved Views" },
+          { key: "column_toggle", label: "Show/Hide Column" },
+          { key: "saved_views", label: "Saved Views" },
         ]}
       >
         <div key="column_toggle" className="pt-2">
