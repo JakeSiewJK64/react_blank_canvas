@@ -112,7 +112,7 @@ export const Pagination = ({
           <div className="pt-1">
             <Monicon name="lucide:ellipsis" />
           </div>
-          {createButtons(start, offset)}
+          {createButtons(start, offset + 1)}
         </>
       );
     }
