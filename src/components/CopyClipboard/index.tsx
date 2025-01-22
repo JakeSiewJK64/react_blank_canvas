@@ -22,6 +22,7 @@ export const CopyClipboard = ({
 
   return (
     <Button
+      title={`Copy ${text}`}
       color="secondary"
       variant="outline"
       className={cn(
