@@ -447,7 +447,7 @@ export const Table = ({
   /** The data to display in the table. */
   data: unknown[];
   /** The total number of records available. Only applicable to server
-   * side data source. Only used to display record information.
+   * side data source to display record information.
    **/
   total?: number;
   /** An array of column definitions to configure table headers and cell rendering. */
