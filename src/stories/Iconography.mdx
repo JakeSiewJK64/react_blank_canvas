@@ -1,5 +1,6 @@
 import Monicon from "@monicon/react";
 import { Markdown, IconGallery, IconItem, Meta } from "@storybook/blocks";
+import { CopyClipboard } from '../components/CopyClipboard';
 import Icons from '../utils/json/icons.json';
 import '../index.css';
 
@@ -18,12 +19,7 @@ import '../index.css';
 <IconGallery>
   {Icons.map((icon) => (
     <IconItem name={icon} key={icon}>
-      <button className="hover:bg-slate-600" title={`Copy ${icon} to clipboard`} onClick={() => {
-          navigator.clipboard.writeText(icon);
-        }}
-      >
-        <Monicon name={icon} />
-      </button>
+      <CopyClipboard icon={<Monicon name={icon} size={15} />} text={`<Monicon name="${icon}" />`} />
     </IconItem>
   ))}
 </IconGallery>

@@ -1,14 +1,16 @@
 import Monicon from "@monicon/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactElement } from "react";
 import { Button } from "../Button";
 import { cn } from "../../utils";
 
 export const CopyClipboard = ({
   text,
   className,
+  icon = null,
 }: {
   text: string;
   className?: string;
+  icon?: ReactElement | null;
 }) => {
   const [clicked, setClicked] = useState(false);
 
@@ -38,7 +40,7 @@ export const CopyClipboard = ({
       {clicked ? (
         <Monicon name="lucide:check" color="white" size={15} />
       ) : (
-        <Monicon name="lucide:copy" size={15} />
+        icon ?? <Monicon name="lucide:copy" size={15} />
       )}
     </Button>
   );
