@@ -25,7 +25,7 @@ const columnHelper = createColumnHelper<{
 }>();
 
 export const ClientSideTable: StoryFn<typeof Table> = (args) => {
-  const total = 20;
+  const total = 100;
   const res = {
     data: Array.from({ length: total }).map((_, index) => ({
       fact: `fact ${index}`,
@@ -41,7 +41,7 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
       <Table
         serverSideDataSource={false}
         pagination
-        initialPageSize={total}
+        initialPageSize={10}
         initialPageIndex={0}
         {...args}
         data={res.data}
@@ -179,8 +179,31 @@ export const ServerSideTable: StoryFn<typeof Table> = () => {
       pageCount={Math.ceil(res.count / pageSize)}
       initialPageSize={pageSize}
       initialPageIndex={page - 1}
+      selection
+      onRowSelect={(selectedRows, isAllRowSelected) => {
+        console.log(selectedRows);
+        console.log(isAllRowSelected);
+      }}
       data={res.data}
       columns={[
+        columnHelper.display({
+          size: 10,
+          enablePinning: false,
+          id: "select",
+          header: ({ table }) => (
+            <Checkbox
+              checked={table.getIsAllRowsSelected()}
+              onChange={table.getToggleAllRowsSelectedHandler()}
+            />
+          ),
+          cell: ({ row }) => (
+            <Checkbox
+              checked={row.getIsSelected()}
+              disabled={!row.getCanSelect()}
+              onChange={row.getToggleSelectedHandler()}
+            />
+          ),
+        }),
         columnHelper.accessor("fact", {
           header: "Fact",
           enableSorting: false,
