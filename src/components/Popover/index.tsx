@@ -69,9 +69,7 @@ export const Popover = ({
           } z-10 transition-all animate-fadeIn`
         )}
       >
-        <div className="border-[1px] border-slate-300 rounded bg-white shadow-[10px_30px_150px_rgba(46,38,92,0.25)]">
-          {content}
-        </div>
+        <div className="bg-white">{content}</div>
       </div>
     </div>
   );
