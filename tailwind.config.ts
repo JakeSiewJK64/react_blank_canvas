@@ -32,8 +32,13 @@ export default {
           "0%": { opacity: "1" },
           "100%": { opacity: "0" },
         },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
       },
       animation: {
+        fadeIn: "fadeIn .5s ease-out",
         fadeOut: "fadeOut 1s ease-out",
         slideIn: "slideIn 0.2s ease-out",
       },

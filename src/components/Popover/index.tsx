@@ -61,12 +61,12 @@ export const Popover = ({
         className={cn(
           `min-w-fit w-[200px] h-fit absolute ${
             {
-              top: "bottom-full mb-2", // Popover above the button
-              bottom: "top-full mt-2", // Popover below the button
-              left: "right-full mr-2", // Popover to the left of the button
-              right: "left-full ml-2", // Popover to the right of the button
+              top: "bottom-full mb-1", // Popover above the button
+              bottom: "top-full mt-1", // Popover below the button
+              left: "right-full mr-1", // Popover to the left of the button
+              right: "left-full ml-1", // Popover to the right of the button
             }[position]
-          } z-10 transition-all`
+          } z-10 transition-all animate-fadeIn`
         )}
       >
         <div className="border-[1px] border-slate-300 rounded bg-white shadow-[10px_30px_150px_rgba(46,38,92,0.25)]">
