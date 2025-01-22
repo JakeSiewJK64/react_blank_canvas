@@ -70,7 +70,7 @@ const ColumnFilterInput = ({ column }: { column: Column<any, unknown> }) => {
 
   if (filterType === "range") {
     return (
-      <Group justify="space-between" gap={4}>
+      <Group gap={4}>
         <DebouncedInput
           className="font-normal"
           type="number"
