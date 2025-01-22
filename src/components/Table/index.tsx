@@ -446,7 +446,9 @@ export const Table = ({
   pageSizeOptions?: string[];
   /** The data to display in the table. */
   data: unknown[];
-  /** The total number of records available. Only applicable to server side data source. */
+  /** The total number of records available. Only applicable to server
+   * side data source. Only used to display record information.
+   **/
   total?: number;
   /** An array of column definitions to configure table headers and cell rendering. */
   columns: ColumnDef<any, any>[];
@@ -464,19 +466,19 @@ export const Table = ({
   loading?: boolean;
   /** Whether pagination is enabled for the table. */
   pagination?: boolean;
-  /** reset selection on filter change. */
+  /** Reset selection on filter change. */
   resetSelectionOnFilterChange?: boolean;
   /** Whether to use server-side data fetching. If `true`, `fetchData` must be provided. */
   serverSideDataSource?: boolean;
   /** Enable sticky header */
   stickyHeader?: boolean;
-  /** is row selection enabled. */
+  /** Is row selection enabled. */
   selection?: boolean;
-  /** manual filtering enabled (providing your own filter form). */
+  /** If `false`, hide the filter inputs under column header. */
   headerFilter?: boolean;
-  /** filter component. */
+  /** Custom filter component. */
   filter?: ReactElement | null;
-  /** class styling for table. */
+  /** Class styling for table. */
   className?: string;
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -635,7 +637,7 @@ export const Table = ({
           </Group>
         )}
       </Group>
-      <div className="overflow-auto h-[60rem]">
+      <div className="overflow-auto">
         <table className={cn(`w-[100%] min-w-[50rem] ${className}`)}>
           <thead className={cn(`${stickyHeader && "sticky z-[2] top-0"}`)}>
             {reactTable.getHeaderGroups().map((headerGroup) => (
