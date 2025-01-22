@@ -24,12 +24,6 @@ const columnHelper = createColumnHelper<{
   status: "active" | "inactive";
 }>();
 
-/**
- * **references:**
- *
- * [react table sorting](https://stackoverflow.com/a/74977394)
- *
- * */
 export const ClientSideTable: StoryFn<typeof Table> = (args) => {
   const total = 20;
   const res = {
