@@ -51,6 +51,7 @@ export const ClientSideTable: StoryFn<typeof Table> = (args) => {
         columns={[
           columnHelper.display({
             size: 10,
+            enablePinning: false,
             id: "select",
             header: ({ table }) => (
               <Checkbox
