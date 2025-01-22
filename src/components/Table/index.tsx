@@ -455,7 +455,7 @@ export const Table = ({
   /** A function to fetch data from the server. Called with options including `pageIndex`, `pageSize`, and `sorting`. */
   fetchData?: ({ pageIndex, pageSize, sorting }: BaseAPIOptions) => void;
   /** Callback for on rows selected */
-  onRowSelect?: (selectedRows: unknown) => void;
+  onRowSelect?: (selectedRows: unknown, isAllRowSelected: boolean) => void;
   /** The total number of pages available (used for server-side pagination). */
   pageCount?: number;
   /** The initial number of rows displayed per page. */
@@ -541,7 +541,10 @@ export const Table = ({
   ]);
 
   useEffect(() => {
-    onRowSelect(reactTable.getSelectedRowModel().flatRows);
+    onRowSelect(
+      reactTable.getSelectedRowModel().flatRows,
+      reactTable.getIsAllRowsSelected()
+    );
   }, [rowSelection, onRowSelect]);
 
   return (
