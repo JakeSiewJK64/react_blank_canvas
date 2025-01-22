@@ -627,25 +627,23 @@ export const Table = ({
                       reactTable.setPageSize(Number(e.target.value));
                     }}
                   />
-                  <Group gap={4} align="center">
-                    <Pagination
-                      onFirstPage={() => {
-                        reactTable.firstPage();
-                      }}
-                      onLastPage={() => {
-                        reactTable.lastPage();
-                      }}
-                      pageCount={reactTable.getPageCount()}
-                      onNextPage={() => reactTable.nextPage()}
-                      onPreviousPage={() => reactTable.previousPage()}
-                      disableNext={!reactTable.getCanNextPage()}
-                      disablePrevious={!reactTable.getCanPreviousPage()}
-                      value={reactTable.getState().pagination.pageIndex + 1}
-                      onChange={(e) => {
-                        reactTable.setPageIndex(Number(e) - 1);
-                      }}
-                    />
-                  </Group>
+                  <Pagination
+                    onFirstPage={() => {
+                      reactTable.firstPage();
+                    }}
+                    onLastPage={() => {
+                      reactTable.lastPage();
+                    }}
+                    pageCount={reactTable.getPageCount()}
+                    onNextPage={() => reactTable.nextPage()}
+                    onPreviousPage={() => reactTable.previousPage()}
+                    disableNext={!reactTable.getCanNextPage()}
+                    disablePrevious={!reactTable.getCanPreviousPage()}
+                    value={reactTable.getState().pagination.pageIndex + 1}
+                    onChange={(e) => {
+                      reactTable.setPageIndex(Number(e) - 1);
+                    }}
+                  />
                 </Group>
               )}
             </Group>
