@@ -15,11 +15,11 @@ const Template = (args: typeof Tabs) => (
     {...args}
     tabList={[
       {
-        id: "tab-1",
+        key: "tab-1",
         label: "Tab 1",
       },
       {
-        id: "tab-2",
+        key: "tab-2",
         label: "Tab 2",
       },
     ]}

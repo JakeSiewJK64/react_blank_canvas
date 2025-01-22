@@ -12,7 +12,7 @@ export const Tabs = ({
 }: {
   border?: boolean;
   children: ReactElement[];
-  tabList: { label: string; id: string }[];
+  tabList: { label: string; key: string }[];
 }) => {
   const [active, setActive] = useState(children[0].key);
 
@@ -24,14 +24,14 @@ export const Tabs = ({
       >
         {tabList.map((tab) => (
           <Button
-            key={`${tab.id}-${tab.label}`}
+            key={`${tab.key}-${tab.label}`}
             className={cn(
               `hover:bg-slate-100 bg-transparent text-black cursor-pointer rounded-none border-kt-6 ${
-                active === tab.id && "border-b-2"
+                active === tab.key && "border-b-2"
               }`
             )}
             onClick={() => {
-              setActive(tab.id);
+              setActive(tab.key);
             }}
           >
             {tab.label}
