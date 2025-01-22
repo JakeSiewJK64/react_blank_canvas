@@ -793,17 +793,19 @@ export const Table = ({
                   {reactTable.getRowModel().rows.length.toString()}
                 </strong>
               </span>
-              <span className="text-sm">
-                Showing{" "}
-                {getPageRecordInfo({
-                  pageIndex,
-                  pageSize,
-                  totalRows: serverSideDataSource
-                    ? total
-                    : reactTable.getRowCount(),
-                })}{" "}
-                rows
-              </span>
+              {data.length !== 0 && (
+                <span className="text-sm">
+                  Showing{" "}
+                  {getPageRecordInfo({
+                    pageIndex,
+                    pageSize,
+                    totalRows: serverSideDataSource
+                      ? total
+                      : reactTable.getRowCount(),
+                  })}{" "}
+                  rows
+                </span>
+              )}
             </Group>
           </th>
         </tr>
