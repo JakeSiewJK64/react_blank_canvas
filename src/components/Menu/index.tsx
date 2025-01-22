@@ -10,7 +10,7 @@ export const MenuButton = (props: ButtonProps & { href?: string }) => {
 
     return (
       <Anchor
-        className="text-left ps-2 text-slate-600 no-underline py-1 hover:bg-slate-100 hover:text-slate-600"
+        className="text-center ps-2 text-slate-600 no-underline py-1 hover:bg-slate-100 hover:text-slate-600"
         href={href}
       >
         {children}
@@ -24,6 +24,7 @@ export const MenuButton = (props: ButtonProps & { href?: string }) => {
       className="rounded-none border-none text-slate-600 hover:bg-slate-100"
       variant="outline"
       color="secondary"
+      size="xs"
     />
   );
 };
