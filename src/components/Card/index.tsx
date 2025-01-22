@@ -12,7 +12,7 @@ export const Card = ({
   /** class name of the card */
   className?: string;
   /** children to render inside the card */
-  children: ReactElement | ReactElement[];
+  children: ReactElement | ReactElement[] | string;
 }) => {
   return (
     <div
