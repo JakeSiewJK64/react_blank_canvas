@@ -48,9 +48,7 @@ const InputStory: Meta<typeof Input> = {
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Small = {
-  args: {
-    label: "Input",
-  },
+  args: {},
 };
 
 export default InputStory;

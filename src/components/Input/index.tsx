@@ -36,20 +36,14 @@ export const DebouncedInput = ({
 };
 
 export const Input = ({
-  label,
   errorMessage,
   ...props
 }: {
   /** Error message (if any) */
   errorMessage?: string;
-  /** Checked or not (applicable for checkbox input type) */
-  label?: string;
 } & InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <div>
-      <label className="block text-gray-700 text-sm font-bold mb-2">
-        {label}
-      </label>
       <input
         {...props}
         className={cn(
