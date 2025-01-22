@@ -346,7 +346,7 @@ const ColumnFilter = ({ table }: { table: TSTable<unknown> }) => {
               return (
                 <div
                   key={`${view.label}-${view.value}`}
-                  className="text-sm p-1 border-b-2 border-slate-300"
+                  className="text-sm p-1 border-b-[1px] border-slate-300"
                   id={`${view.label}-${view.value}`}
                 >
                   <Group justify="space-between">
