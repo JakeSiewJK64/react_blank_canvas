@@ -45,7 +45,7 @@ export const AutoComplete = ({
         <>
           <Stack
             gap={2}
-            className="mt-1 absolute w-full bg-white border border-gray-300 rounded shadow-md z-2"
+            className="mt-1 absolute w-full bg-white border border-gray-300 rounded shadow-md z-2 p-1"
           >
             {options.length === 0 && (
               <Stack className="p-2 text-center text-sm" align="center">
