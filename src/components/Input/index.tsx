@@ -99,7 +99,6 @@ export const DebouncedInput = ({
     <Input
       {...props}
       value={value}
-      type="text"
       onChange={(e) => setValue(e.target.value)}
     />
   );
