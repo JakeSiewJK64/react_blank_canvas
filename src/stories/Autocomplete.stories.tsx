@@ -17,8 +17,6 @@ export const Regular = () => {
 
   return (
     <AutoComplete
-      showOptions={search.length > 0}
-      onMouseLeave={() => setSearch("")}
       options={[
         {
           label: "Apple",
@@ -46,7 +44,7 @@ export const Regular = () => {
 
         return option;
       })}
-      value=""
+      value={search}
       onSelect={(e) => console.log(e)}
       onChange={(e) => setSearch(String(e))}
     />

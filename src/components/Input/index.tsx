@@ -1,36 +1,46 @@
-import { InputHTMLAttributes, MouseEvent, useEffect, useState } from "react";
+import { InputHTMLAttributes, useEffect, useState } from "react";
 import { cn } from "../../utils";
 import { Stack } from "../Stack";
+import { Highlight } from "../Highlight";
+import { Loader } from "../Loader";
 import "../../index.css";
 
 export const AutoComplete = ({
   options,
+  value,
   loading = false,
-  showOptions = false,
   onSelect = () => {},
   onChange = () => {},
-  onMouseLeave = () => {},
   ...props
 }: {
-  options: { label: string; value: string }[];
-  loading?: boolean;
-  showOptions?: boolean;
-  value: string | number;
+  value: string;
   label?: string;
+  loading?: boolean;
+  options: { label: string; value: string }[];
   onSelect: (e: { label: string; value: string }) => void;
   onChange: (value: string | number) => void;
-  onMouseLeave?: (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
 }) => {
+  const [showOptions, setShowOptions] = useState(false);
+
   return (
-    <div className="relative w-full">
+    <div
+      className="relative w-full"
+      onFocus={() => setShowOptions(true)}
+      onBlur={() => setShowOptions(false)}
+    >
       <DebouncedInput
         {...props}
+        value={value}
         className="w-full"
         onChange={(e) => onChange(e)}
       />
-      {loading && <div>Loading...</div>}
+      {loading && (
+        <div className="absolute right-0 top-2 me-2">
+          <Loader size="xs" />
+        </div>
+      )}
       {showOptions && (
-        <div onMouseLeave={(e) => onMouseLeave(e)}>
+        <>
           <Stack
             gap={2}
             className="mt-1 absolute w-full bg-white border border-gray-300 rounded shadow-md z-2"
@@ -40,15 +50,13 @@ export const AutoComplete = ({
                 key={option.value}
                 title={option.label}
                 className="w-full text-sm p-2 hover:bg-slate-100 cursor-pointer text-ellipsis text-nowrap overflow-x-hidden"
-                onClick={() => {
-                  onSelect(option);
-                }}
+                onClick={() => onSelect(option)}
               >
-                {option.label}
+                <Highlight target={value}>{option.label}</Highlight>
               </div>
             ))}
           </Stack>
-        </div>
+        </>
       )}
     </div>
   );
