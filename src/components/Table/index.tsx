@@ -549,7 +549,7 @@ export const Table = ({
 
   return (
     <table className={cn(`w-[100%] min-w-[50rem] ${className}`)}>
-      <thead className={cn(`${stickyHeader && "sticky z-[2] top-0"}`)}>
+      <thead className={cn(`${stickyHeader && "sticky z-2 top-0"}`)}>
         <tr>
           <th colSpan={columns.length} className="font-normal">
             <Group
