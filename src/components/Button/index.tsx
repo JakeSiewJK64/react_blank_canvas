@@ -86,3 +86,25 @@ export const Button = ({
     </button>
   );
 };
+
+export const Burger = ({
+  size,
+  color = "secondary",
+  variant = "subtle",
+  ...props
+}: ButtonProps) => (
+  <Button
+    {...props}
+    size={size}
+    variant={variant}
+    color={color}
+    className="group hover:bg-white"
+    icon={
+      <div className="grid justify-items-center gap-1.5">
+        <span className="h-1 w-8 rounded-full bg-black transition group-hover:rotate-45 group-hover:translate-y-2.5" />
+        <span className="h-1 w-8 rounded-full bg-black group-hover:scale-x-0 transition" />
+        <span className="h-1 w-8 rounded-full bg-black group-hover:-rotate-45 group-hover:-translate-y-2.5" />
+      </div>
+    }
+  />
+);
