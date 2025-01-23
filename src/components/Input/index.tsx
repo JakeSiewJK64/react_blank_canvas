@@ -1,6 +1,60 @@
-import { InputHTMLAttributes, useEffect, useState } from "react";
+import { InputHTMLAttributes, MouseEvent, useEffect, useState } from "react";
 import { cn } from "../../utils";
+import { Stack } from "../Stack";
 import "../../index.css";
+
+export const AutoComplete = ({
+  value,
+  options,
+  loading = false,
+  showOptions = false,
+  onSelect = () => {},
+  onChange = () => {},
+  onMouseLeave = () => {},
+}: {
+  showOptions?: boolean;
+  loading?: boolean;
+  value: string | number;
+  options: { label: string; value: string }[];
+  onSelect: (e: { label: string; value: string }) => void;
+  onChange: (value: string | number) => void;
+  onMouseLeave?: (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
+}) => {
+  return (
+    <div className="relative w-full">
+      <DebouncedInput
+        type="text"
+        value={value}
+        className="w-full"
+        onChange={(e) => {
+          onChange(e);
+        }}
+      />
+      {loading && <div>Loading...</div>}
+      {showOptions && (
+        <div onMouseLeave={(e) => onMouseLeave(e)}>
+          <Stack
+            gap={2}
+            className="mt-1 absolute w-full bg-white border border-gray-300 rounded shadow-md z-2"
+          >
+            {options.map((option) => (
+              <div
+                key={option.value}
+                title={option.label}
+                className="w-full text-sm p-2 hover:bg-slate-100 cursor-pointer text-ellipsis text-nowrap overflow-x-hidden"
+                onClick={() => {
+                  onSelect(option);
+                }}
+              >
+                {option.label}
+              </div>
+            ))}
+          </Stack>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const DebouncedInput = ({
   value: initialValue,
