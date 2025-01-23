@@ -27,18 +27,14 @@ export const CopyClipboard = ({
       title={`Copy ${text}`}
       color="secondary"
       variant="outline"
-      className={cn(
-        `${
-          clicked ? "bg-success hover:bg-success hover:opacity-60" : ""
-        } ${className}`
-      )}
+      className={cn(`${clicked ? "hover:bg-green-200" : ""} ${className}`)}
       onClick={() => {
         navigator.clipboard.writeText(text);
         setClicked(true);
       }}
     >
       {clicked ? (
-        <Monicon name="lucide:check" color="white" size={15} />
+        <Monicon name="lucide:check" color="#40c057" size={15} />
       ) : (
         icon ?? <Monicon name="lucide:copy" size={15} />
       )}
