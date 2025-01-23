@@ -28,8 +28,6 @@ export const Popover = ({
     }
   };
 
-  const handleMouseLeft = () => {};
-
   useEffect(() => {
     const handleClickOutside = (event: Event) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -52,7 +50,6 @@ export const Popover = ({
     <div
       ref={wrapperRef}
       onMouseEnter={handleMouseOver}
-      onMouseLeave={handleMouseLeft}
       className="w-fit h-fit relative flex justify-center"
     >
       <div onClick={() => setShow(!show)}>{children}</div>
