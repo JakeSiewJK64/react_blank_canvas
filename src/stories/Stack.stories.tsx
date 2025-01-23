@@ -11,16 +11,10 @@ const StackStory: Meta<typeof Stack> = {
 };
 
 const Template = (args: typeof Stack) => (
-  <Stack justify="baseline" {...args}>
-    <div className="text-white font-bold bg-kt-primary p-2 w-[25%]">
-      Children 1
-    </div>
-    <div className="text-white font-bold bg-kt-primary p-2 w-[25%]">
-      Children 2
-    </div>
-    <div className="text-white font-bold bg-kt-primary p-2 w-[25%]">
-      Children 3
-    </div>
+  <Stack justify="baseline" {...args} gap={2}>
+    <div className="text-white font-bold bg-kt-6 p-2 w-[25%]">Children 1</div>
+    <div className="text-white font-bold bg-kt-6 p-2 w-[25%]">Children 2</div>
+    <div className="text-white font-bold bg-kt-6 p-2 w-[25%]">Children 3</div>
   </Stack>
 );
 
