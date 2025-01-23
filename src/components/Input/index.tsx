@@ -4,6 +4,7 @@ import { Stack } from "../Stack";
 import { Highlight } from "../Highlight";
 import { Loader } from "../Loader";
 import "../../index.css";
+import Monicon from "@monicon/react";
 
 export const AutoComplete = ({
   options,
@@ -45,6 +46,12 @@ export const AutoComplete = ({
             gap={2}
             className="mt-1 absolute w-full bg-white border border-gray-300 rounded shadow-md z-2"
           >
+            {options.length === 0 && (
+              <Stack className="p-2 text-center text-sm" align="center">
+                <Monicon size={20} name="lucide:package-open" />
+                <div>There are no results available.</div>
+              </Stack>
+            )}
             {options.map((option) => (
               <div
                 key={option.value}
