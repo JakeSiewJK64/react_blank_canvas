@@ -16,6 +16,7 @@ export const AutoComplete = ({
 }: {
   value: string;
   label?: string;
+  placeholder?: string;
   loading?: boolean;
   options: { label: string; value: string }[];
   onSelect: (e: { label: string; value: string }) => void;
