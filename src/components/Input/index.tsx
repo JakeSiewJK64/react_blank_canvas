@@ -1,10 +1,10 @@
+import Monicon from "@monicon/react";
 import { InputHTMLAttributes, useEffect, useState } from "react";
 import { cn } from "../../utils";
 import { Stack } from "../Stack";
 import { Highlight } from "../Highlight";
 import { Loader } from "../Loader";
 import "../../index.css";
-import Monicon from "@monicon/react";
 
 export const AutoComplete = ({
   options,
