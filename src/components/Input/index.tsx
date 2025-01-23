@@ -4,18 +4,19 @@ import { Stack } from "../Stack";
 import "../../index.css";
 
 export const AutoComplete = ({
-  value,
   options,
   loading = false,
   showOptions = false,
   onSelect = () => {},
   onChange = () => {},
   onMouseLeave = () => {},
+  ...props
 }: {
-  showOptions?: boolean;
-  loading?: boolean;
-  value: string | number;
   options: { label: string; value: string }[];
+  loading?: boolean;
+  showOptions?: boolean;
+  value: string | number;
+  label?: string;
   onSelect: (e: { label: string; value: string }) => void;
   onChange: (value: string | number) => void;
   onMouseLeave?: (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
@@ -23,12 +24,9 @@ export const AutoComplete = ({
   return (
     <div className="relative w-full">
       <DebouncedInput
-        type="text"
-        value={value}
+        {...props}
         className="w-full"
-        onChange={(e) => {
-          onChange(e);
-        }}
+        onChange={(e) => onChange(e)}
       />
       {loading && <div>Loading...</div>}
       {showOptions && (
@@ -63,9 +61,10 @@ export const DebouncedInput = ({
   ...props
 }: {
   value: string | number;
+  label?: string;
   onChange: (value: string | number) => void;
   debounce?: number;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange">) => {
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">) => {
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
@@ -84,6 +83,7 @@ export const DebouncedInput = ({
     <Input
       {...props}
       value={value}
+      type="text"
       onChange={(e) => setValue(e.target.value)}
     />
   );
@@ -91,19 +91,22 @@ export const DebouncedInput = ({
 
 export const Input = ({
   errorMessage,
+  label,
   ...props
 }: {
   /** Error message (if any) */
   errorMessage?: string;
+  label?: string;
 } & InputHTMLAttributes<HTMLInputElement>) => {
   return (
-    <div>
+    <div className={props.className}>
+      {label && <label>{label}</label>}
       <input
         {...props}
         className={cn(
           `shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
             errorMessage && "border-red-500"
-          } ${props.className}`
+          }`
         )}
       />
       {errorMessage && (
