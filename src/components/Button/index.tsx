@@ -31,7 +31,7 @@ const variants = {
       danger: "bg-danger text-white hover:bg-danger/90",
       success: "bg-success text-white hover:bg-success/90",
       secondary:
-        "bg-slate-600 border border-slate-200 text-white hover:bg-slate-100",
+        "bg-slate-600 border border-slate-200 text-white hover:opacity-[75%]",
     },
     outline: {
       secondary:
@@ -78,7 +78,7 @@ export const Button = ({
         } ${props.className}`
       )}
     >
-      {loading && <Loader size="md" color="white" />}
+      {loading && <Loader size="md" color={color} />}
       <Group align="center" gap={5} className="my-auto">
         {icon && icon}
         {props.children}

@@ -1,6 +1,12 @@
 import Monicon from "@monicon/react";
 import "../../index.css";
 
+const DEFAULT_COLORS: Record<string, string> = {
+  danger: "red",
+  success: "#40c057",
+  secondary: "#475569",
+};
+
 export const Loader = ({
   color = "#09ABC2",
   size = "md",
@@ -17,7 +23,11 @@ export const Loader = ({
   }[size];
   return (
     <div className="animate-spin">
-      <Monicon name="lucide:loader-circle" color={color} size={sizing} />
+      <Monicon
+        name="lucide:loader-circle"
+        color={DEFAULT_COLORS[color] ?? color}
+        size={sizing}
+      />
     </div>
   );
 };
