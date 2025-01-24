@@ -12,29 +12,55 @@ const AutoCompleteStory: Meta<typeof AutoComplete> = {
   argTypes: {},
 };
 
+const options = [
+  {
+    label: "Apple",
+    value: "apple",
+  },
+  {
+    label: "Orange",
+    value: "orange",
+  },
+  {
+    label: "Melon",
+    value: "melon",
+  },
+  {
+    label: "Something very long but it could be a name at some point",
+    value: "Something very long but it could be a name at some point",
+  },
+  {
+    label: "Banana",
+    value: "banana",
+  },
+  {
+    label: "Grapes",
+    value: "grapes",
+  },
+  {
+    label: "Watermelon",
+    value: "watermelon",
+  },
+  {
+    label: "Pineapple",
+    value: "pineapple",
+  },
+  {
+    label: "Mango",
+    value: "mango",
+  },
+  {
+    label: "Strawberry",
+    value: "strawberry",
+  },
+];
+
 export const Regular = () => {
   const [search, setSearch] = useState("");
 
   return (
     <AutoComplete
-      options={[
-        {
-          label: "Apple",
-          value: "apple",
-        },
-        {
-          label: "Orange",
-          value: "orange",
-        },
-        {
-          label: "Melon",
-          value: "melon",
-        },
-        {
-          label: "Something very long but it could be a name at some point",
-          value: "Something very long but it could be a name at some point",
-        },
-      ].filter((option) => {
+      options={options.filter((option) => {
         if (String(search).length > 0) {
           return (
             option.label.toLowerCase().includes(search) ||
@@ -45,7 +71,7 @@ export const Regular = () => {
         return option;
       })}
       value={search}
-      onSelect={(e) => console.log(e)}
+      onSelect={(e) => setSearch(e.value)}
       onChange={(e) => setSearch(String(e))}
     />
   );
