@@ -1,4 +1,5 @@
 import Monicon from "@monicon/react";
+import { HTMLAttributes } from "react";
 import "../../index.css";
 
 const DEFAULT_COLORS: Record<string, string> = {
@@ -10,10 +11,11 @@ const DEFAULT_COLORS: Record<string, string> = {
 export const Loader = ({
   color = "#09ABC2",
   size = "md",
+  ...props
 }: {
   color?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
-}) => {
+} & HTMLAttributes<HTMLDivElement>) => {
   const sizing = {
     xs: 24,
     sm: 36,
@@ -22,7 +24,7 @@ export const Loader = ({
     xl: 72,
   }[size];
   return (
-    <div className="animate-spin">
+    <div {...props} className="animate-spin">
       <Monicon
         name="lucide:loader-circle"
         color={DEFAULT_COLORS[color] ?? color}
