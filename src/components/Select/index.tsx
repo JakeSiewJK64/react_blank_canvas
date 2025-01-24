@@ -10,7 +10,7 @@ export const Select = ({
   return (
     <select
       {...props}
-      className={`px-2 w-fit h-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none block dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 ${props.className}`}
+      className={`w-fit bg-transparent border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-1 ring-offset-1 ring-kt-6 focus:outline-none block dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 ${props.className}`}
     >
       {options.map((option) => {
         if (typeof option === "string") {

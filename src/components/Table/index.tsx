@@ -621,7 +621,6 @@ export const Table = ({
                   <div className="text-sm min-w-[5rem]">Page Size: </div>
                   <Select
                     value={String(reactTable.getState().pagination.pageSize)}
-                    className="my-2"
                     options={pageSizeOptions}
                     onChange={(e) => {
                       reactTable.setPageSize(Number(e.target.value));
