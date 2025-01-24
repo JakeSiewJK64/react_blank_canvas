@@ -25,7 +25,15 @@ export const AutoComplete = ({
   const [showOptions, setShowOptions] = useState(false);
 
   return (
-    <div className="relative w-full" onFocus={() => setShowOptions(true)}>
+    <div
+      className="relative w-full"
+      onFocus={() => setShowOptions(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+          setShowOptions(false);
+        }
+      }}
+    >
       <DebouncedInput
         {...props}
         value={value}
@@ -38,34 +46,33 @@ export const AutoComplete = ({
         </div>
       )}
       {showOptions && (
-        <div onBlur={() => setShowOptions(false)}>
-          <Stack
-            gap={2}
-            className="mt-1 absolute w-full bg-white border border-gray-300 rounded shadow-md z-2 p-1"
-          >
-            {options.length === 0 && (
-              <Stack className="p-2 text-center text-sm" align="center">
-                <Monicon size={20} name="lucide:package-open" />
-                <div>There are no results available.</div>
-              </Stack>
-            )}
-            <div className="max-h-60 overflow-y-auto">
-              {options.map((option) => (
-                <div
-                  key={option.value}
-                  title={option.label}
-                  className="w-full text-sm p-2 hover:bg-slate-100 cursor-pointer text-ellipsis text-nowrap overflow-x-hidden"
-                  onClick={() => {
-                    onSelect(option);
-                    setShowOptions(false);
-                  }}
-                >
-                  <Highlight target={value}>{option.label}</Highlight>
-                </div>
-              ))}
-            </div>
-          </Stack>
-        </div>
+        <Stack
+          gap={2}
+          className="mt-1 absolute w-full bg-white border border-gray-300 rounded shadow-md z-2 p-1"
+        >
+          {options.length === 0 && (
+            <Stack className="p-2 text-center text-sm" align="center">
+              <Monicon size={20} name="lucide:package-open" />
+              <div>There are no results available.</div>
+            </Stack>
+          )}
+          <div className="max-h-60 overflow-y-auto">
+            {options.map((option) => (
+              <div
+                key={option.value}
+                title={option.label}
+                className="w-full text-sm p-2 hover:bg-slate-100 cursor-pointer text-ellipsis text-nowrap overflow-x-hidden"
+                tabIndex={0}
+                onClick={() => {
+                  onSelect(option);
+                  setShowOptions(false);
+                }}
+              >
+                <Highlight target={value}>{option.label}</Highlight>
+              </div>
+            ))}
+          </div>
+        </Stack>
       )}
     </div>
   );
